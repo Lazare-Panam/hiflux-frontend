@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,6 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          data-cfasync="false"
+          type="text/javascript"
+          src="https://cdn.seoplatform.io/injector.js?websiteId=28583"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
