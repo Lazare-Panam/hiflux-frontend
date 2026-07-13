@@ -76,7 +76,7 @@ export default function ContactCTA() {
                 Email
               </Typography>
               <Typography sx={{ color: "text.secondary", fontSize: "0.9rem" }}>
-                sales@marsvalveuk.com
+                sales@hiflux.uk.com
               </Typography>
             </Box>
             <Box>
