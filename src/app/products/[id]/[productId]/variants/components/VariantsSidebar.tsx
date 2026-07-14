@@ -3,7 +3,7 @@
 import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, FormGroup, FormControlLabel, Checkbox, Chip, Divider } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const BRAND = '#E7390F';
+const BRAND = '#0072BC';
 
 interface Props {
   specKeys: string[];

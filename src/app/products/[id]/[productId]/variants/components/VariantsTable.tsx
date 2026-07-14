@@ -11,7 +11,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Image from 'next/image';
 import { ProductVariant } from '@/api/useProductVariants';
 
-const BRAND = '#E7390F';
+const BRAND = '#0072BC';
 
 interface RowProps {
   variant: ProductVariant;

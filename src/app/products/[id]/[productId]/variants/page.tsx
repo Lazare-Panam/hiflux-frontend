@@ -8,7 +8,7 @@ import VariantsTable from './components/VariantsTable';
 import VariantsActiveFilters from './components/VariantsActiveFilters';
 import { alpha } from '@mui/material/styles';
 
-const BRAND = '#E7390F';
+const BRAND = '#0072BC';
 
 export default function ProductVariantsPage({
   params,
