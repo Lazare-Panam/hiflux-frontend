@@ -40,7 +40,7 @@ export default function RootLayout({
         <script
           data-cfasync="false"
           type="text/javascript"
-          src="https://cdn.seoplatform.io/injector.js?websiteId=28583"
+          src="https://cdn.seoplatform.io/injector.js?websiteId=28611"
         />
       </head>
       <body>
