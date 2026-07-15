@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import QueryProvider from "@/theme/QueryProvider";
 import Navbar from "./Common/Navbar/Navbar";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +49,18 @@ export default function RootLayout({
             {" "}
             <Navbar />
             {children}
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-VES6DYGCYH"
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VES6DYGCYH');
+  `}
+            </Script>
           </ThemeRegistry>
         </QueryProvider>
       </body>
