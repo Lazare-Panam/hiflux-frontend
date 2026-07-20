@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import {
   Box, Table, TableHead, TableRow, TableCell, TableBody, TableSortLabel,
   TablePagination, Typography, Chip, IconButton, Collapse, Button
@@ -21,18 +22,33 @@ interface RowProps {
 
 function VariantRow({ variant, specKeys, thumbnailImage }: RowProps) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { id, productId } = useParams<{ id: string; productId: string }>();
+
+  const goToDetail = () => {
+    const sku = variant.specs['SKU'] ?? variant.id;
+    router.push(`/products/${id}/${productId}/variants/${sku}`);
+  };
 
   return (
     <>
       <TableRow
         hover
+        onClick={goToDetail}
         sx={{
+          cursor: 'pointer',
           bgcolor: open ? alpha(BRAND, 0.03) : 'inherit',
           '&:hover': { bgcolor: `${alpha(BRAND, 0.02)} !important` },
         }}
       >
         <TableCell sx={{ width: 40, py: 1.5 }}>
-          <IconButton size="small" onClick={() => setOpen(o => !o)}>
+          <IconButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(o => !o);
+            }}
+          >
             {open ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
           </IconButton>
         </TableCell>
@@ -76,6 +92,7 @@ function VariantRow({ variant, specKeys, thumbnailImage }: RowProps) {
                   <Button
                     variant="contained"
                     size="small"
+                    onClick={(e) => e.stopPropagation()}
                     sx={{ textTransform: 'none', fontWeight: 700, borderRadius: '4px', bgcolor: BRAND, boxShadow: 'none', px: 3, '&:hover': { bgcolor: '#A8270A', boxShadow: 'none' } }}
                   >
                     Request Quote
