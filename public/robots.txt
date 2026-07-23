@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.hiflux.uk.com/
+
+# Sitemaps
+Sitemap: https://www.hiflux.uk.com/sitemap.xml
