@@ -22,6 +22,7 @@ export type NavItem = {
 };
 
 export const LEFT_NAV: NavItem[] = [
+   { label: 'latest News', href: '/news' },
   { label: 'About Us', href: '#' },
   { label: 'Hiflux® Brand', href: '#' },
   {
@@ -68,7 +69,7 @@ export const LEFT_NAV: NavItem[] = [
 
 export const RIGHT_NAV: NavItem[] = [
   { label: 'Download', href: '#' },
-  { label: 'E-catalog', href: '#' },
+ 
   { label: 'News', href: '#' },
   { label: 'Contact Us', href: '#' },
 ];
