@@ -167,8 +167,10 @@ const Navbar: React.FC = () => {
                 </Box>
               ))}
               <Box
-                component={Link}
-                href="/contact"
+                component="a"
+                href="https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   textDecoration: "none",
                   border: `1.5px solid ${ACCENT}`,
@@ -186,7 +188,7 @@ const Navbar: React.FC = () => {
                   },
                 }}
               >
-                Get a Quote
+                Download Catalog
               </Box>
             </Box>
 
