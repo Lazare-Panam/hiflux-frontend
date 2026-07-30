@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 
 import { LEFT_NAV, RIGHT_NAV, type NavItem } from "./navData";
 import MegaMenuPanel from "./MegaMenuPanel";
@@ -189,6 +190,32 @@ const Navbar: React.FC = () => {
                 }}
               >
                 Download Catalog
+              </Box>
+              <Box
+                component={Link}
+                href="/shop"
+                aria-label="Shop"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0.75,
+                  textDecoration: "none",
+                  bgcolor: ACCENT,
+                  color: theme.palette.primary.contrastText,
+                  fontWeight: 600,
+                  fontSize: "0.74rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  px: 2.5,
+                  py: 1,
+                  transition: "background-color 0.15s ease",
+                  "&:hover": {
+                    bgcolor: theme.palette.primary.dark,
+                  },
+                }}
+              >
+                <StorefrontOutlinedIcon sx={{ fontSize: 18 }} />
+                Shop
               </Box>
             </Box>
 
