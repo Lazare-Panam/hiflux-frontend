@@ -192,6 +192,25 @@ const Navbar: React.FC = () => {
                 Download Catalog
               </Box>
               <Box
+                component="a"
+                href="https://ukhea.co.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="HEA"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+                  alt="HEA"
+                  width={38}
+                  height={38}
+                  style={{ objectFit: "contain", height: 38, width: "auto" }}
+                />
+              </Box>
+              <Box
                 component={Link}
                 href="/shop"
                 aria-label="Shop"
@@ -380,6 +399,57 @@ const Navbar: React.FC = () => {
               )}
             </Box>
           ))}
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 2,
+            p: 2.5,
+            mt: "auto",
+            borderTop: `1px solid ${LINE}`,
+          }}
+        >
+          <Box
+            component="a"
+            href="https://ukhea.co.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="HEA"
+            sx={{ display: "inline-flex", alignItems: "center" }}
+          >
+            <Image
+              src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+              alt="HEA"
+              width={36}
+              height={36}
+              style={{ objectFit: "contain", height: 36, width: "auto" }}
+            />
+          </Box>
+          <Box
+            component={Link}
+            href="/shop"
+            onClick={() => setMobileOpen(false)}
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 0.75,
+              textDecoration: "none",
+              bgcolor: ACCENT,
+              color: theme.palette.primary.contrastText,
+              fontWeight: 600,
+              fontSize: "0.74rem",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              px: 2.5,
+              py: 1,
+            }}
+          >
+            <StorefrontOutlinedIcon sx={{ fontSize: 18 }} />
+            Shop
+          </Box>
         </Box>
       </Drawer>
     </>

@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "pblol2.blob.core.windows.net" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+      },
     ],
   },
 };
