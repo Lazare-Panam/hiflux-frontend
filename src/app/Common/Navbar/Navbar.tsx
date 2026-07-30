@@ -177,26 +177,15 @@ const Navbar: React.FC = () => {
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 1,
                 }}
               >
                 <Image
-                  src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+                  src="https://pblol2.blob.core.windows.net/valvenok-images/hea.png"
                   alt="HEA"
                   width={38}
                   height={38}
                   style={{ objectFit: "contain", height: 38, width: "auto" }}
                 />
-                <Typography
-                  sx={{
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    color: RUST,
-                  }}
-                >
-                  HEA
-                </Typography>
               </Box>
 
               <Box
@@ -431,7 +420,7 @@ const Navbar: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="HEA"
-            sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
+            sx={{ display: "inline-flex", alignItems: "center" }}
           >
             <Image
               src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
@@ -440,16 +429,6 @@ const Navbar: React.FC = () => {
               height={36}
               style={{ objectFit: "contain", height: 36, width: "auto" }}
             />
-            <Typography
-              sx={{
-                fontSize: "0.78rem",
-                fontWeight: 600,
-                letterSpacing: "0.06em",
-                color: RUST,
-              }}
-            >
-              HEA
-            </Typography>
           </Box>
           <Box
             component={Link}

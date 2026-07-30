@@ -6,6 +6,7 @@ import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 
 const BRAND = "#0072BC";
 const BRAND_DARK = "#00539B";
+const PAGE_BG = "#EAF3FB"; // light blue wash to contrast white cards
 
 type ProductVariant = {
   id: string;
@@ -452,7 +453,7 @@ const FEATURED_PICK = ALL_VARIANTS.reduce((min, cur) =>
 
 export default function ShopLandingPage() {
   return (
-    <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
+    <Box sx={{ bgcolor: PAGE_BG, minHeight: "100vh" }}>
       {/* Welcome hero */}
       <Box
         sx={{
