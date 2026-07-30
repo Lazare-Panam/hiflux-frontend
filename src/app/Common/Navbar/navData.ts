@@ -108,9 +108,7 @@ export const LEFT_NAV: NavItem[] = [
     ],
   },
   { label: "latest News", href: "/news" },
-];
-
-export const RIGHT_NAV: NavItem[] = [
-  { label: "News", href: "#" },
   { label: "Contact Us", href: "#" },
 ];
+
+export const RIGHT_NAV: NavItem[] = [];
