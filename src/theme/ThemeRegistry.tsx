@@ -36,6 +36,29 @@ const theme = createTheme({
   shape: {
     borderRadius: 8,
   },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          textTransform: 'capitalize',
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        label: {
+          textTransform: 'capitalize',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'capitalize',
+        },
+      },
+    },
+  },
 });
 
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {

@@ -167,30 +167,7 @@ const Navbar: React.FC = () => {
                   {item.label}
                 </Box>
               ))}
-              <Box
-                component="a"
-                href="https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  textDecoration: "none",
-                  border: `1.5px solid ${ACCENT}`,
-                  color: ACCENT,
-                  fontWeight: 600,
-                  fontSize: "0.74rem",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  px: 2.5,
-                  py: 1,
-                  transition: "all 0.15s ease",
-                  "&:hover": {
-                    bgcolor: ACCENT,
-                    color: theme.palette.primary.contrastText,
-                  },
-                }}
-              >
-                Download Catalog
-              </Box>
+
               <Box
                 component="a"
                 href="https://ukhea.co.uk/"
@@ -210,6 +187,7 @@ const Navbar: React.FC = () => {
                   style={{ objectFit: "contain", height: 38, width: "auto" }}
                 />
               </Box>
+
               <Box
                 component={Link}
                 href="/shop"
@@ -235,6 +213,30 @@ const Navbar: React.FC = () => {
               >
                 <StorefrontOutlinedIcon sx={{ fontSize: 18 }} />
                 Shop
+              </Box>
+              <Box
+                component="a"
+                href="https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  textDecoration: "none",
+                  border: `1.5px solid ${ACCENT}`,
+                  color: ACCENT,
+                  fontWeight: 600,
+                  fontSize: "0.74rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  px: 2.5,
+                  py: 1,
+                  transition: "all 0.15s ease",
+                  "&:hover": {
+                    bgcolor: ACCENT,
+                    color: theme.palette.primary.contrastText,
+                  },
+                }}
+              >
+                Download Catalog
               </Box>
             </Box>
 
