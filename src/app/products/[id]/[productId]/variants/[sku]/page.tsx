@@ -56,7 +56,7 @@ export default function VariantDetail({
       </Box>
     );
   }
-
+//
   const price = variant.specs["Price"];
   const displaySpecs = Object.entries(variant.specs).filter(
     ([key]) => !HIDDEN_SPEC_KEYS.includes(key)
