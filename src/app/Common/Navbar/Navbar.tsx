@@ -12,6 +12,7 @@ import {
   IconButton,
   Drawer,
   Collapse,
+  Badge,
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,9 +20,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 
 import { LEFT_NAV, RIGHT_NAV, type NavItem } from "./navData";
 import MegaMenuPanel from "./MegaMenuPanel";
+import { useCartStore } from "@/store/useCartStore";
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -30,6 +33,12 @@ const Navbar: React.FC = () => {
   const PAPER = theme.palette.background.default;
   const ACCENT = theme.palette.primary.main;
   const LINE = theme.palette.divider;
+
+  // NOTE: totalItems() reads from localStorage via zustand persist, which is
+  // only available client-side. On first server render this will show 0
+  // before hydration catches up — a brief flash, not a bug, but worth knowing
+  // if the badge looks "wrong" for a split second on page load.
+  const totalItems = useCartStore((state) => state.totalItems());
 
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -188,6 +197,33 @@ const Navbar: React.FC = () => {
                 />
               </Box>
 
+              {/* Cart icon */}
+              <Box
+                component={Link}
+                href="/cart"
+                aria-label="Cart"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0.75,
+                  textDecoration: "none",
+                  color: totalItems > 0 ? ACCENT : RUST,
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  transition: "color 0.15s ease",
+                  "&:hover": { color: ACCENT },
+                }}
+              >
+                <Badge
+                  badgeContent={totalItems}
+                  color="primary"
+                  invisible={totalItems === 0}
+                >
+                  <ShoppingBagOutlinedIcon sx={{ fontSize: 22 }} />
+                </Badge>
+                Cart
+              </Box>
+
               <Box
                 component={Link}
                 href="/shop"
@@ -240,13 +276,31 @@ const Navbar: React.FC = () => {
               </Box>
             </Box>
 
-            {/* Mobile trigger */}
-            <IconButton
-              onClick={() => setMobileOpen(true)}
-              sx={{ display: { md: "none" }, color: INK }}
+            {/* Mobile trigger row: cart + hamburger */}
+            <Box
+              sx={{ display: { md: "none" }, alignItems: "center", gap: 0.5 }}
             >
-              <MenuIcon />
-            </IconButton>
+              <IconButton
+                component={Link}
+                href="/cart"
+                aria-label="Cart"
+                sx={{ color: INK }}
+              >
+                <Badge
+                  badgeContent={totalItems}
+                  color="primary"
+                  invisible={totalItems === 0}
+                >
+                  <ShoppingBagOutlinedIcon sx={{ fontSize: 20 }} />
+                </Badge>
+              </IconButton>
+              <IconButton
+                onClick={() => setMobileOpen(true)}
+                sx={{ color: INK }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
 

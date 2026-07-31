@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useMemo } from "react";
+import { use, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -18,7 +18,10 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 import { useProductVariants } from "@/api/useProductVariants";
+import { useCartStore } from "@/store/useCartStore";
 
 const BRAND = "#0072BC";
 const HIDDEN_SPEC_KEYS = ["SKU", "Price"];
@@ -30,6 +33,8 @@ export default function VariantDetail({
 }) {
   const { id, productId, sku } = use(params);
   const { data, isLoading, isError } = useProductVariants(productId);
+  const addItem = useCartStore((state) => state.addItem);
+  const [justAdded, setJustAdded] = useState(false);
 
   const variant = useMemo(() => {
     if (!data?.variants) return undefined;
@@ -52,19 +57,45 @@ export default function VariantDetail({
   if (isError || !data || !variant) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", py: 12 }}>
-        <Typography sx={{ color: "text.secondary" }}>Variant not found.</Typography>
+        <Typography sx={{ color: "text.secondary" }}>
+          Variant not found.
+        </Typography>
       </Box>
     );
   }
-//
+
   const price = variant.specs["Price"];
+  // Price comes from specs as a string (e.g. "141.60"); guard against it being
+  // missing, empty, or non-numeric before treating this as a priced item.
+  const parsedPrice = price ? parseFloat(price) : NaN;
+  const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
+
   const displaySpecs = Object.entries(variant.specs).filter(
-    ([key]) => !HIDDEN_SPEC_KEYS.includes(key)
+    ([key]) => !HIDDEN_SPEC_KEYS.includes(key),
   );
+
+  const handleAddToCart = () => {
+    addItem({
+      productId,
+      sku,
+      name: data.name,
+      thumbnailImage: data.thumbnailImage,
+      price: parsedPrice,
+    });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  };
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
+      <Box
+        sx={{
+          maxWidth: 1200,
+          mx: "auto",
+          px: { xs: 2, md: 4 },
+          py: { xs: 4, md: 6 },
+        }}
+      >
         {/* Breadcrumb / back */}
         <Breadcrumbs
           separator="/"
@@ -88,7 +119,13 @@ export default function VariantDetail({
             <ArrowBackIcon sx={{ fontSize: 12 }} />
             {data.name}
           </Link>
-          <Typography sx={{ fontSize: "0.8rem", color: "text.secondary", fontFamily: "monospace" }}>
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              color: "text.secondary",
+              fontFamily: "monospace",
+            }}
+          >
             {sku}
           </Typography>
         </Breadcrumbs>
@@ -140,12 +177,16 @@ export default function VariantDetail({
 
             <Typography
               component="h1"
-              sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 800, lineHeight: 1.15 }}
+              sx={{
+                fontSize: { xs: "1.6rem", md: "2rem" },
+                fontWeight: 800,
+                lineHeight: 1.15,
+              }}
             >
               {sku}
             </Typography>
 
-            {price && (
+            {hasPrice && (
               <Box
                 sx={{
                   display: "inline-flex",
@@ -159,10 +200,14 @@ export default function VariantDetail({
                   borderLeft: `4px solid ${BRAND}`,
                 }}
               >
-                <Typography sx={{ fontSize: "1.9rem", fontWeight: 800, color: BRAND }}>
+                <Typography
+                  sx={{ fontSize: "1.9rem", fontWeight: 800, color: BRAND }}
+                >
                   £{price}
                 </Typography>
-                <Typography sx={{ fontSize: "0.8rem", color: "text.secondary" }}>
+                <Typography
+                  sx={{ fontSize: "0.8rem", color: "text.secondary" }}
+                >
                   per unit
                 </Typography>
               </Box>
@@ -189,8 +234,12 @@ export default function VariantDetail({
                 border: `1px solid ${alpha(BRAND, 0.12)}`,
                 borderRadius: "8px",
                 overflow: "hidden",
-                "& td, & th": { borderBottom: `1px solid ${alpha(BRAND, 0.08)}` },
-                "& tr:last-of-type td, & tr:last-of-type th": { borderBottom: "none" },
+                "& td, & th": {
+                  borderBottom: `1px solid ${alpha(BRAND, 0.08)}`,
+                },
+                "& tr:last-of-type td, & tr:last-of-type th": {
+                  borderBottom: "none",
+                },
               }}
             >
               <TableBody>
@@ -212,29 +261,54 @@ export default function VariantDetail({
                     >
                       {label}
                     </TableCell>
-                    <TableCell sx={{ fontSize: "0.9rem", fontWeight: 600 }}>{value}</TableCell>
+                    <TableCell sx={{ fontSize: "0.9rem", fontWeight: 600 }}>
+                      {value}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
 
-            <Button
-              variant="contained"
-              fullWidth
-              disableElevation
-              sx={{
-                mt: 3,
-                py: 1.5,
-                bgcolor: BRAND,
-                textTransform: "none",
-                fontWeight: 700,
-                fontSize: "0.95rem",
-                borderRadius: "8px",
-                "&:hover": { bgcolor: "#005a94" },
-              }}
-            >
-              Request quote
-            </Button>
+            {hasPrice ? (
+              <Button
+                variant="contained"
+                fullWidth
+                disableElevation
+                onClick={handleAddToCart}
+                startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
+                sx={{
+                  mt: 3,
+                  py: 1.5,
+                  bgcolor: justAdded ? "#2e7d32" : BRAND,
+                  textTransform: "none",
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  borderRadius: "8px",
+                  transition: "background-color 0.2s",
+                  "&:hover": { bgcolor: justAdded ? "#2e7d32" : "#005a94" },
+                }}
+              >
+                {justAdded ? "Added to cart" : "Add to cart"}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                fullWidth
+                disableElevation
+                sx={{
+                  mt: 3,
+                  py: 1.5,
+                  bgcolor: BRAND,
+                  textTransform: "none",
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  borderRadius: "8px",
+                  "&:hover": { bgcolor: "#005a94" },
+                }}
+              >
+                Request quote
+              </Button>
+            )}
           </Grid>
         </Grid>
 
@@ -285,12 +359,24 @@ export default function VariantDetail({
                         </Box>
                         <Typography
                           noWrap
-                          sx={{ fontSize: "0.82rem", fontWeight: 700, mt: 1.25, fontFamily: "monospace" }}
+                          sx={{
+                            fontSize: "0.82rem",
+                            fontWeight: 700,
+                            mt: 1.25,
+                            fontFamily: "monospace",
+                          }}
                         >
                           {itemSku}
                         </Typography>
                         {itemPrice && (
-                          <Typography sx={{ fontSize: "0.85rem", fontWeight: 800, color: BRAND, mt: 0.25 }}>
+                          <Typography
+                            sx={{
+                              fontSize: "0.85rem",
+                              fontWeight: 800,
+                              color: BRAND,
+                              mt: 0.25,
+                            }}
+                          >
                             £{itemPrice}
                           </Typography>
                         )}

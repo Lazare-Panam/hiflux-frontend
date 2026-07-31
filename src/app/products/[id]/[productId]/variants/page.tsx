@@ -164,6 +164,7 @@ export default function ProductVariantsPage({
               variants={filtered}
               specKeys={allSpecKeys}
               thumbnailImage={data.thumbnailImage}
+              productName={data.name}
             />
           </Box>
         </Box>
