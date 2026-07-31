@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Box, Typography, Chip } from "@mui/material";
+import { Box, Typography, Chip, Button } from "@mui/material";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+import { useCartStore } from "@/store/useCartStore";
 
 const BRAND = "#0072BC";
 const BRAND_DARK = "#00539B";
@@ -32,7 +36,7 @@ function variantHref(categorySlug: string, productId: string, sku: string) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Card components (now Link-wrapped)                                 */
+/* Card components (now Link-wrapped, with Add to Cart)               */
 /* ------------------------------------------------------------------ */
 
 function GridCard({
@@ -49,6 +53,28 @@ function GridCard({
   productId: string;
 }) {
   const { specs } = variant;
+  const addItem = useCartStore((state) => state.addItem);
+  const [justAdded, setJustAdded] = useState(false);
+
+  const parsedPrice = parseFloat(specs.Price);
+  const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
+
+  // Card is wrapped in a Link (navigates to the detail page on click), so the
+  // button needs to stop that navigation from firing when it's clicked.
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({
+      productId,
+      sku: specs.SKU,
+      name: productName,
+      thumbnailImage,
+      price: parsedPrice,
+    });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  };
+
   return (
     <Link
       href={variantHref(categorySlug, productId, specs.SKU)}
@@ -145,6 +171,32 @@ function GridCard({
         >
           £{specs.Price}
         </Typography>
+
+        {hasPrice && (
+          <Button
+            variant="contained"
+            size="small"
+            fullWidth
+            onClick={handleAddToCart}
+            startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
+            sx={{
+              mt: 1,
+              textTransform: "none",
+              fontWeight: 700,
+              borderRadius: "6px",
+              bgcolor: justAdded ? "#2e7d32" : BRAND,
+              boxShadow: "none",
+              fontSize: "0.78rem",
+              transition: "background-color 0.2s",
+              "&:hover": {
+                bgcolor: justAdded ? "#2e7d32" : "#005a94",
+                boxShadow: "none",
+              },
+            }}
+          >
+            {justAdded ? "Added" : "Add to cart"}
+          </Button>
+        )}
       </Box>
     </Link>
   );
@@ -164,6 +216,26 @@ function FeaturedCard({
   productId: string;
 }) {
   const { specs } = variant;
+  const addItem = useCartStore((state) => state.addItem);
+  const [justAdded, setJustAdded] = useState(false);
+
+  const parsedPrice = parseFloat(specs.Price);
+  const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({
+      productId,
+      sku: specs.SKU,
+      name: productName,
+      thumbnailImage,
+      price: parsedPrice,
+    });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  };
+
   return (
     <Link
       href={variantHref(categorySlug, productId, specs.SKU)}
@@ -265,11 +337,44 @@ function FeaturedCard({
             ))}
           </Box>
 
-          <Typography
-            sx={{ fontSize: "2rem", fontWeight: 800, color: BRAND_DARK }}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
           >
-            £{specs.Price}
-          </Typography>
+            <Typography
+              sx={{ fontSize: "2rem", fontWeight: 800, color: BRAND_DARK }}
+            >
+              £{specs.Price}
+            </Typography>
+
+            {hasPrice && (
+              <Button
+                variant="contained"
+                onClick={handleAddToCart}
+                startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 700,
+                  borderRadius: "8px",
+                  bgcolor: justAdded ? "#2e7d32" : BRAND,
+                  boxShadow: "none",
+                  px: 3,
+                  py: 1,
+                  transition: "background-color 0.2s",
+                  "&:hover": {
+                    bgcolor: justAdded ? "#2e7d32" : "#005a94",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                {justAdded ? "Added to cart" : "Add to cart"}
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </Link>
@@ -633,16 +738,24 @@ export default function ShopLandingPage() {
         >
           {ALL_VARIANTS.filter(
             (v) => v.variant.id !== FEATURED_PICK.variant.id,
-          ).map(({ productName, thumbnailImage, variant, categorySlug, productId }) => (
-            <GridCard
-              key={variant.id}
-              variant={variant}
-              productName={productName}
-              thumbnailImage={thumbnailImage}
-              categorySlug={categorySlug}
-              productId={productId}
-            />
-          ))}
+          ).map(
+            ({
+              productName,
+              thumbnailImage,
+              variant,
+              categorySlug,
+              productId,
+            }) => (
+              <GridCard
+                key={variant.id}
+                variant={variant}
+                productName={productName}
+                thumbnailImage={thumbnailImage}
+                categorySlug={categorySlug}
+                productId={productId}
+              />
+            ),
+          )}
         </Box>
       </Box>
     </Box>
