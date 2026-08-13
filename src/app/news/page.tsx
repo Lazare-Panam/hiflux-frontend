@@ -7,10 +7,6 @@ import Link from "next/link";
 import { blogs } from "./data/blogs";
 
 const internalLinks = [
-  { label: "Our Products", href: "/products" },
-  { label: "Our Services", href: "/services" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact Us", href: "/contact" },
    { label: "Home", href: "/" },
 ];
 
