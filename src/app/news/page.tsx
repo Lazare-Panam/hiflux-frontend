@@ -1,9 +1,18 @@
 "use client";
 
-import { Box, Chip, Container, Typography } from "@mui/material";
+import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { blogs } from "./data/blogs";
+
+const internalLinks = [
+  { label: "Our Products", href: "/products" },
+  { label: "Our Services", href: "/services" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
+   { label: "Home", href: "/" },
+];
 
 export default function NewsPage() {
   const featured = blogs[0];
@@ -42,6 +51,40 @@ export default function NewsPage() {
               "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%)",
           }}
         />
+
+        {/* Back to Home button */}
+        <Box
+          component={Link}
+          href="/"
+          sx={{
+            position: "absolute",
+            top: { xs: 16, md: 24 },
+            left: { xs: 16, md: 24 },
+            zIndex: 2,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 0.75,
+            px: 2,
+            py: 0.75,
+            borderRadius: "999px",
+            textDecoration: "none",
+            bgcolor: "rgba(0,0,0,0.35)",
+            border: "1px solid rgba(255,255,255,0.35)",
+            backdropFilter: "blur(4px)",
+            color: "#fff",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            transition: "background-color 0.2s ease, border-color 0.2s ease",
+            "&:hover": {
+              bgcolor: "rgba(0,0,0,0.55)",
+              borderColor: "rgba(255,255,255,0.6)",
+            },
+          }}
+        >
+          <ArrowBackIcon sx={{ fontSize: "1rem" }} />
+          Back to Home
+        </Box>
+
         <Box
           sx={{
             position: "relative",
@@ -153,6 +196,48 @@ export default function NewsPage() {
             >
               {featured.excerpt}
             </Typography>
+          </Box>
+        </Box>
+
+        {/* Explore More - internal links */}
+        <Box sx={{ mb: 8, textAlign: "center" }}>
+          <Typography
+            variant="overline"
+            sx={{
+              color: "text.secondary",
+              letterSpacing: 3,
+              fontSize: "0.7rem",
+              display: "block",
+              mb: 2,
+            }}
+          >
+            Explore More
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 1.5,
+            }}
+          >
+            {internalLinks.map((link) => (
+              <Button
+                key={link.href}
+                component={Link}
+                href={link.href}
+                variant="outlined"
+                color="primary"
+                sx={{
+                  borderRadius: "999px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  px: 3,
+                }}
+              >
+                {link.label}
+              </Button>
+            ))}
           </Box>
         </Box>
 
