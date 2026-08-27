@@ -105,6 +105,32 @@ export const LEFT_NAV: NavItem[] = [
           },
         ],
       },
+      {
+        heading: "Union & Adapters",
+        href: "/products/union-adapters",
+        items: [
+          {
+            label: "Union",
+            href: "/products/union-adapters/unn-ff-60k",
+          },
+          {
+            label: "Adapter - Male to Male",
+            href: "/products/union-adapters/adp-mm-60k",
+          },
+          {
+            label: "Adapter - Male to Female",
+            href: "/products/union-adapters/adp-mf-60k",
+          },
+          {
+            label: "Adapter - Bulkhead Union",
+            href: "/products/union-adapters/adp-bulkhead-60k",
+          },
+          {
+            label: "Adapter - LOK to Female",
+            href: "/products/union-adapters/adp-lokf-f-20k",
+          },
+        ],
+      },
     ],
   },
   { label: "latest News", href: "/news" },

@@ -26,4 +26,13 @@ export const CATEGORIES = [
       "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/tube.png",
     href: "/products/high-pressure-tubing",
   },
+  {
+    id: "union-adapters",
+    label: "Union & Adapters",
+    description:
+      "Unions, adapters, and bulkhead fittings for pressure and size compatibility across industrial and extreme service applications.",
+    image:
+      "https://pblol2.blob.core.windows.net/hiflux/union-adapters/f-f-u.png",
+    href: "/products/union-adapters",
+  },
 ];
