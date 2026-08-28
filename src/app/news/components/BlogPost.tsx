@@ -109,7 +109,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
             size="small"
             sx={{ mb: 2, fontWeight: 600, borderRadius: 0, width: 'fit-content', bgcolor: 'primary.main', color: 'white' }}
           />
-          <Typography variant="h2" sx={{ fontWeight: 700, color: 'white', lineHeight: 1.15, mb: 1.5, fontSize: { xs: '1.8rem', md: '2.8rem' } }}>
+          <Typography variant="h2" component="h1" sx={{ fontWeight: 700, color: 'white', lineHeight: 1.15, mb: 1.5, fontSize: { xs: '1.8rem', md: '2.8rem' } }}>
             {blog.title}
           </Typography>
           <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>

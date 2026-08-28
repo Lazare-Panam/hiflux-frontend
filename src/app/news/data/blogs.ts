@@ -57,10 +57,10 @@ export const blogs: BlogData[] = [
       },
     ],
     cta: {
-      heading: "Tell Valvenok the pressure, media and connection requirements.",
+      heading: "Tell Hiflux the pressure, media and connection requirements.",
       body: "We'll help identify the right Hiflux high-pressure solution.",
       email: "sales@hiflux.uk.com",
-      phone: "+44 1234 567890",
+      phone: "+44 7369 243459",
     },
   },
   {
@@ -176,8 +176,8 @@ export const blogs: BlogData[] = [
     cta: {
       heading: "Need help specifying a check valve?",
       body: "Get in touch with our team to discuss pressure ratings, sealing types and tube sizes for your application.",
-      email: "sales@panamvalves.co.uk",
-      phone: "+44 0000 000000",
+      email: "sales@hiflux.uk.com",
+      phone: "+44 7369 243459",
     },
   },
 ];
