@@ -66,6 +66,49 @@ const FOOTER_COLUMNS = [
       },
     ],
   },
+  {
+    heading: "Union & Adapters",
+    links: [
+      { label: "Union", href: "/products/union-adapters/unn-ff-60k" },
+      {
+        label: "Adapter - Male to Male",
+        href: "/products/union-adapters/adp-mm-60k",
+      },
+      {
+        label: "Adapter - Male to Female",
+        href: "/products/union-adapters/adp-mf-60k",
+      },
+      {
+        label: "Bulkhead Union",
+        href: "/products/union-adapters/adp-bulkhead-60k",
+      },
+      {
+        label: "Adapter - LOK to Female",
+        href: "/products/union-adapters/adp-lokf-f-20k",
+      },
+    ],
+  },
+  {
+    heading: "High Pressure Regulators",
+    links: [
+      {
+        label: "General Pressure Regulator",
+        href: "/products/high-pressure-regulators/gpr-normal-3000",
+      },
+      {
+        label: "High Pressure Regulator",
+        href: "/products/high-pressure-regulators/hpr-10000",
+      },
+      {
+        label: "Back Pressure Regulator",
+        href: "/products/high-pressure-regulators/bpr-15000",
+      },
+      {
+        label: "Air Operated Back Pressure Regulator",
+        href: "/products/high-pressure-regulators/abpr-10000",
+      },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -86,12 +129,21 @@ export default function Footer() {
           px: { xs: 3, md: 8 },
           py: { xs: 6, md: 8 },
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "2fr 1fr 1fr 1fr" },
-          gap: { xs: 5, md: 4 },
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "1.6fr repeat(3, 1fr)",
+            lg: "1.6fr repeat(5, 1fr)",
+          },
+          gap: { xs: 5, md: 4, lg: 3 },
         }}
       >
         {/* brand + contact */}
-        <Box>
+        <Box
+          sx={{
+            gridColumn: { xs: "auto", sm: "1 / -1", md: "1 / -1", lg: "auto" },
+          }}
+        >
           <Box
             sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2.5 }}
           >
@@ -118,9 +170,9 @@ export default function Footer() {
               <EmailOutlinedIcon
                 sx={{ fontSize: 16, color: "primary.light" }}
               />
-             <Typography sx={{ fontSize: "0.85rem", textTransform: "none" }}>
-  sales@hiflux.co.uk
-</Typography>
+              <Typography sx={{ fontSize: "0.85rem", textTransform: "none" }}>
+                sales@hiflux.uk.com
+              </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <PhoneOutlinedIcon
@@ -165,7 +217,7 @@ export default function Footer() {
               sx={{
                 color: "#fff",
                 fontWeight: 700,
-                fontSize: "0.85rem",
+                fontSize: "0.8rem",
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
                 mb: 2,
@@ -173,14 +225,15 @@ export default function Footer() {
             >
               {col.heading}
             </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.1 }}>
               {col.links.map((link) => (
                 <Typography
                   key={link.label}
                   component={Link}
                   href={link.href}
                   sx={{
-                    fontSize: "0.85rem",
+                    fontSize: "0.8rem",
+                    lineHeight: 1.4,
                     color: "rgba(255,255,255,0.65)",
                     textDecoration: "none",
                     "&:hover": { color: "primary.light" },
