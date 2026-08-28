@@ -118,16 +118,16 @@ export default function Footer() {
               <EmailOutlinedIcon
                 sx={{ fontSize: 16, color: "primary.light" }}
               />
-              <Typography sx={{ fontSize: "0.85rem" }}>
-                sales@hiflux.co.uk
-              </Typography>
+             <Typography sx={{ fontSize: "0.85rem", textTransform: "none" }}>
+  sales@hiflux.co.uk
+</Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <PhoneOutlinedIcon
                 sx={{ fontSize: 16, color: "primary.light" }}
               />
               <Typography sx={{ fontSize: "0.85rem" }}>
-                +44 1234 567890
+                +44 7369 243459
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
