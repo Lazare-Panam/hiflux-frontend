@@ -131,6 +131,28 @@ export const LEFT_NAV: NavItem[] = [
           },
         ],
       },
+      {
+        heading: "High Pressure Regulators",
+        href: "/products/high-pressure-regulators",
+        items: [
+          {
+            label: "General Pressure Regulator",
+            href: "/products/high-pressure-regulators/gpr-normal-3000",
+          },
+          {
+            label: "High Pressure Regulator",
+            href: "/products/high-pressure-regulators/hpr-10000",
+          },
+          {
+            label: "Back Pressure Regulator",
+            href: "/products/high-pressure-regulators/bpr-15000",
+          },
+          {
+            label: "Air Operated Back Pressure Regulator",
+            href: "/products/high-pressure-regulators/abpr-10000",
+          },
+        ],
+      },
     ],
   },
   { label: "latest News", href: "/news" },

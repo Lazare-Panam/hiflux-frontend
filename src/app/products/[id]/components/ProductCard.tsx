@@ -22,7 +22,7 @@ export default function ProductCard({
     }}>
       <Box sx={{
         display: "flex", justifyContent: "center", alignItems: "center",
-        bgcolor: "background.paper", p: 3, borderBottom: "1px solid #f0f0f0", minHeight: 220,
+        bgcolor: "#ffff", p: 3, borderBottom: "1px solid #f0f0f0", minHeight: 220,
       }}>
         <CardMedia component="img" image={thumbnailImage} alt={name}
           sx={{ width: "100%", maxWidth: 200, height: 180, objectFit: "contain" }} />

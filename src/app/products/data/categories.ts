@@ -35,4 +35,13 @@ export const CATEGORIES = [
       "https://pblol2.blob.core.windows.net/hiflux/union-adapters/f-f-u.png",
     href: "/products/union-adapters",
   },
+  {
+    id: "high-pressure-regulators",
+    label: "High Pressure Regulators",
+    description:
+      "General, high pressure, back pressure, and air operated regulators for precise pressure control in industrial and extreme service applications.",
+    image:
+      "https://pblol2.blob.core.windows.net/hiflux/regulators/bp-regulator.png",
+    href: "/products/high-pressure-regulators",
+  },
 ];
