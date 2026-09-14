@@ -182,19 +182,35 @@ const Navbar: React.FC = () => {
                 href="https://ukhea.co.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="HEA"
+                aria-label="Hydrogen Energy Association"
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
+                  gap: 1,
+                  textDecoration: "none",
+                  color: "text.secondary",
+                  "&:hover": { color: ACCENT },
                 }}
               >
                 <Image
-                  src="https://pblol2.blob.core.windows.net/valvenok-images/hea.png"
-                  alt="HEA"
-                  width={38}
-                  height={38}
-                  style={{ objectFit: "contain", height: 38, width: "auto" }}
+                  src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+                  alt="Hydrogen Energy Association"
+                  width={48}
+                  height={48}
+                  style={{ objectFit: "contain", height: 48, width: "auto" }}
                 />
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    lineHeight: 1.25,
+                    maxWidth: 120,
+                    color: "inherit",
+                  }}
+                >
+                  Hydrogen Energy Association
+                </Box>
               </Box>
 
               {/* Cart icon */}
