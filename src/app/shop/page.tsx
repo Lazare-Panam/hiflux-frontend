@@ -540,13 +540,13 @@ const FEATURED: {
     productId: "acc-ultra-150k",
     productName: "High Pressure Fitting Accessory",
     thumbnailImage:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/Accessory.png",
+      "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
     categorySlug: "high-pressure-fittings",
     variants: [
       {
         id: "FA15SS02",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/Accessory.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
         specs: {
           SKU: "FA15SS02",
           Type: "Sleeve",
@@ -558,7 +558,7 @@ const FEATURED: {
       {
         id: "FA60GS04-AVS",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/Accessory.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
         specs: {
           SKU: "FA60GS04-AVS",
           Type: "Gland Assy/Anti-V",
@@ -570,7 +570,7 @@ const FEATURED: {
       {
         id: "FA20PS16",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/Accessory.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
         specs: {
           SKU: "FA20PS16",
           Type: "Plug",

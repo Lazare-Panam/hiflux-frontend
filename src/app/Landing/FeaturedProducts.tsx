@@ -71,8 +71,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     pressureLabel: "~150,000 psi",
     connectionType: "UNF",
     description: "Accessory rated to 150,000 psi.",
-    image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/Accessory.png",
+    image: "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
   },
   {
     code: "ndl-3way-60k",
