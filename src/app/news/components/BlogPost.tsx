@@ -32,6 +32,10 @@ interface BlogCta {
 export interface BlogData {
   slug: string;
   title: string;
+  /** Optional SEO <title>; falls back to `title` (before any colon) when absent. */
+  seoTitle?: string;
+  /** Optional meta description; falls back to `excerpt` when absent. */
+  metaDescription?: string;
   date: string;
   category: string;
   heroImage: string;

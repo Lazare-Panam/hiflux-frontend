@@ -12,8 +12,8 @@ export async function generateMetadata({
   const blog = blogs.find((b) => b.slug === slug);
   if (!blog) return {};
   return {
-    title: blog.title.split(":")[0].trim(),
-    description: blog.excerpt,
+    title: blog.seoTitle ?? blog.title.split(":")[0].trim(),
+    description: blog.metaDescription ?? blog.excerpt,
   };
 }
 

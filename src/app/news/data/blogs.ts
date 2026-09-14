@@ -2,6 +2,103 @@ import { BlogData } from "../components/BlogPost";
 
 export const blogs: BlogData[] = [
   {
+    slug: "backwashing-filter-cycles-municipal-industrial",
+    title: "Backwashing 101: Setting filter cycles for reliable water treatment",
+    seoTitle: "Backwashing Filter Cycles for Reliable Water Treatment",
+    metaDescription:
+      "Learn how to set backwashing filter cycles, DP setpoints, and SCADA logic for reliable municipal and industrial water treatment.",
+    date: "September 14, 2026",
+    category: "Water Treatment",
+    heroImage:
+      "https://pblol2.blob.core.windows.net/hiflux/catalogs/bg__2.jpeg",
+    excerpt:
+      "This guide explains how backwashing works in media and screen filters and why correct cycle control is critical for municipal and industrial water treatment. It covers DP-based triggers, cycle duration, rinse steps, and SCADA integration, with starting setpoints and troubleshooting tips to avoid over- and under-backwashing while protecting membranes and extending filter life.",
+    tags: [
+      "Filtration System",
+      "Water Treatment Solutions",
+      "Industrial Filtration Systems",
+      "Backwashing Filters",
+    ],
+    sections: [
+      {
+        heading: null,
+        body: `Backwashing keeps granular and screen-based filters working to spec. Get the cycle wrong and you lose capacity, foul downstream equipment, or waste water and energy. Get it right and you stabilise differential pressure, hold turbidity targets, and extend media and element life.\nThis guide explains what backwashing is, what a backwashing sediment filter does, and how to set why, when, and how long for municipal and industrial duties. It closes with practical starting points, DP setpoints, SCADA integration tips, and how HiFlux designs simplify cycle control with low-maintenance hardware and certification support.\nZero margin for error. Consistent results. That is the objective.`,
+      },
+      {
+        heading: "What backwashing is and what it does",
+        body: `Backwashing reverses flow through a filter to dislodge and remove trapped solids. It is used with:\n• Granular media filters (sand, anthracite, multimedia)\n• Automatic screen filters\n• Nozzle and lateral beds feeding clarifiers, RO pre-treatment, and process water\nA backwashing sediment filter accumulates suspended solids during service. When DP rises or a timer expires, the filter reverses or reconfigures flow to fluidise media or shear the screen, exporting the solids to drain. Correct shear and velocity are essential to lift the bed, break the cake layer, and avoid media loss.`,
+      },
+      {
+        heading: "Why cycles matter",
+        body: `Cycle control safeguards throughput, quality, and asset life. The goals are simple:\n• Maintain a stable operating DP and flow\n• Protect downstream membranes and exchangers\n• Minimise water and energy used for cleaning\n• Avoid bed channeling and biological growth\nOver-backwashing wastes water and can destabilise a media bed. Under-backwashing allows fines breakthrough, higher turbidity, membrane fouling, and accelerated pump wear.`,
+      },
+      {
+        heading: "When to backwash, and which trigger to use",
+        body: `For municipal and industrial filtration, DP-driven logic is the most reliable primary trigger, with time and quality interlocks as secondary checks.\nTypical triggers:\n• Differential pressure (primary): Start at a defined DP rise across the filter.\n• Time (secondary): Force a clean if the DP trigger does not occur within a maximum service interval, useful on variable or low-load streams.\n• Quality override: Start if turbidity or particle count spikes above a limit.\n• Flow-conditional: Only allow a cycle when bypass or duty-standby capacity is available.\nRecommended starting DP setpoints:\n• Clean DP reference: establish after media conditioning or element change, at design flow and temperature.\n• Start backwash: clean DP + 0.5 to 1.0 bar for media beds handling typical surface water or pre-RO duties.\n• Alarm review: clean DP + 1.5 to 2.0 bar if a cycle fails to recover pressure.\nAdjust for viscosity, temperature, and solids character. Heavier, sticky solids may need a lower DP threshold to avoid compaction.`,
+      },
+      {
+        heading: "How long to backwash",
+        body: `Cycle time must deliver target bed expansion or screen shear for long enough to flush the cake. Use manufacturer data where available. As practical starting points:\nMedia filters (sand/multimedia)\n• Backwash flow: set per media spec to achieve 15 to 30 percent bed expansion at operating temperature. Colder water needs higher flow for the same expansion.\n• Duration: 6 to 10 minutes for typical municipal and light industrial loads. High-load or oily solids can require 10 to 15 minutes.\n• Rinse/settle: 2 to 5 minutes rinse to drain at service flow before returning to line, confirming turbidity is back within target.\nAutomatic screen filters\n• Scour duration: 20 to 60 seconds per cycle for mechanically assisted screens, depending on mesh size and solids load.\n• Repeat cycles: 1 to 3 quick cycles if DP does not return close to clean DP.\n• Return-to-service check: confirm DP recovery within 10 to 20 percent of clean DP.\nThese are starting points only. Validate on your plant with DP, turbidity, and particle data. Increase time in small increments and verify the recovery curve.`,
+      },
+      {
+        heading: "Can you backwash too much",
+        body: `Yes. Over-backwashing:\n• Wastes water and energy\n• Depletes media and can cause media carryover\n• Disturbs biological filters that rely on a stable biofilm\n• Increases wear on actuated valves and drives\nIf your DP returns well below clean DP, your cycle is likely longer or stronger than required. Trim duration or flow and trend results.`,
+      },
+      {
+        heading: "Risks of under-backwashing",
+        body: `Under-cleaning is costlier than it looks:\n• Persistent high DP, higher pump energy\n• Bed channeling and solids breakthrough\n• Rapid fouling of RO elements and heat exchangers\n• Shorter media and element life\nIf DP fails to recover to within 10 to 20 percent of clean DP after a cycle, increase duration or flow, or shorten the service interval. Inspect internals if deterioration continues.`,
+      },
+      {
+        heading: "SCADA integration tips",
+        body: `Reliable automation requires clean signals and safe interlocks:\n• Use DP transmitters with proper range and damping. Validate zero and span after each maintenance shutdown.\n• Program primary DP trigger with minimum service time lockout to prevent cycling.\n• Add maximum DP and maximum time overrides to force a cycle.\n• Interlock against critical process steps, or switch to standby duty via duplex or duty-standby logic before starting a cycle.\n• Log clean DP, pre-cycle DP, post-cycle DP, duration, flow, and total backwash water. Trend recovery percentage and water used per cycle to refine setpoints.\n• Expose manual start and manual inhibit under permit control for maintenance.`,
+      },
+      {
+        heading: "How HiFlux simplifies cycle control",
+        body: `HiFlux industrial filtration systems are engineered for predictable DP recovery and low operator input. Designs focus on:\n• Consistent bed and screen hydraulics for repeatable cleaning\n• Robust actuation and seals for frequent cycling\n• Minimal maintenance access with safe isolation\n• Full documentation, material traceability, and certification support for regulated sites\nFor solids that resist hydraulic cleaning, pairing with an upstream magnetic filter can reduce load on the primary filter and cut backwash frequency. See our range of inline magnetic filters for ferrous capture in recirculating loops and process water.\nIf you are integrating RO, consistent pre-filter control protects membranes. Explore our reverse osmosis solutions, including guidance on selecting the right water system filter and RO filter for industrial duty.\n• Learn more about our industrial filtration systems and engineering support at our filtration system overview: https://www.hiflux.uk.com/industrial-filtration-systems\n• Reduce ferrous load ahead of fine filtration with an inline magnetic filter: https://www.hiflux.uk.com/magnetic-filters\n• Plan RO pre-treatment and protection, including filters for reverse osmosis and reverse osmosis system manufacturers guidance: https://www.hiflux.uk.com/reverse-osmosis-water-filtration`,
+      },
+      {
+        heading: "Practical commissioning checklist",
+        body: `Use this as a starting framework, then tune to site data:\n• Establish clean DP at design flow and temperature.\n• Set start DP at clean DP + 0.5 to 1.0 bar, with a maximum time override.\n• Set backwash duration to deliver target bed expansion or screen scour, then add a short rinse-to-drain.\n• Trend recovery: target post-cycle DP within 10 to 20 percent of clean DP.\n• Review water use per cycle and adjust to the minimum effective duration.\n• Add seasonal adjustments for water temperature and solids character.`,
+      },
+      {
+        heading: "Summary",
+        body: `Backwashing is routine, but performance hinges on data-led control. Use DP as the primary trigger, validate with quality signals, and set the minimum effective duration that restores DP. Protect throughput, protect membranes, and cut lifecycle cost. HiFlux designs make cycle control predictable, maintenance light, and compliance straightforward. If you want help selecting or commissioning an industrial filtration solution, contact us. We will specify, document, and support the system so your plant runs clean and stays that way.`,
+      },
+    ],
+    faq: [
+      {
+        q: "What is backwashing of filters?",
+        a: "It is reversing or reconfiguring flow through a filter to dislodge trapped solids and flush them to drain.",
+      },
+      {
+        q: "What does a backwashing sediment filter do?",
+        a: "It captures suspended solids in service, then automatically cleans itself by reversing flow so capacity and low DP are restored.",
+      },
+      {
+        q: "How often should I backwash a filter?",
+        a: "Start with DP-based control at clean DP + 0.5 to 1.0 bar, with a maximum service interval as a safety net. Frequency will vary with solids load.",
+      },
+      {
+        q: "How long should I backwash a filter for?",
+        a: "As a starting point, media beds 6 to 10 minutes plus 2 to 5 minutes rinse; screen filters 20 to 60 seconds per scour, repeating if DP does not recover. Tune on site.",
+      },
+      {
+        q: "Can you backwash a filter too much?",
+        a: "Yes. Over-backwashing wastes water, erodes media, and wears components. Set the minimum effective duration that restores DP.",
+      },
+      {
+        q: "Do you always rinse after backwash?",
+        a: "Yes for media filters. A short rinse returns turbidity to target before service. Screen units typically return directly once DP recovers, but verify quality limits.",
+      },
+    ],
+    cta: {
+      heading: "Selecting or commissioning an industrial filtration system?",
+      body: "Tell us your solids load, flow and quality targets. We'll specify, document, and support the system so your plant runs clean and stays that way.",
+      email: "sales@hiflux.uk.com",
+      phone: "+44 7369 243459",
+    },
+  },
+  {
     slug: "hiflux-joins-hydrogen-energy-association-distributors",
     title:
       "Hiflux Joins the Hydrogen Energy Association and Seeks New Distributors",
