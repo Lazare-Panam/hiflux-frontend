@@ -22,7 +22,7 @@ export type NavItem = {
 };
 
 export const LEFT_NAV: NavItem[] = [
-  { label: "About Us", href: "#" },
+  { label: "About Us", href: "/about" },
   {
     label: "Products",
     href: "/products",
@@ -156,7 +156,7 @@ export const LEFT_NAV: NavItem[] = [
     ],
   },
   { label: "latest News", href: "/news" },
-  { label: "Contact Us", href: "#" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export const RIGHT_NAV: NavItem[] = [];

@@ -23,7 +23,10 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Hiflux UK",
+  metadataBase: new URL("https://www.hiflux.uk.com"),
+  // Default/home title. Child pages that export their own metadata replace this;
+  // no title.template is used because several page titles already carry the brand.
+  title: "High-Pressure Valves, Fittings & Tubing | Hiflux UK",
   description: "Hiflux UK manufactures high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
 };
 

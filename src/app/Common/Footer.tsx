@@ -1,11 +1,8 @@
 "use client";
 
-import { Box, Typography, IconButton, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import XIcon from "@mui/icons-material/X";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -14,9 +11,9 @@ const FOOTER_COLUMNS = [
   {
     heading: "Company",
     links: [
-      { label: "About Us", href: "#" },
+      { label: "About Us", href: "/about" },
       { label: "Latest News", href: "/news" },
-      { label: "Contact Us", href: "#" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
   {
@@ -267,42 +264,6 @@ export default function Footer() {
           >
             © {new Date().getFullYear()} Hiflux. All rights reserved.
           </Typography>
-
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton
-              component={Link}
-              href="#"
-              size="small"
-              sx={{
-                color: "rgba(255,255,255,0.6)",
-                "&:hover": { color: "primary.light" },
-              }}
-            >
-              <LinkedInIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              component={Link}
-              href="#"
-              size="small"
-              sx={{
-                color: "rgba(255,255,255,0.6)",
-                "&:hover": { color: "primary.light" },
-              }}
-            >
-              <FacebookIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              component={Link}
-              href="#"
-              size="small"
-              sx={{
-                color: "rgba(255,255,255,0.6)",
-                "&:hover": { color: "primary.light" },
-              }}
-            >
-              <XIcon fontSize="small" />
-            </IconButton>
-          </Box>
         </Box>
       </Box>
     </Box>

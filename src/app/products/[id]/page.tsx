@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
-import { fetchCatalog, ProductCatalog } from "@/api/useProductCatalog";
-import ProductCatalogPageClient from "./components/ProductCatalogPageClient";
+import { notFound } from "next/navigation";
+import { getCatalog, ProductType } from "@/api/useProductCatalog";
+import CatalogView from "./components/CatalogView";
+import ProductDetailContent from "../components/ProductDetailContent";
 
 type Props = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  let data: ProductCatalog | null = null;
-  try {
-    data = await fetchCatalog(id);
-  } catch {
-    // API unreachable, or product genuinely doesn't exist — fall back
-    // to generic metadata instead of crashing the whole route.
-  }
-
+  const data = await getCatalog(id).catch(() => null);
   if (!data) {
     return { title: "Hiflux Valves" };
   }
@@ -47,5 +42,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductCatalogPage({ params }: Props) {
   const { id } = await params;
-  return <ProductCatalogPageClient id={id} />;
+
+  const data = await getCatalog(id).catch(() => null);
+  if (!data) notFound();
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://www.hiflux.uk.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products",
+        item: "https://www.hiflux.uk.com/products",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.bannerTitle ?? id,
+        item: `https://www.hiflux.uk.com/products/${id}`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {data.type === ProductType.Grid ? (
+        <ProductDetailContent id={id} />
+      ) : (
+        <CatalogView data={data} id={id} />
+      )}
+    </>
+  );
 }

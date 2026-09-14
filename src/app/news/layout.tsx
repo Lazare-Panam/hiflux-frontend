@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-
+/**/
 export const metadata: Metadata = {
-  title: 'News',
+  title: 'High-Pressure Valve News & Insights | Hiflux UK',
   description: 'Updates, stories and insights from Hiflux on high-pressure valves, fittings and hydrogen-ready flow-control engineering.',
 };
 

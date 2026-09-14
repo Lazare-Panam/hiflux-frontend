@@ -8,6 +8,8 @@ const catalogIds = [
   "high-pressure-valves",
   "high-pressure-fittings",
   "high-pressure-tubing",
+  "union-adapters",
+  "high-pressure-regulators",
 ];
 
 /** @type {import('next-sitemap').IConfig} */

@@ -1,60 +1,19 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useTheme } from "@mui/material/styles";
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  CircularProgress,
-  Divider,
-  Button,
-} from "@mui/material";
-import { ProductType, useProductCatalog } from "@/api/useProductCatalog";
+import { Box, Container, Grid, Typography, Divider, Button } from "@mui/material";
+import { ProductCatalog } from "@/api/useProductCatalog";
 import ProductCard from "./ProductCard";
-import ProductDetailContent from "../../components/ProductDetailContent";
 
-export default function ProductCatalogPageClient({ id }: { id: string }) {
-  const router = useRouter();
-  const theme = useTheme();
-  const { data, isLoading, isError } = useProductCatalog(id);
-
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <CircularProgress color="primary" />
-      </Box>
-    );
-  }
-
-  if (isError || !data) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <Typography sx={{ color: "text.secondary" }}>
-          Failed to load products.
-        </Typography>
-      </Box>
-    );
-  }
-  if (data.type === ProductType.Grid) {
-    return <ProductDetailContent id={id} />;
-  }
-
+/**
+ * Server-rendered catalog listing (hero, marquee, intro, product grid, key
+ * features, CTA). Receives already-fetched catalog data so all content is in
+ * the initial HTML. Interactivity is limited to links (no client handlers).
+ */
+export default function CatalogView({
+  data,
+  id,
+}: {
+  data: ProductCatalog;
+  id: string;
+}) {
   const hero = data.hero ?? {
     overline: undefined,
     title: data.bannerTitle,
@@ -62,7 +21,7 @@ export default function ProductCatalogPageClient({ id }: { id: string }) {
     subtitle: data.bannerSubtitle,
     bannerImage: data.bannerImage,
     primaryCta: { label: "Explore Range", link: "#products" },
-    secondaryCta: { label: "Request Quote", link: "/enquiry" },
+    secondaryCta: { label: "Request Quote", link: "/contact" },
   };
 
   return (
@@ -169,62 +128,58 @@ export default function ProductCatalogPageClient({ id }: { id: string }) {
       </Box>
 
       {/* MARQUEE */}
-      {data.marquee &&
-        data.marquee.length > 0 &&
-        (() => {
-          const marqueeItems = data.marquee!; // narrowed once, stored in a plain variable — safe to use anywhere below
-          return (
-            <Box
-              sx={{
-                borderBottom: "1px solid #eee",
-                py: 1.5,
-                bgcolor: "background.paper",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <style>{`@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "max-content",
-                  animation: "marquee 28s linear infinite",
-                  "&:hover": { animationPlayState: "paused" },
-                }}
-              >
-                {[1, 2].map((i) => (
-                  <Box key={i} sx={{ display: "flex", gap: 6, pr: 6 }}>
-                    {marqueeItems.map((item) => (
-                      <Typography
-                        key={item}
-                        sx={{
-                          fontSize: 13,
-                          fontWeight: 500,
-                          color: "text.secondary",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1.5,
-                        }}
-                      >
-                        <Box
-                          component="span"
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            bgcolor: "primary.main",
-                            flexShrink: 0,
-                          }}
-                        />
-                        {item}
-                      </Typography>
-                    ))}
-                  </Box>
+      {data.marquee && data.marquee.length > 0 && (
+        <Box
+          sx={{
+            borderBottom: "1px solid #eee",
+            py: 1.5,
+            bgcolor: "background.paper",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <style>{`@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
+          <Box
+            sx={{
+              display: "flex",
+              width: "max-content",
+              animation: "marquee 28s linear infinite",
+              "&:hover": { animationPlayState: "paused" },
+            }}
+          >
+            {[1, 2].map((i) => (
+              <Box key={i} sx={{ display: "flex", gap: 6, pr: 6 }}>
+                {data.marquee!.map((item) => (
+                  <Typography
+                    key={item}
+                    sx={{
+                      fontSize: 13,
+                      fontWeight: 500,
+                      color: "text.secondary",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: "primary.main",
+                        flexShrink: 0,
+                      }}
+                    />
+                    {item}
+                  </Typography>
                 ))}
               </Box>
-            </Box>
-          );
-        })()}
+            ))}
+          </Box>
+        </Box>
+      )}
+
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
         {/* INTRO */}
         {data.intro && (
@@ -305,10 +260,7 @@ export default function ProductCatalogPageClient({ id }: { id: string }) {
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
                 <ProductCard
                   {...product}
-             
-                  onClick={(pid: string) =>
-                    router.push(`/products/${id}/${pid}`)
-                  }
+                  href={`/products/${id}/${product.id}`}
                 />
               </Grid>
             ))}
@@ -442,7 +394,6 @@ export default function ProductCatalogPageClient({ id }: { id: string }) {
             </Box>
           </>
         )}
-        
       </Container>
     </Box>
   );

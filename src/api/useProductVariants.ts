@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosClient from "./axiosClient";
 
@@ -17,6 +18,9 @@ const fetchVariants = async (id: string): Promise<ProductSeriesVariants> => {
   const { data } = await axiosClient.get(`/api/product/${id}/variants`);
   return data;
 };
+
+/** Server-side, request-memoised variants fetch (dedupes generateMetadata + page body). */
+export const getProductVariants = cache(fetchVariants);
 
 export const useProductVariants = (id: string) => {
   return useQuery({

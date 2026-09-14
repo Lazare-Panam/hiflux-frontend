@@ -13,12 +13,28 @@ function CountUp({ target }: { target: string }) {
   const numericPart = parseFloat(target.replace(/[^0-9.]/g, ''));
   const prefix = target.match(/^[^0-9]*/)?.[0] ?? '';
   const suffix = target.match(/[^0-9.]*$/)?.[0] ?? '';
-  const [value, setValue] = useState(0);
+  // Initialise with the real target so the value is present in the
+  // server-rendered HTML (and the first client render, avoiding a hydration
+  // mismatch). Crawlers and no-JS visitors always see the real figure.
+  const [value, setValue] = useState(() =>
+    Number.isNaN(numericPart) ? 0 : numericPart
+  );
   const ref = useRef<HTMLSpanElement>(null);
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (!ref.current || Number.isNaN(numericPart)) return;
+    const el = ref.current;
+    if (!el || Number.isNaN(numericPart)) return;
+
+    // If the stat is already on screen at mount, keep the real number as-is —
+    // animating would flash target -> 0 -> target in front of the user.
+    // Only when it starts below the fold do we reset to 0 (off-screen, so the
+    // reset is never seen) and count up as it scrolls into view.
+    const rect = el.getBoundingClientRect();
+    const visibleAtMount = rect.top < window.innerHeight && rect.bottom > 0;
+    if (visibleAtMount) return;
+
+    setValue(0);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -41,7 +57,7 @@ function CountUp({ target }: { target: string }) {
       { threshold: 0.4 }
     );
 
-    observer.observe(ref.current);
+    observer.observe(el);
     return () => observer.disconnect();
   }, [numericPart]);
 

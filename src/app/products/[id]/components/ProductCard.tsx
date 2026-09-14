@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Typography, Card, CardMedia, CardContent, Button } from "@mui/material";
 
 type ProductCardProps = {
@@ -8,11 +10,12 @@ type ProductCardProps = {
   thumbnailImage?: string;
   tag?: string;
   materialBadge?: string;
-  onClick: (id: string) => void;
+  /** Destination for "View Range" — a real link so the card works in Server Components and is crawlable. */
+  href: string;
 };
 
 export default function ProductCard({
-  id, name, subtitle, description, thumbnailImage, tag, materialBadge, onClick,
+  name, subtitle, description, thumbnailImage, tag, materialBadge, href,
 }: ProductCardProps) {
   return (
     <Card variant="outlined" sx={{
@@ -55,11 +58,11 @@ export default function ProductCard({
       </CardContent>
 
       <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 1 }}>
-        <Button variant="contained" fullWidth size="small" onClick={() => onClick(id)}
+        <Button variant="contained" fullWidth size="small" href={href}
           sx={{ borderRadius: 0, fontWeight: 700, fontSize: 12, letterSpacing: 1, py: 1 }}>
           VIEW RANGE
         </Button>
-        <Button variant="outlined" fullWidth size="small" href="/enquiry"
+        <Button variant="outlined" fullWidth size="small" href="/contact"
           sx={{ borderColor: "#ddd", color: "text.secondary", borderRadius: 0, fontWeight: 600, fontSize: 12, letterSpacing: 1, py: 1 }}>
           REQUEST QUOTE
         </Button>

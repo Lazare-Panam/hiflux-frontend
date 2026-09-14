@@ -1,6 +1,5 @@
-"use client";
-
-import { use, useMemo, useState } from "react";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,61 +11,40 @@ import {
   TableCell,
   Button,
   Grid,
-  CircularProgress,
   Breadcrumbs,
   Divider,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
-import CheckIcon from "@mui/icons-material/Check";
-import { useProductVariants } from "@/api/useProductVariants";
-import { useCartStore } from "@/store/useCartStore";
+import { getProductVariants } from "@/api/useProductVariants";
+import AddToCartButton from "./components/AddToCartButton";
 
 const BRAND = "#0072BC";
 const HIDDEN_SPEC_KEYS = ["SKU", "Price"];
 
-export default function VariantDetail({
-  params,
-}: {
+type Props = {
   params: Promise<{ id: string; productId: string; sku: string }>;
-}) {
-  const { id, productId, sku } = use(params);
-  const { data, isLoading, isError } = useProductVariants(productId);
-  const addItem = useCartStore((state) => state.addItem);
-  const [justAdded, setJustAdded] = useState(false);
+};
 
-  const variant = useMemo(() => {
-    if (!data?.variants) return undefined;
-    return data.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
-  }, [data, sku]);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { productId, sku } = await params;
+  const data = await getProductVariants(productId).catch(() => null);
+  const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
+  if (!data || !variant) return { title: "Model Not Found | Hiflux UK" };
 
-  const related = useMemo(() => {
-    if (!data?.variants || !variant) return [];
-    return data.variants.filter((v) => v.id !== variant.id).slice(0, 4);
-  }, [data, variant]);
+  const title = `${sku} — ${data.name} | Hiflux UK`;
+  const description = `${sku}: ${data.name} model specifications from Hiflux UK — pressure rating, materials and dimensions for high-pressure flow-control systems.`;
+  return { title, description };
+}
 
-  if (isLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", py: 12 }}>
-        <CircularProgress sx={{ color: BRAND }} />
-      </Box>
-    );
-  }
+export default async function VariantDetail({ params }: Props) {
+  const { id, productId, sku } = await params;
 
-  if (isError || !data || !variant) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", py: 12 }}>
-        <Typography sx={{ color: "text.secondary" }}>
-          Variant not found.
-        </Typography>
-      </Box>
-    );
-  }
+  const data = await getProductVariants(productId).catch(() => null);
+  const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
+  if (!data || !variant) notFound();
 
   const price = variant.specs["Price"];
-  // Price comes from specs as a string (e.g. "141.60"); guard against it being
-  // missing, empty, or non-numeric before treating this as a priced item.
   const parsedPrice = price ? parseFloat(price) : NaN;
   const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
 
@@ -74,28 +52,40 @@ export default function VariantDetail({
     ([key]) => !HIDDEN_SPEC_KEYS.includes(key),
   );
 
-  const handleAddToCart = () => {
-    addItem({
-      productId,
-      sku,
-      name: data.name,
-      thumbnailImage: data.thumbnailImage,
-      price: parsedPrice,
-    });
-    setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 1500);
+  const related = data.variants.filter((v) => v.id !== variant.id).slice(0, 4);
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${data.name} ${sku}`,
+    sku,
+    image: data.thumbnailImage ? [data.thumbnailImage] : undefined,
+    brand: { "@type": "Brand", name: "Hiflux" },
+    additionalProperty: displaySpecs.map(([name, value]) => ({
+      "@type": "PropertyValue",
+      name,
+      value,
+    })),
+    ...(hasPrice
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: parsedPrice,
+            priceCurrency: "GBP",
+            availability: "https://schema.org/InStock",
+            url: `https://www.hiflux.uk.com/products/${id}/${productId}/variants/${sku}`,
+          },
+        }
+      : {}),
   };
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      <Box
-        sx={{
-          maxWidth: 1200,
-          mx: "auto",
-          px: { xs: 2, md: 4 },
-          py: { xs: 4, md: 6 },
-        }}
-      >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
         {/* Breadcrumb / back */}
         <Breadcrumbs
           separator="/"
@@ -119,13 +109,7 @@ export default function VariantDetail({
             <ArrowBackIcon sx={{ fontSize: 12 }} />
             {data.name}
           </Link>
-          <Typography
-            sx={{
-              fontSize: "0.8rem",
-              color: "text.secondary",
-              fontFamily: "monospace",
-            }}
-          >
+          <Typography sx={{ fontSize: "0.8rem", color: "text.secondary", fontFamily: "monospace" }}>
             {sku}
           </Typography>
         </Breadcrumbs>
@@ -143,19 +127,8 @@ export default function VariantDetail({
                 overflow: "hidden",
               }}
             >
-              <Box
-                sx={{
-                  position: "relative",
-                  aspectRatio: "1/1",
-                  bgcolor: alpha(BRAND, 0.03),
-                }}
-              >
-                <Image
-                  src={data.thumbnailImage}
-                  alt={sku}
-                  fill
-                  style={{ objectFit: "contain", padding: 40 }}
-                />
+              <Box sx={{ position: "relative", aspectRatio: "1/1", bgcolor: alpha(BRAND, 0.03) }}>
+                <Image src={data.thumbnailImage} alt={sku} fill style={{ objectFit: "contain", padding: 40 }} />
               </Box>
             </Box>
           </Grid>
@@ -177,11 +150,7 @@ export default function VariantDetail({
 
             <Typography
               component="h1"
-              sx={{
-                fontSize: { xs: "1.6rem", md: "2rem" },
-                fontWeight: 800,
-                lineHeight: 1.15,
-              }}
+              sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 800, lineHeight: 1.15 }}
             >
               {sku}
             </Typography>
@@ -200,16 +169,10 @@ export default function VariantDetail({
                   borderLeft: `4px solid ${BRAND}`,
                 }}
               >
-                <Typography
-                  sx={{ fontSize: "1.9rem", fontWeight: 800, color: BRAND }}
-                >
+                <Typography sx={{ fontSize: "1.9rem", fontWeight: 800, color: BRAND }}>
                   £{price}
                 </Typography>
-                <Typography
-                  sx={{ fontSize: "0.8rem", color: "text.secondary" }}
-                >
-                  per unit
-                </Typography>
+                <Typography sx={{ fontSize: "0.8rem", color: "text.secondary" }}>per unit</Typography>
               </Box>
             )}
 
@@ -234,20 +197,13 @@ export default function VariantDetail({
                 border: `1px solid ${alpha(BRAND, 0.12)}`,
                 borderRadius: "8px",
                 overflow: "hidden",
-                "& td, & th": {
-                  borderBottom: `1px solid ${alpha(BRAND, 0.08)}`,
-                },
-                "& tr:last-of-type td, & tr:last-of-type th": {
-                  borderBottom: "none",
-                },
+                "& td, & th": { borderBottom: `1px solid ${alpha(BRAND, 0.08)}` },
+                "& tr:last-of-type td, & tr:last-of-type th": { borderBottom: "none" },
               }}
             >
               <TableBody>
                 {displaySpecs.map(([label, value], i) => (
-                  <TableRow
-                    key={label}
-                    sx={{ bgcolor: i % 2 === 0 ? "#fff" : alpha(BRAND, 0.02) }}
-                  >
+                  <TableRow key={label} sx={{ bgcolor: i % 2 === 0 ? "#fff" : alpha(BRAND, 0.02) }}>
                     <TableCell
                       component="th"
                       sx={{
@@ -261,40 +217,26 @@ export default function VariantDetail({
                     >
                       {label}
                     </TableCell>
-                    <TableCell sx={{ fontSize: "0.9rem", fontWeight: 600 }}>
-                      {value}
-                    </TableCell>
+                    <TableCell sx={{ fontSize: "0.9rem", fontWeight: 600 }}>{value}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
 
             {hasPrice ? (
-              <Button
-                variant="contained"
-                fullWidth
-                disableElevation
-                onClick={handleAddToCart}
-                startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
-                sx={{
-                  mt: 3,
-                  py: 1.5,
-                  bgcolor: justAdded ? "#2e7d32" : BRAND,
-                  textTransform: "none",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  borderRadius: "8px",
-                  transition: "background-color 0.2s",
-                  "&:hover": { bgcolor: justAdded ? "#2e7d32" : "#005a94" },
-                }}
-              >
-                {justAdded ? "Added to cart" : "Add to cart"}
-              </Button>
+              <AddToCartButton
+                productId={productId}
+                sku={sku}
+                name={data.name}
+                thumbnailImage={data.thumbnailImage}
+                price={parsedPrice}
+              />
             ) : (
               <Button
                 variant="contained"
                 fullWidth
                 disableElevation
+                href="/contact"
                 sx={{
                   mt: 3,
                   py: 1.5,
@@ -359,23 +301,13 @@ export default function VariantDetail({
                         </Box>
                         <Typography
                           noWrap
-                          sx={{
-                            fontSize: "0.82rem",
-                            fontWeight: 700,
-                            mt: 1.25,
-                            fontFamily: "monospace",
-                          }}
+                          sx={{ fontSize: "0.82rem", fontWeight: 700, mt: 1.25, fontFamily: "monospace" }}
                         >
                           {itemSku}
                         </Typography>
                         {itemPrice && (
                           <Typography
-                            sx={{
-                              fontSize: "0.85rem",
-                              fontWeight: 800,
-                              color: BRAND,
-                              mt: 0.25,
-                            }}
+                            sx={{ fontSize: "0.85rem", fontWeight: 800, color: BRAND, mt: 0.25 }}
                           >
                             £{itemPrice}
                           </Typography>

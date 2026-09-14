@@ -1,63 +1,47 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import {
-  Box,
-  Grid,
-  Typography,
-  CircularProgress,
-  Divider,
-  Button,
-} from "@mui/material";
-import { useProductDetail } from "@/api/useProductDetail";
+import { notFound } from "next/navigation";
+import { Box, Grid, Typography, Divider, Button } from "@mui/material";
+import { getProductDetail } from "@/api/useProductDetail";
 import ProductDetailHero from "../[id]/[productId]/components/ProductDetailHero";
 import ProductDetailImage from "../[id]/[productId]/components/ProductDetailImage";
 import ProductSpecsTable from "../[id]/[productId]/components/ProductSpecsTable";
 import ProductFeatureChips from "../[id]/[productId]/components/ProductFeatureChips";
 import ProductApplicationsList from "../[id]/[productId]/components/ProductApplicationsList";
 import RelatedProducts from "../[id]/[productId]/components/RelatedProducts";
+
 interface Props {
   id: string;
 }
 
-export default function ProductDetailContent({ id }: Props) {
-  const router = useRouter();
-  const { data, isLoading, isError } = useProductDetail(id);
+/**
+ * Server-rendered single-product view used when a catalog id resolves to one
+ * product (ProductType.Grid). Fetches on the server so all content is in the
+ * initial HTML.
+ */
+export default async function ProductDetailContent({ id }: Props) {
+  const data = await getProductDetail(id).catch(() => null);
+  if (!data) notFound();
 
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <CircularProgress color="primary" />
-      </Box>
-    );
-  }
-
-  if (isError || !data) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <Typography sx={{ color: "text.secondary" }}>
-          Failed to load product.
-        </Typography>
-      </Box>
-    );
-  }
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: data.name,
+    description: data.description,
+    image: data.image ? [data.image] : undefined,
+    brand: { "@type": "Brand", name: "Hiflux" },
+    additionalProperty: Object.entries(data.specs ?? {}).map(([name, value]) => ({
+      "@type": "PropertyValue",
+      name,
+      value,
+    })),
+  };
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+
       <ProductDetailHero name={data.name} />
       <Box
         sx={{
@@ -87,7 +71,7 @@ export default function ProductDetailContent({ id }: Props) {
               <ProductFeatureChips features={data.features} />
               <ProductApplicationsList applications={data.applications} />
               <Button
-                onClick={() => router.push(`/products/${id}/variants`)}
+                href={`/products/${id}/variants`}
                 variant="contained"
                 sx={{
                   alignSelf: "flex-start",

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosClient from "./axiosClient";
 
@@ -81,6 +82,12 @@ export const fetchCatalog = async (id: string): Promise<ProductCatalog> => {
   const { data } = await axiosClient.get(`/api/product/${id}`);
   return data;
 };
+
+/**
+ * Server-side, request-memoised catalog fetch. Dedupes the call made in
+ * generateMetadata and the page body (axios isn't auto-memoised like `fetch`).
+ */
+export const getCatalog = cache(fetchCatalog);
 
 export const useProductCatalog = (id: string) => {
   return useQuery({
