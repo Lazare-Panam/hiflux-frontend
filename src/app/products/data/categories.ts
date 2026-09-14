@@ -13,8 +13,7 @@ export const CATEGORIES = [
     label: "High Pressure Fittings",
     description:
       "Fittings, accessories, manifold blocks, and tube caps for industrial and extreme service applications.",
-    image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/reducing-fitting.png",
+    image: "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
     href: "/products/high-pressure-fittings",
   },
   {

@@ -495,13 +495,13 @@ const FEATURED: {
     productId: "fit-ultra-150k",
     productName: "High Pressure Fitting",
     thumbnailImage:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/reducing-fitting.png",
+      "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
     categorySlug: "high-pressure-fittings",
     variants: [
       {
         id: "FTNES02",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/reducing-fitting.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
         specs: {
           SKU: "FTNES02",
           Type: "Elbow",
@@ -513,7 +513,7 @@ const FEATURED: {
       {
         id: "FT150CS06",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/reducing-fitting.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
         specs: {
           SKU: "FT150CS06",
           Type: "Cross",
@@ -525,7 +525,7 @@ const FEATURED: {
       {
         id: "FT20TS12",
         thumbnailImage:
-          "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/reducing-fitting.png",
+          "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
         specs: {
           SKU: "FT20TS12",
           Type: "Tee",
