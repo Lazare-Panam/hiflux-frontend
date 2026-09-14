@@ -24,7 +24,7 @@ const INDUSTRIES = [
     label: "Hydrogen Refuelling",
     body: [
       "Hydrogen's small molecular size and high working pressures make leak control and material compatibility non-negotiable. Refuelling infrastructure typically needs components engineered specifically for hydrogen service rather than adapted from a general industrial catalogue.",
-      "Hiflux is a member of the Hydrogen Energy Association and manufactures hydrogen-specific needle valves rated up to 700 bar in STS316 stainless steel, with non-rotating stems and metal-to-metal seating designed for hydrogen refuelling stations and hydrogen-powered vehicle systems.",
+      "Hiflux UK is a member of the Hydrogen Energy Association and supplies hydrogen-specific needle valves rated up to 700 bar in STS316 stainless steel, with non-rotating stems and metal-to-metal seating designed for hydrogen refuelling stations and hydrogen-powered vehicle systems.",
     ],
   },
   {

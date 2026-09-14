@@ -21,7 +21,7 @@ export const blogs: BlogData[] = [
     sections: [
       {
         heading: "Supporting High-Pressure Hydrogen Systems",
-        body: `The Hydrogen Energy Association represents organisations from across the hydrogen value chain, bringing industry expertise together to encourage collaboration, support innovation and help advance the UK hydrogen sector.\n\nFor Hiflux, joining the association reflects an established focus on developing high-pressure flow-control products for demanding hydrogen applications.\n\nHydrogen presents several engineering challenges due to its small molecular size, demanding operating pressures and the need for dependable leak control. Every valve, fitting and tube within a hydrogen system must therefore be carefully selected to support safety, pressure integrity and reliable operation.\n\nHiflux manufactures high-pressure valves, fittings, tubing and associated components for industrial applications, with products available for systems operating at pressures of up to 150,000 psi. The company also develops specialist piping components for hydrogen refuelling stations and hydrogen-powered vehicles.`,
+        body: `The Hydrogen Energy Association represents organisations from across the hydrogen value chain, bringing industry expertise together to encourage collaboration, support innovation and help advance the UK hydrogen sector.\n\nFor Hiflux, joining the association reflects an established focus on developing high-pressure flow-control products for demanding hydrogen applications.\n\nHydrogen presents several engineering challenges due to its small molecular size, demanding operating pressures and the need for dependable leak control. Every valve, fitting and tube within a hydrogen system must therefore be carefully selected to support safety, pressure integrity and reliable operation.\n\nHiflux UK supplies high-pressure valves, fittings, tubing and associated components for industrial applications, with products available for systems operating at pressures of up to 150,000 psi. The range also includes specialist piping components for hydrogen refuelling stations and hydrogen-powered vehicles.`,
       },
       {
         heading: "At a Glance",
@@ -29,7 +29,7 @@ export const blogs: BlogData[] = [
       },
       {
         heading: "Hydrogen Product Range",
-        body: `• Hydrogen needle valves.\n• High-pressure check valves.\n• Tube fittings and adapters.\n• High-pressure tubing.\n• Flow-control components.\n• Hydrogen refuelling system accessories.\n\nHiflux's hydrogen refuelling needle valve is designed for pressures of up to 700 bar, manufactured in STS316 stainless steel for the corrosion resistance required in high-pressure environments. The valve also incorporates a non-rotating stem, reliable packing, metal-to-metal seating and a design developed specifically for use with hydrogen.`,
+        body: `• Hydrogen needle valves.\n• High-pressure check valves.\n• Tube fittings and adapters.\n• High-pressure tubing.\n• Flow-control components.\n• Hydrogen refuelling system accessories.\n\nHiflux's hydrogen refuelling needle valve is designed for pressures of up to 700 bar and made in STS316 stainless steel for the corrosion resistance required in high-pressure environments. The valve also incorporates a non-rotating stem, reliable packing, metal-to-metal seating and a design developed specifically for use with hydrogen.`,
       },
       {
         heading: "Collaboration Across the Hydrogen Industry",

@@ -61,9 +61,10 @@ export default function HifluxSection() {
             >
               HiFlux UK
             </Box>{" "}
-            — built for the pressures other valves can't hold. From needle
-            valves to full instrumentation systems, every product we ship is
-            engineered to perform when the margin for error is zero.
+            — the exclusive UK &amp; EU distributor for HiFlux, built for the
+            pressures other valves can't hold. From needle valves to full
+            instrumentation systems, every product we ship is engineered to
+            perform when the margin for error is zero.
           </Typography>
 
           <Typography
@@ -74,12 +75,11 @@ export default function HifluxSection() {
               mb: 2.5,
             }}
           >
-            Every valve that leaves our facility is tested to the same high
+            Every valve we ship is tested to the same high
             pressure ratings, the same material standards, the same
             tolerances — whether it's a single needle valve or a full
             instrumentation package. That consistency isn't a logo. It's a
-            process, refined over years, that doesn't cut corners under
-            pressure.
+            standard we hold every order to.
           </Typography>
 
           <Typography
@@ -92,16 +92,16 @@ export default function HifluxSection() {
               mb: 1.5,
             }}
           >
-            Buy from the source
+            Buy genuine, buy traceable
           </Typography>
 
           <Typography
             sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.75 }}
           >
-            If you're sourcing HiFlux valves, source them from us. Every
-            series, every certificate, every batch is traceable back to one
-            place — not a name licensed out, copied, or printed on a box
-            that's never seen our factory floor.
+            If you're sourcing HiFlux valves in the UK or EU, source them from
+            the authorised distributor. Every series, every certificate, every
+            batch is genuine HiFlux product, fully traceable back to the
+            manufacturer — not a grey-market copy or a name printed on a box.
           </Typography>
         </Box>
 

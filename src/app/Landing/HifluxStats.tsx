@@ -80,7 +80,7 @@ const STATS = [
 ];
 
 const FEATURES = [
-  { icon: <VerifiedIcon fontSize="small" />, title: 'KGS & KC Certified', desc: 'Hydrogen refueling and gas relief valves independently certified for safety-critical service.' },
+  { icon: <VerifiedIcon fontSize="small" />, title: 'ISO 9001 & PED Compliant', desc: 'Quality-managed to ISO 9001, with products conforming to the EU Pressure Equipment Directive (PED 2014/68/EU) for high-pressure service.' },
   { icon: <PrecisionManufacturingIcon fontSize="small" />, title: 'Rated to 150,000 PSI', desc: 'From standard 15k psi lines to extreme 150k psi research and test applications.' },
   { icon: <SpeedIcon fontSize="small" />, title: 'Zero Margin for Error', desc: 'Every needle, check, and ball valve built to hold at the pressures where others fail.' },
   { icon: <CategoryIcon fontSize="small" />, title: 'Full System Coverage', desc: 'Valves, fittings, manifolds, and safety components engineered to work as one system.' },
@@ -144,9 +144,9 @@ export default function HifluxStats() {
           </Typography>
 
           <Typography sx={{ color: 'rgba(255,255,255,0.7)', mb: 5, maxWidth: 550, lineHeight: 1.7 }}>
-            HiFlux exists for the systems where failure isn't an option — hydrogen refueling,
-            wellhead pressure control, high-pressure research. Every valve that leaves our facility
-            is tested to the exact rating stamped on it, not a marketing estimate.
+            HiFlux UK exists for the systems where failure isn't an option — hydrogen refuelling,
+            wellhead pressure control, high-pressure research. As the exclusive UK &amp; EU distributor
+            for HiFlux, every valve we ship is tested to the exact rating stamped on it, not a marketing estimate.
           </Typography>
 
           <Box

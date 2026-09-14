@@ -8,17 +8,17 @@ import CategoryIcon from "@mui/icons-material/Category";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "About Hiflux UK | High-Pressure Valve Manufacturer",
+    title: "About Hiflux UK | Exclusive UK & EU High-Pressure Valve Distributor",
     description:
-      "Hiflux UK designs and manufactures high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi, tested and traceable from a single source.",
+      "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi — supplied tested and fully traceable from a single source.",
   };
 }
 
 const CERTIFICATIONS = [
   {
     icon: <VerifiedIcon fontSize="small" />,
-    title: "KGS & KC Certified",
-    desc: "Hydrogen refuelling and gas relief valves independently certified for safety-critical service.",
+    title: "ISO 9001 & PED Compliant",
+    desc: "Quality-managed to ISO 9001, with products conforming to the EU Pressure Equipment Directive (PED 2014/68/EU) for high-pressure service.",
   },
   {
     icon: <PrecisionManufacturingIcon fontSize="small" />,
@@ -28,7 +28,7 @@ const CERTIFICATIONS = [
   {
     icon: <SpeedIcon fontSize="small" />,
     title: "100% Pressure Tested Pre-Ship",
-    desc: "Every valve that leaves our facility is tested to the exact rating stamped on it, not a marketing estimate.",
+    desc: "Every valve we ship is pressure-tested to the exact rating stamped on it, not a marketing estimate.",
   },
   {
     icon: <CategoryIcon fontSize="small" />,
@@ -111,10 +111,10 @@ export default async function AboutPage() {
               maxWidth: 640,
             }}
           >
-            Hiflux UK designs and manufactures high-pressure valves, fittings
-            and tubing for industrial, energy and research applications where
-            failure is not an option — from standard 15,000 psi process lines
-            to extreme 150,000 psi test and research service.
+            Hiflux UK is the exclusive UK &amp; EU distributor of high-pressure
+            valves, fittings and tubing for industrial, energy and research
+            applications where failure is not an option — from standard 15,000
+            psi process lines to extreme 150,000 psi test and research service.
           </Typography>
         </Container>
       </Box>
@@ -153,11 +153,10 @@ export default async function AboutPage() {
             mb: 2.5,
           }}
         >
-          Every valve that leaves our facility is tested to the same high
-          pressure ratings, the same material standards, the same
-          tolerances — whether it&apos;s a single needle valve or a full
-          instrumentation package. That consistency isn&apos;t a logo. It&apos;s
-          a process that doesn&apos;t cut corners under pressure.
+          Every valve we ship meets the same high pressure ratings, the same
+          material standards, the same tolerances — whether it&apos;s a single
+          needle valve or a full instrumentation package. That consistency
+          isn&apos;t a logo. It&apos;s a standard we hold every order to.
         </Typography>
 
         <Typography
@@ -170,15 +169,15 @@ export default async function AboutPage() {
             mb: 1.5,
           }}
         >
-          Buy from the source
+          Buy genuine, buy traceable
         </Typography>
         <Typography
           sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.8 }}
         >
-          If you&apos;re sourcing Hiflux valves, source them from us. Every
-          series, every certificate, every batch is traceable back to one
-          place — not a name licensed out, copied, or printed on a box that&apos;s
-          never seen our factory floor.
+          If you&apos;re sourcing Hiflux valves in the UK or EU, source them from
+          the authorised distributor. Every series, every certificate, every
+          batch is genuine Hiflux product, fully traceable back to the
+          manufacturer — not a grey-market copy or a name printed on a box.
         </Typography>
       </Container>
 
@@ -279,7 +278,7 @@ export default async function AboutPage() {
             mb: 4,
           }}
         >
-          What we manufacture
+          What we supply
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {PRODUCT_LINES.map((line) => (

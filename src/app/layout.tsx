@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   // Default/home title. Child pages that export their own metadata replace this;
   // no title.template is used because several page titles already carry the brand.
   title: "High-Pressure Valves, Fittings & Tubing | Hiflux UK",
-  description: "Hiflux UK manufactures high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
+  description: "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
 };
 
 export default function RootLayout({
@@ -68,7 +68,7 @@ export default function RootLayout({
               url: "https://www.hiflux.uk.com",
               logo: "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
               description:
-                "Hiflux UK manufactures high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
+                "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
               email: "sales@hiflux.uk.com",
               telephone: "+44 7369 243459",
               address: {
@@ -79,6 +79,11 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "Hydrogen Energy Association",
                 url: "https://ukhea.co.uk/",
+              },
+              parentOrganization: {
+                "@type": "Organization",
+                name: "Hiflux Co., Ltd",
+                url: "https://hiflux.com",
               },
             }),
           }}
