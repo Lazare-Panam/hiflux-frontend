@@ -84,11 +84,11 @@ export default function HeaMembership() {
             alt="Hiflux UK Hydrogen Energy Association membership certificate"
             width={2400}
             height={1560}
-            sizes="(max-width: 900px) 85vw, 390px"
+            sizes="(max-width: 900px) 90vw, 640px"
             style={{
               width: "100%",
               height: "auto",
-              maxWidth: 390,
+              maxWidth: 640,
               borderRadius: 4,
               filter: "drop-shadow(0 14px 30px rgba(0,0,0,0.20))",
             }}
