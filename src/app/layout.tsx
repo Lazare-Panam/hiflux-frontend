@@ -22,12 +22,37 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const SITE_TITLE = "High-Pressure Valves, Fittings & Tubing | Hiflux UK";
+const SITE_DESCRIPTION =
+  "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.";
+const SITE_OG_IMAGE =
+  "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.hiflux.uk.com"),
   // Default/home title. Child pages that export their own metadata replace this;
   // no title.template is used because several page titles already carry the brand.
-  title: "High-Pressure Valves, Fittings & Tubing | Hiflux UK",
-  description: "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  // Site-wide Open Graph + X (Twitter) Card defaults. Pages that export their
+  // own `openGraph`/`twitter` override these; pages that don't (e.g. /shop)
+  // inherit them, so every page ships a valid `twitter:card` tag. `twitter` is
+  // intentionally limited to `card` here — X falls back to each page's own
+  // Open Graph title/description/image, so a page-specific og:* is never
+  // clobbered by these generic defaults. `metadataBase` makes the relative/blob
+  // image URLs resolve to absolute https:// URLs, as the X Card spec requires.
+  openGraph: {
+    type: "website",
+    siteName: "Hiflux UK",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "https://www.hiflux.uk.com",
+    locale: "en_GB",
+    images: [SITE_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

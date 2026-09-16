@@ -1,11 +1,22 @@
 import type { Metadata } from "next";
 import { Box, Container, Typography, Divider, Button } from "@mui/material";
+import ProductIndexSection from "./ProductIndexSection";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const title =
+    "About Hiflux UK | UK Distributor of Hiflux High-Pressure Flow Control";
+  const description =
+    "Hiflux UK is the UK-based distributor of Hiflux high-pressure valves, fittings, tubing and pressure-control equipment, manufactured by HIFLUX Co., Ltd. of Daejeon, South Korea — with UK technical support from enquiry to delivery.";
+  const url = "https://www.hiflux.uk.com/about";
+  const images = [
+    "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
+  ];
   return {
-    title: "About Hiflux UK | UK Distributor of Hiflux High-Pressure Flow Control",
-    description:
-      "Hiflux UK is the UK-based distributor of Hiflux high-pressure valves, fittings, tubing and pressure-control equipment, manufactured by HIFLUX Co., Ltd. of Daejeon, South Korea — with UK technical support from enquiry to delivery.",
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 
@@ -378,6 +389,12 @@ export default async function AboutPage() {
         </Typography>
         <TermList items={PRODUCT_RANGE} />
       </Container>
+
+      <Divider />
+
+      {/* Full product index — real links to every series (and, via each series
+          listing, every SKU) so no product page is orphaned. */}
+      <ProductIndexSection />
 
       <Divider />
 

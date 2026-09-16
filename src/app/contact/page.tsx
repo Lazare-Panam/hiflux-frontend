@@ -9,11 +9,19 @@ const PHONE_DISPLAY = "+44 7369 243459";
 const PHONE_HREF = "+447369243459";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const title = "Contact Hiflux UK | High-Pressure Valve Enquiries";
+  const description =
+    "Get in touch with the Hiflux UK team about high-pressure valves, fittings, tubing and hydrogen flow-control components. Email sales@hiflux.uk.com or call +44 7369 243459.";
+  const url = "https://www.hiflux.uk.com/contact";
+  const images = [
+    "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
+  ];
   return {
-    title: "Contact Hiflux UK | High-Pressure Valve Enquiries",
-    description:
-      "Get in touch with the Hiflux UK team about high-pressure valves, fittings, tubing and hydrogen flow-control components. Email sales@hiflux.uk.com or call +44 7369 243459.",
-    alternates: { canonical: "https://www.hiflux.uk.com/contact" },
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 

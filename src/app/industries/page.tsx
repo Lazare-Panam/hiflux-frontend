@@ -3,10 +3,20 @@ import { Box, Container, Typography, Button, Divider } from "@mui/material";
 import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const title =
+    "Industries We Serve | High-Pressure Valves for Oil & Gas, Hydrogen, Research | Hiflux UK";
+  const description =
+    "Hiflux UK high-pressure valves, fittings and tubing serve oil & gas wellhead control, hydrogen refuelling, research and testing, chemical processing, and power generation — rated up to 150,000 psi.";
+  const url = "https://www.hiflux.uk.com/industries";
+  const images = [
+    "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
+  ];
   return {
-    title: "Industries We Serve | High-Pressure Valves for Oil & Gas, Hydrogen, Research | Hiflux UK",
-    description:
-      "Hiflux UK high-pressure valves, fittings and tubing serve oil & gas wellhead control, hydrogen refuelling, research and testing, chemical processing, and power generation — rated up to 150,000 psi.",
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 

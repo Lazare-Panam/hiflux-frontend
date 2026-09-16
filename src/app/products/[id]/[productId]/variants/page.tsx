@@ -10,14 +10,22 @@ function humanizeCategory(slug: string): string {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { productId } = await params;
+  const { id, productId } = await params;
   const data = await getProductVariants(productId).catch(() => null);
   if (!data) return { title: "Product Models | Hiflux UK" };
 
   const count = data.variants?.length ?? 0;
   const title = `${data.name} — Models & Specifications | Hiflux UK`;
   const description = `Compare ${count} model${count !== 1 ? "s" : ""} of the ${data.name} from Hiflux UK — full specifications, pressure ratings and materials for high-pressure flow control.`;
-  return { title, description };
+  const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants`;
+  const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
+  };
 }
 
 export default async function ProductVariantsPage({ params }: Props) {

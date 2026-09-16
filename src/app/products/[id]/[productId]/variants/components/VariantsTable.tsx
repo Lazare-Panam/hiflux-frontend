@@ -23,6 +23,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import Image from "next/image";
+import Link from "next/link";
 import { ProductVariant } from "@/api/useProductVariants";
 import { useCartStore } from "@/store/useCartStore";
 
@@ -33,6 +34,9 @@ interface RowProps {
   specKeys: string[];
   thumbnailImage: string;
   productName: string;
+  // When true the row stays in the DOM (so its <a href> is crawlable) but is
+  // visually hidden because it belongs to another pagination page.
+  hidden: boolean;
 }
 
 function VariantRow({
@@ -40,6 +44,7 @@ function VariantRow({
   specKeys,
   thumbnailImage,
   productName,
+  hidden,
 }: RowProps) {
   const [open, setOpen] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
@@ -48,6 +53,7 @@ function VariantRow({
   const addItem = useCartStore((state) => state.addItem);
 
   const sku = variant.specs["SKU"] ?? variant.id;
+  const detailHref = `/products/${id}/${productId}/variants/${sku}`;
 
   // Price comes from specs as a string (e.g. "141.60"); guard against it
   // being missing, empty, or non-numeric before treating this as priced.
@@ -56,7 +62,7 @@ function VariantRow({
   const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
 
   const goToDetail = () => {
-    router.push(`/products/${id}/${productId}/variants/${sku}`);
+    router.push(detailHref);
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -78,6 +84,7 @@ function VariantRow({
         hover
         onClick={goToDetail}
         sx={{
+          display: hidden ? "none" : undefined,
           cursor: "pointer",
           bgcolor: open ? alpha(BRAND, 0.03) : "inherit",
           "&:hover": { bgcolor: `${alpha(BRAND, 0.02)} !important` },
@@ -98,29 +105,48 @@ function VariantRow({
             )}
           </IconButton>
         </TableCell>
-        {specKeys.map((key) => (
-          <TableCell key={key} sx={{ py: 1.5, fontSize: "0.875rem" }}>
-            {variant.specs[key] ? (
-              key === "End Connection" ? (
-                <Chip
-                  label={variant.specs[key]}
-                  size="small"
-                  sx={{
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    bgcolor: alpha(BRAND, 0.08),
-                    color: BRAND,
-                    borderRadius: "3px",
-                  }}
-                />
-              ) : (
-                variant.specs[key]
-              )
+        {specKeys.map((key, index) => {
+          const cellContent = variant.specs[key] ? (
+            key === "End Connection" ? (
+              <Chip
+                label={variant.specs[key]}
+                size="small"
+                sx={{
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  bgcolor: alpha(BRAND, 0.08),
+                  color: BRAND,
+                  borderRadius: "3px",
+                }}
+              />
             ) : (
-              "—"
-            )}
-          </TableCell>
-        ))}
+              variant.specs[key]
+            )
+          ) : (
+            "—"
+          );
+
+          // The first column carries a real crawlable <a href> to the variant
+          // detail page so search engines can discover each SKU. The row's
+          // onClick still handles click-anywhere navigation for humans; the
+          // link stops propagation to avoid a redundant second navigation.
+          return (
+            <TableCell key={key} sx={{ py: 1.5, fontSize: "0.875rem" }}>
+              {index === 0 ? (
+                <Link
+                  href={detailHref}
+                  aria-label={`View ${productName} ${sku}`.trim()}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  {cellContent}
+                </Link>
+              ) : (
+                cellContent
+              )}
+            </TableCell>
+          );
+        })}
         <TableCell sx={{ py: 1.5 }} onClick={(e) => e.stopPropagation()}>
           {hasPrice ? (
             <Button
@@ -169,7 +195,7 @@ function VariantRow({
         </TableCell>
       </TableRow>
 
-      <TableRow>
+      <TableRow sx={{ display: hidden ? "none" : undefined }}>
         <TableCell
           colSpan={specKeys.length + 2}
           sx={{
@@ -337,10 +363,11 @@ export default function VariantsTable({
     return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
   });
 
-  const paginated = sorted.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
-  );
+  // Every row is rendered into the DOM (so each variant's <a href> is present
+  // in the HTML for search crawlers); pagination only controls which slice is
+  // visible. `page`/`rowsPerPage` define the visible window.
+  const pageStart = page * rowsPerPage;
+  const pageEnd = pageStart + rowsPerPage;
 
   const headerSx = {
     bgcolor: alpha(BRAND, 0.04),
@@ -373,7 +400,7 @@ export default function VariantsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {paginated.length === 0 ? (
+          {sorted.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={specKeys.length + 2}
@@ -388,13 +415,14 @@ export default function VariantsTable({
               </TableCell>
             </TableRow>
           ) : (
-            paginated.map((v) => (
+            sorted.map((v, i) => (
               <VariantRow
                 key={v.id}
                 variant={v}
                 specKeys={specKeys}
                 thumbnailImage={thumbnailImage}
                 productName={productName}
+                hidden={i < pageStart || i >= pageEnd}
               />
             ))
           )}

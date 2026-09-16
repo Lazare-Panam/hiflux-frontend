@@ -11,9 +11,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const blog = blogs.find((b) => b.slug === slug);
   if (!blog) return {};
+  const title = blog.seoTitle ?? blog.title.split(":")[0].trim();
+  const description = blog.metaDescription ?? blog.excerpt;
+  const url = `https://www.hiflux.uk.com/news/${blog.slug}`;
+  const images = blog.heroImage ? [blog.heroImage] : undefined;
   return {
-    title: blog.seoTitle ?? blog.title.split(":")[0].trim(),
-    description: blog.metaDescription ?? blog.excerpt,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "article", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 

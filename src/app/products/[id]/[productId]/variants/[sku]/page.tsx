@@ -27,14 +27,22 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { productId, sku } = await params;
+  const { id, productId, sku } = await params;
   const data = await getProductVariants(productId).catch(() => null);
   const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
   if (!data || !variant) return { title: "Model Not Found | Hiflux UK" };
 
   const title = `${sku} — ${data.name} | Hiflux UK`;
   const description = `${sku}: ${data.name} model specifications from Hiflux UK — pressure rating, materials and dimensions for high-pressure flow-control systems.`;
-  return { title, description };
+  const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants/${sku}`;
+  const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
+    twitter: { card: "summary_large_image", title, description, images },
+  };
 }
 
 export default async function VariantDetail({ params }: Props) {
