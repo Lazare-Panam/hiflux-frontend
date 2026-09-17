@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data || !variant) return { title: "Model Not Found | Hiflux UK" };
 
   const title = `${sku} — ${data.name} | Hiflux UK`;
-  const description = `${sku}: ${data.name} model specifications from Hiflux UK — pressure rating, materials and dimensions for high-pressure flow-control systems.`;
+  const description = `${sku}: ${data.name} — specifications, pressure rating and materials from Hiflux UK.`;
   const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants/${sku}`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {

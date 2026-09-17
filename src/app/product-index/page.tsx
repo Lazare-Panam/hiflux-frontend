@@ -18,7 +18,7 @@ const CATALOGS: { id: string; label: string }[] = [
 export const metadata: Metadata = {
   title: "Product Index — All Models & Specifications | Hiflux UK",
   description:
-    "Complete index of every Hiflux high-pressure valve, fitting, tubing, adapter and regulator series and model available from Hiflux UK, with links to full specifications for each SKU.",
+    "Full index of every Hiflux high-pressure valve, fitting, tubing, adapter and regulator model available from Hiflux UK.",
   alternates: { canonical: PAGE_URL },
 };
 

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const count = data.variants?.length ?? 0;
   const title = `${data.name} — Models & Specifications | Hiflux UK`;
-  const description = `Compare ${count} model${count !== 1 ? "s" : ""} of the ${data.name} from Hiflux UK — full specifications, pressure ratings and materials for high-pressure flow control.`;
+  const description = `Compare ${count} ${data.name} model${count !== 1 ? "s" : ""} from Hiflux UK — specifications, pressure ratings and materials.`;
   const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {

@@ -3,19 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getProductDetail } from '@/api/useProductDetail';
 
-async function RelatedProductCard({
-  catalogId,
-  productId,
-}: {
-  catalogId: string;
-  productId: string;
-}) {
+async function RelatedProductCard({ productId }: { productId: string }) {
   const data = await getProductDetail(productId).catch(() => null);
   if (!data) return null;
 
   return (
     <Link
-      href={`/products/${catalogId}/${productId}`}
+      // Link using the related product's OWN category (data.catalogId), not the
+      // category of the page we're on — otherwise a valve page would link a
+      // fitting as /products/high-pressure-valves/... creating a duplicate URL.
+      href={`/products/${data.catalogId}/${productId}`}
       style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
     >
       <Box
@@ -60,11 +57,10 @@ async function RelatedProductCard({
 }
 
 interface Props {
-  catalogId: string;
   productIds: string[];
 }
 
-export default function RelatedProducts({ catalogId, productIds }: Props) {
+export default function RelatedProducts({ productIds }: Props) {
   if (!productIds?.length) return null;
 
   return (
@@ -78,7 +74,7 @@ export default function RelatedProducts({ catalogId, productIds }: Props) {
         {productIds.map((pid) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={pid}>
             {/* async Server Component — fetched and rendered on the server */}
-            <RelatedProductCard catalogId={catalogId} productId={pid} />
+            <RelatedProductCard productId={pid} />
           </Grid>
         ))}
       </Grid>

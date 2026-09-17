@@ -18,6 +18,16 @@ function humanizeCategory(slug: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+// Trim to a meta-description-friendly length (<=158 chars recommended) without
+// cutting a word in half; appends an ellipsis only when actually truncated.
+function metaDescription(text: string, max = 155): string {
+  const t = (text ?? '').trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${(lastSpace > 40 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.–-]+$/, '')}…`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productId } = await params;
 
@@ -27,12 +37,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const title = `${data.name} | Hiflux UK`;
-  const description = (data.description ?? '').slice(0, 160);
+  const description = metaDescription(data.description);
   const images = data.image ? [{ url: data.image }] : undefined;
+  // Canonical always uses the product's TRUE category so the same product
+  // reached via a wrong-category URL collapses to one indexed page.
+  const canonical = `https://www.hiflux.uk.com/products/${data.catalogId}/${productId}`;
 
   return {
     title,
     description,
+    alternates: { canonical },
     openGraph: {
       type: 'website',
       siteName: 'Hiflux UK',
@@ -50,12 +64,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductDetailPage({ params }: Props) {
-  const { id, productId } = await params;
+  const { productId } = await params;
 
   const data = await getProductDetail(productId).catch(() => null);
   if (!data) notFound();
 
-  const category = humanizeCategory(id);
+  // Always use the product's real category for on-page links/breadcrumbs so a
+  // visit via a wrong-category URL still emits correct, non-duplicating links.
+  const catalogId = data.catalogId;
+  const category = humanizeCategory(catalogId);
 
   const productSchema = {
     '@context': 'https://schema.org',
@@ -78,8 +95,8 @@ export default async function ProductDetailPage({ params }: Props) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hiflux.uk.com' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://www.hiflux.uk.com/products' },
-      { '@type': 'ListItem', position: 3, name: category, item: `https://www.hiflux.uk.com/products/${id}` },
-      { '@type': 'ListItem', position: 4, name: data.name, item: `https://www.hiflux.uk.com/products/${id}/${productId}` },
+      { '@type': 'ListItem', position: 3, name: category, item: `https://www.hiflux.uk.com/products/${catalogId}` },
+      { '@type': 'ListItem', position: 4, name: data.name, item: `https://www.hiflux.uk.com/products/${catalogId}/${productId}` },
     ],
   };
 
@@ -110,7 +127,7 @@ export default async function ProductDetailPage({ params }: Props) {
               <ProductFeatureChips features={data.features} />
               <ProductApplicationsList applications={data.applications} />
               <Button
-                href={`/products/${id}/${productId}/variants`}
+                href={`/products/${catalogId}/${productId}/variants`}
                 variant="contained"
                 sx={{ alignSelf: 'flex-start', bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: '4px', textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
               >
@@ -121,7 +138,7 @@ export default async function ProductDetailPage({ params }: Props) {
         </Grid>
         <Box sx={{ mt: { xs: 8, md: 12 } }}>
           <Divider sx={{ mb: { xs: 6, md: 8 } }} />
-          <RelatedProducts catalogId={id} productIds={data.relatedProducts ?? []} />
+          <RelatedProducts productIds={data.relatedProducts ?? []} />
         </Box>
       </Box>
     </Box>

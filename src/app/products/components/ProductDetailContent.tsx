@@ -93,10 +93,7 @@ export default async function ProductDetailContent({ id }: Props) {
         </Grid>
         <Box sx={{ mt: { xs: 8, md: 12 } }}>
           <Divider sx={{ mb: { xs: 6, md: 8 } }} />
-          <RelatedProducts
-            catalogId={id}
-            productIds={data.relatedProducts ?? []}
-          />
+          <RelatedProducts productIds={data.relatedProducts ?? []} />
         </Box>
       </Box>
     </Box>

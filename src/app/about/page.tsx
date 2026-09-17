@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title =
     "About Hiflux UK | UK Distributor of Hiflux High-Pressure Flow Control";
   const description =
-    "Hiflux UK is the UK-based distributor of Hiflux high-pressure valves, fittings, tubing and pressure-control equipment, manufactured by HIFLUX Co., Ltd. of Daejeon, South Korea — with UK technical support from enquiry to delivery.";
+    "Hiflux UK is the UK distributor of Hiflux high-pressure valves, fittings, tubing and pressure-control equipment, with UK technical support.";
   const url = "https://www.hiflux.uk.com/about";
   const images = [
     "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
