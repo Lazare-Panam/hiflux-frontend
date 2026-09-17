@@ -66,11 +66,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable}`}
     >
       <head>
-        <script
+        {/* <script
           data-cfasync="false"
           type="text/javascript"
           src="https://cdn.seoplatform.io/injector.js?websiteId=28611"
-        />
+        /> */}
         {/* <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
@@ -125,12 +125,7 @@ export default function RootLayout({
               strategy="afterInteractive"
             />
             <Script id="google-analytics" strategy="afterInteractive">
-              {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-VES6DYGCYH');
-  `}
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-VES6DYGCYH');`}
             </Script>
             <Footer />
           </ThemeRegistry>
