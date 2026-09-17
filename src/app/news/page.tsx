@@ -1,9 +1,6 @@
-"use client";
-
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Link from "next/link";
 import { blogs } from "./data/blogs";
 
 const internalLinks = [
@@ -50,7 +47,7 @@ export default function NewsPage() {
 
         {/* Back to Home button */}
         <Box
-          component={Link}
+          component="a"
           href="/"
           sx={{
             position: "absolute",
@@ -135,7 +132,7 @@ export default function NewsPage() {
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
         {/* Featured */}
         <Box
-          component={Link}
+          component="a"
           href={`/news/${featured.slug}`}
           sx={{
             display: "grid",
@@ -220,7 +217,7 @@ export default function NewsPage() {
             {internalLinks.map((link) => (
               <Button
                 key={link.href}
-                component={Link}
+                component="a"
                 href={link.href}
                 variant="outlined"
                 color="primary"
@@ -242,7 +239,7 @@ export default function NewsPage() {
           {rest.map((blog) => (
             <Grid key={blog.slug} size={{ xs: 12, sm: 6, md: 4 }}>
               <Box
-                component={Link}
+                component="a"
                 href={`/news/${blog.slug}`}
                 sx={{
                   display: "flex",
