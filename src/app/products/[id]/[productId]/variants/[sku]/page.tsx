@@ -17,6 +17,7 @@ import {
 import { alpha } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
 import { getProductVariants } from "@/api/useProductVariants";
+import { categorySlug } from "@/api/catalogSlug";
 import AddToCartButton from "./components/AddToCartButton";
 
 const BRAND = "#0072BC";
@@ -32,9 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
   if (!data || !variant) return { title: "Model Not Found | Hiflux UK" };
 
-  const title = `${sku} — ${data.name} | Hiflux UK`;
+  const title = `${sku} — ${data.name}`;
   const description = `${sku}: ${data.name} — specifications, pressure rating and materials from Hiflux UK.`;
-  const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants/${sku}`;
+  const url = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}/variants/${sku}`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {
     title,

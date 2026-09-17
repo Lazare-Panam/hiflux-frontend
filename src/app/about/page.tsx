@@ -3,8 +3,7 @@ import { Box, Container, Typography, Divider, Button } from "@mui/material";
 import ProductIndexSection from "./ProductIndexSection";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title =
-    "About Hiflux UK | UK Distributor of Hiflux High-Pressure Flow Control";
+  const title = "About Hiflux UK | UK High-Pressure Flow Control Distributor";
   const description =
     "Hiflux UK is the UK distributor of Hiflux high-pressure valves, fittings, tubing and pressure-control equipment, with UK technical support.";
   const url = "https://www.hiflux.uk.com/about";

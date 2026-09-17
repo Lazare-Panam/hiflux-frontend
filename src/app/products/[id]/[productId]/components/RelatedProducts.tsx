@@ -2,6 +2,7 @@ import { Box, Typography, Grid } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getProductDetail } from '@/api/useProductDetail';
+import { categorySlug } from '@/api/catalogSlug';
 
 async function RelatedProductCard({ productId }: { productId: string }) {
   const data = await getProductDetail(productId).catch(() => null);
@@ -12,7 +13,7 @@ async function RelatedProductCard({ productId }: { productId: string }) {
       // Link using the related product's OWN category (data.catalogId), not the
       // category of the page we're on — otherwise a valve page would link a
       // fitting as /products/high-pressure-valves/... creating a duplicate URL.
-      href={`/products/${data.catalogId}/${productId}`}
+      href={`/products/${categorySlug(data.catalogId)}/${productId}`}
       style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
     >
       <Box

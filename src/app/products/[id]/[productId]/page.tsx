@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Box, Grid, Typography, Divider, Button } from '@mui/material';
 import { getProductDetail } from '@/api/useProductDetail';
+import { categorySlug } from '@/api/catalogSlug';
 import ProductDetailHero from './components/ProductDetailHero';
 import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const images = data.image ? [{ url: data.image }] : undefined;
   // Canonical always uses the product's TRUE category so the same product
   // reached via a wrong-category URL collapses to one indexed page.
-  const canonical = `https://www.hiflux.uk.com/products/${data.catalogId}/${productId}`;
+  const canonical = `https://www.hiflux.uk.com/products/${categorySlug(data.catalogId)}/${productId}`;
 
   return {
     title,
@@ -71,7 +72,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   // Always use the product's real category for on-page links/breadcrumbs so a
   // visit via a wrong-category URL still emits correct, non-duplicating links.
-  const catalogId = data.catalogId;
+  const catalogId = categorySlug(data.catalogId);
   const category = humanizeCategory(catalogId);
 
   const productSchema = {

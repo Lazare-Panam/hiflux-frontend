@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductVariants } from "@/api/useProductVariants";
+import { categorySlug } from "@/api/catalogSlug";
 import VariantsBrowser from "./components/VariantsBrowser";
 
 type Props = { params: Promise<{ id: string; productId: string }> };
@@ -15,9 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return { title: "Product Models | Hiflux UK" };
 
   const count = data.variants?.length ?? 0;
-  const title = `${data.name} — Models & Specifications | Hiflux UK`;
+  const title = `${data.name} — Models & Specs`;
   const description = `Compare ${count} ${data.name} model${count !== 1 ? "s" : ""} from Hiflux UK — specifications, pressure ratings and materials.`;
-  const url = `https://www.hiflux.uk.com/products/${id}/${productId}/variants`;
+  const url = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}/variants`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {
     title,
