@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // The product API uses catalogId "regulators", but the canonical category
+      // slug across the site is "high-pressure-regulators". Permanently redirect
+      // the alias so the duplicate /products/regulators/... URLs collapse to one.
+      {
+        source: "/products/regulators/:path*",
+        destination: "/products/high-pressure-regulators/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
