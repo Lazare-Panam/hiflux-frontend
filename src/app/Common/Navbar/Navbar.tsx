@@ -309,6 +309,25 @@ const Navbar: React.FC = () => {
                 >
                   <ShoppingBagOutlinedIcon sx={{ fontSize: 20 }} />
                 </Badge>
+                {/* Visually-hidden label so the link has real anchor text for
+                    crawlers (icon alone reads as "symbols only" to SE Ranking);
+                    stays icon-only on screen. */}
+                <Box
+                  component="span"
+                  sx={{
+                    position: "absolute",
+                    width: 1,
+                    height: 1,
+                    p: 0,
+                    m: -1,
+                    overflow: "hidden",
+                    clip: "rect(0 0 0 0)",
+                    whiteSpace: "nowrap",
+                    border: 0,
+                  }}
+                >
+                  Cart
+                </Box>
               </IconButton>
               <IconButton
                 onClick={() => setMobileOpen(true)}
