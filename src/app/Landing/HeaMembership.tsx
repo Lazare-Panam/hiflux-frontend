@@ -2,8 +2,9 @@ import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-const HEA_LOGO =
-  "https://pblol2.blob.core.windows.net/hiflux/catalogs/Hiflux_HEA_framed.png";
+// Optimized, self-hosted certificate (640x416 WebP, ~10KB) replacing the
+// 2.4MB source PNG that was only ever displayed at <=640px.
+const HEA_LOGO = "/Hiflux_HEA_framed.webp";
 const HEA_PDF =
   "https://pblol2.blob.core.windows.net/hiflux/catalogs/Hiflux_HEA.pdf";
 
@@ -82,8 +83,8 @@ export default function HeaMembership() {
           <Image
             src={HEA_LOGO}
             alt="Hiflux UK Hydrogen Energy Association membership certificate"
-            width={2400}
-            height={1560}
+            width={640}
+            height={416}
             sizes="(max-width: 900px) 90vw, 640px"
             style={{
               width: "100%",
