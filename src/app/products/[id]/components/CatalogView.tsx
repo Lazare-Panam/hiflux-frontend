@@ -1,6 +1,8 @@
 import { Box, Container, Grid, Typography, Divider, Button } from "@mui/material";
 import { ProductCatalog } from "@/api/useProductCatalog";
 import ProductCard from "./ProductCard";
+import { getCategoryEditorial } from "../../data/editorial";
+import { EditorialIntro, EditorialBlocks } from "../../components/ProductEditorial";
 
 /**
  * Server-rendered catalog listing (hero, marquee, intro, product grid, key
@@ -14,6 +16,9 @@ export default function CatalogView({
   data: ProductCatalog;
   id: string;
 }) {
+  // Frontend-only editorial overlay (undefined for categories without one).
+  const editorial = getCategoryEditorial(id);
+
   const hero = data.hero ?? {
     overline: undefined,
     title: data.bannerTitle,
@@ -213,6 +218,9 @@ export default function CatalogView({
           </>
         )}
 
+        {/* EDITORIAL INTRO (frontend overlay, above the grid) */}
+        {editorial?.above && <EditorialIntro above={editorial.above} />}
+
         {/* PRODUCTS */}
         <Box id="products" sx={{ mb: 10 }}>
           {data.productsSectionLabel && (
@@ -266,6 +274,14 @@ export default function CatalogView({
             ))}
           </Grid>
         </Box>
+
+        {/* EDITORIAL SECTIONS (frontend overlay, below the grid) */}
+        {editorial?.below && (
+          <>
+            <Divider sx={{ mb: { xs: 6, md: 8 } }} />
+            <EditorialBlocks blocks={editorial.below} />
+          </>
+        )}
 
         {/* KEY FEATURES */}
         {data.keyFeatures && (

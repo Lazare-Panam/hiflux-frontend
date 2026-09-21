@@ -2,37 +2,44 @@
 
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 type Application = {
   label: string;
+  href: string;
   image: string;
   large?: boolean;
 };
 
 const APPLICATIONS: Application[] = [
   {
-    label: "Oil & Gas / Wellhead",
+    label: "Wellhead & Pressure Control",
+    href: "/applications/wellhead-pressure-control",
     image:
       "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?fm=jpg&q=80&w=1600&auto=format&fit=crop",
     large: true,
   },
   {
-    label: "Hydrogen Refueling",
+    label: "Hydrogen Refuelling",
+    href: "/applications/hydrogen-refuelling",
     image:
       "https://pblol2.blob.core.windows.net/spac-images/website-media/umberto-jXd2FSvcRr8-unsplash.jpg",
   },
   {
     label: "Research & Testing",
+    href: "/applications/research-and-testing",
     image:
       "https://pblol2.blob.core.windows.net/spac-images/website-media/umberto-jXd2FSvcRr8-unsplash.jpg",
   },
   {
     label: "Chemical Processing",
+    href: "/applications/chemical-processing",
     image:
       "https://images.unsplash.com/photo-1726731782158-fcf6822b6ca4?fm=jpg&q=80&w=1200&auto=format&fit=crop",
   },
   {
     label: "Power Generation",
+    href: "/applications/power-generation",
     image:
       "https://images.unsplash.com/photo-1716191299980-a6e8827ba10b?fm=jpg&q=80&w=1200&auto=format&fit=crop",
   },
@@ -41,6 +48,8 @@ const APPLICATIONS: Application[] = [
 function ApplicationTile({ app }: { app: Application }) {
   return (
     <Box
+      component={Link}
+      href={app.href}
       sx={{
         position: "relative",
         height: "100%",
@@ -50,13 +59,15 @@ function ApplicationTile({ app }: { app: Application }) {
         display: "flex",
         alignItems: "flex-end",
         overflow: "hidden",
+        textDecoration: "none",
+        "&:hover img": { transform: "scale(1.05)" },
       }}
     >
       <Image
         src={app.image}
         alt={app.label}
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover", transition: "transform 0.4s ease" }}
         sizes="(max-width: 768px) 50vw, 25vw"
       />
       <Box
@@ -131,10 +142,12 @@ export default function IndustriesSection() {
               mb: 3,
             }}
           >
-            Applications
+            Where our components are used
           </Typography>
 
           <Button
+            component={Link}
+            href="/applications"
             variant="outlined"
             sx={{
               px: 3,

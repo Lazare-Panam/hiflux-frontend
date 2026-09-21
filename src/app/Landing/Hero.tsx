@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Typography, Stack, Button } from '@mui/material';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -71,16 +72,16 @@ export default function Hero() {
             component="h1"
             sx={{
               color: '#fff',
-              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
+              fontSize: { xs: '2.3rem', sm: '3.2rem', md: '4rem' },
               fontWeight: 800,
               lineHeight: 1.05,
               letterSpacing: '-0.02em',
             }}
           >
-            High pressure valves
+            Ultra high-pressure valves and fittings,
             <br />
             <Box component="span" sx={{ color: 'primary.main' }}>
-              built to hold the line.
+              rated to 150,000 psi.
             </Box>
           </Typography>
 
@@ -88,23 +89,27 @@ export default function Hero() {
             sx={{
               color: 'rgba(255,255,255,0.75)',
               fontSize: { xs: '1rem', md: '1.15rem' },
-              maxWidth: 560,
+              maxWidth: 620,
             }}
           >
-            Precision-engineered high pressure valves and fittings for the most demanding
-            industrial, energy, and process applications — reliable performance where failure
-            is not an option.
+            Exclusive UK and EU distributor for HIFLUX Co., Ltd — precision
+            high-pressure valves, fittings and tubing for hydrogen, wellhead,
+            research and process applications where failure is not an option.
           </Typography>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ pt: 1 }}>
             <Button
+              component={Link}
+              href="/contact"
               variant="contained"
               size="large"
               sx={{ px: 4, py: 1.5, fontWeight: 700, textTransform: 'none', fontSize: '1rem', borderRadius: '2px' }}
             >
-              Explore the Range
+              Request a Quote
             </Button>
             <Button
+              component={Link}
+              href="/products"
               variant="outlined"
               size="large"
               sx={{
@@ -119,7 +124,7 @@ export default function Hero() {
                 '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.05)' },
               }}
             >
-              Request a Quote
+              View the Range
             </Button>
           </Stack>
         </Stack>

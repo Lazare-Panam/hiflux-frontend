@@ -1,7 +1,9 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function HifluxSection() {
   return (
@@ -43,7 +45,7 @@ export default function HifluxSection() {
               mb: 3,
             }}
           >
-            There's only one HiFlux.
+            The UK and EU arm of HIFLUX Co., Ltd
           </Typography>
 
           <Typography
@@ -54,17 +56,16 @@ export default function HifluxSection() {
               mb: 2.5,
             }}
           >
-            We're{" "}
             <Box
               component="span"
               sx={{ fontWeight: 700, color: "text.primary" }}
             >
-              HiFlux UK
+              Hiflux UK
             </Box>{" "}
-            — the exclusive UK &amp; EU distributor for HiFlux, built for the
-            pressures other valves can't hold. From needle valves to full
-            instrumentation systems, every product we ship is engineered to
-            perform when the margin for error is zero.
+            is the exclusive UK and EU distributor for HIFLUX Co., Ltd of
+            Daejeon, South Korea — a manufacturer of ultra high-pressure valves,
+            fittings and tubing since 2010, and a designated Hydrogen Specialist
+            Company under Korea's Ministry of Trade, Industry and Energy.
           </Typography>
 
           <Typography
@@ -75,11 +76,10 @@ export default function HifluxSection() {
               mb: 2.5,
             }}
           >
-            Every valve we ship is tested to the same high
-            pressure ratings, the same material standards, the same
-            tolerances — whether it's a single needle valve or a full
-            instrumentation package. That consistency isn't a logo. It's a
-            standard we hold every order to.
+            We hold UK stock, handle EU-facing supply, and provide the technical
+            and documentation support a UK or EU project needs. Every series,
+            every certificate and every batch is genuine HIFLUX product,
+            traceable back to the manufacturer.
           </Typography>
 
           <Typography
@@ -96,13 +96,32 @@ export default function HifluxSection() {
           </Typography>
 
           <Typography
-            sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.75 }}
+            sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.75, mb: 3 }}
           >
-            If you're sourcing HiFlux valves in the UK or EU, source them from
-            the authorised distributor. Every series, every certificate, every
-            batch is genuine HiFlux product, fully traceable back to the
-            manufacturer — not a grey-market copy or a name printed on a box.
+            If you are sourcing HIFLUX components in the UK or EU, source them
+            from the authorised distributor. Grey-market product carries no
+            traceable material certification — and on a 150,000 psi line, that
+            documentation is the whole point.
           </Typography>
+
+          <Button
+            component={Link}
+            href="/about"
+            variant="outlined"
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              borderRadius: 0,
+              textTransform: "none",
+              fontWeight: 700,
+              px: 3,
+              py: 1.1,
+              borderColor: "primary.main",
+              color: "primary.main",
+              "&:hover": { bgcolor: "primary.main", color: "#fff", borderColor: "primary.main" },
+            }}
+          >
+            About Hiflux UK
+          </Button>
         </Box>
 
         {/* right: static image */}
@@ -122,7 +141,7 @@ export default function HifluxSection() {
           >
             <Image
               src="https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png"
-              alt="HiFlux high pressure needle valve"
+              alt="Hiflux high pressure needle valve"
               fill
               style={{ objectFit: "contain", padding: "32px" }}
               sizes="(max-width: 768px) 100vw, 50vw"

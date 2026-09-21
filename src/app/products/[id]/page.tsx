@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCatalog, ProductType } from "@/api/useProductCatalog";
 import CatalogView from "./components/CatalogView";
 import ProductDetailContent from "../components/ProductDetailContent";
+import { getCategoryEditorial } from "../data/editorial";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -15,20 +16,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const seo = data.seo;
-  const title = seo?.title ?? data.bannerTitle ?? "Hiflux Valves";
-  const description = seo?.description ?? data.bannerSubtitle ?? "";
+  // Frontend editorial overlay takes precedence for title/description/canonical
+  // (the catalog API returns null seo for the overlaid categories).
+  const editorial = getCategoryEditorial(id);
+  const title =
+    editorial?.seo?.title ?? seo?.title ?? data.bannerTitle ?? "Hiflux Valves";
+  const description =
+    editorial?.seo?.description ?? seo?.description ?? data.bannerSubtitle ?? "";
   const ogImage = seo?.ogImage ?? data.bannerImage;
+  const canonical = editorial?.canonical ?? seo?.canonical;
 
   return {
     title,
     description,
-    alternates: seo?.canonical ? { canonical: seo.canonical } : undefined,
+    alternates: canonical ? { canonical } : undefined,
     openGraph: {
       type: "website",
       siteName: "Hiflux Valves",
       title,
       description,
-      url: seo?.canonical,
+      url: canonical,
       images: ogImage ? [{ url: ogImage }] : undefined,
     },
     twitter: {

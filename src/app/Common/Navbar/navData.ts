@@ -155,6 +155,38 @@ export const LEFT_NAV: NavItem[] = [
       },
     ],
   },
+  {
+    label: "Applications",
+    href: "/applications",
+    megaMenu: [
+      {
+        heading: "Applications",
+        href: "/applications",
+        items: [
+          {
+            label: "Hydrogen Refuelling",
+            href: "/applications/hydrogen-refuelling",
+          },
+          {
+            label: "Wellhead & Pressure Control",
+            href: "/applications/wellhead-pressure-control",
+          },
+          {
+            label: "Research & Testing",
+            href: "/applications/research-and-testing",
+          },
+          {
+            label: "Chemical Processing",
+            href: "/applications/chemical-processing",
+          },
+          {
+            label: "Power Generation",
+            href: "/applications/power-generation",
+          },
+        ],
+      },
+    ],
+  },
   { label: "latest News", href: "/news" },
   { label: "Contact Us", href: "/contact" },
 ];

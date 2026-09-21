@@ -1,9 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import { Box, Typography, Button, TextField } from "@mui/material";
+import Link from "next/link";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PhoneIcon from "@mui/icons-material/Phone";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+
+const EMAIL = "sales@hiflux.uk.com";
+const PHONE_DISPLAY = "+44 7369 243459";
+const PHONE_HREF = "+447369243459";
+const CATALOG_PDF =
+  "https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf";
 
 export default function ContactCTA() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  // Frontend-only enquiry handoff: open the visitor's mail client with the
+  // form contents prefilled to sales@. No backend/API involved.
+  const mailtoHref =
+    `mailto:${EMAIL}` +
+    `?subject=${encodeURIComponent(
+      `Website enquiry${name ? ` from ${name}` : ""}`,
+    )}` +
+    `&body=${encodeURIComponent(
+      `${message}\n\n---\nName: ${name}\nEmail: ${email}`,
+    )}`;
+
   return (
     <Box component="section" sx={{ py: { xs: 8, md: 12 }, bgcolor: "#FAF6F4" }}>
       <Box
@@ -38,15 +63,14 @@ export default function ContactCTA() {
             component="h2"
             sx={{
               fontWeight: 800,
-              fontSize: { xs: "2rem", md: "2.75rem" },
+              fontSize: { xs: "1.9rem", md: "2.5rem" },
               lineHeight: 1.15,
               color: "text.primary",
               mb: 2.5,
             }}
           >
-            Talk to us. We'll give you
-            <br />
-            the best price in the market.
+            Send us your specification. We&apos;ll come back with a price and
+            the paperwork.
           </Typography>
 
           <Typography
@@ -55,50 +79,83 @@ export default function ContactCTA() {
               fontSize: "1rem",
               lineHeight: 1.75,
               mb: 4,
-              maxWidth: 480,
+              maxWidth: 520,
             }}
           >
-            Whether it's a single valve or a full pipeline order, our team
-            responds fast with specs, certifications, and pricing — no
-            middlemen, no guesswork.
+            Whether it&apos;s a single valve or a full system, send your
+            pressure rating, connection type and material requirement.
+            We&apos;ll confirm availability, pricing and the certification that
+            comes with it.
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-            <Box>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  color: "text.primary",
-                  mb: 0.5,
-                }}
-              >
-                Email
-              </Typography>
-              <Typography sx={{ color: "text.secondary", fontSize: "0.9rem" }}>
-                sales@hiflux.uk.com
-              </Typography>
-            </Box>
-            <Box>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  color: "text.primary",
-                  mb: 0.5,
-                }}
-              >
-                Phone
-              </Typography>
-              <Typography sx={{ color: "text.secondary", fontSize: "0.9rem" }}>
-                +44 7369 243459
-              </Typography>
-            </Box>
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+            <Button
+              component={Link}
+              href="/contact"
+              variant="contained"
+              disableElevation
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                bgcolor: "primary.main",
+                color: "#fff",
+                fontWeight: 700,
+                borderRadius: 0,
+                px: 3,
+                py: 1.2,
+                textTransform: "none",
+                "&:hover": { bgcolor: "primary.dark" },
+              }}
+            >
+              Request a Quote
+            </Button>
+            <Button
+              component="a"
+              href={`tel:${PHONE_HREF}`}
+              variant="outlined"
+              startIcon={<PhoneIcon />}
+              sx={{
+                borderRadius: 0,
+                px: 3,
+                py: 1.2,
+                fontWeight: 700,
+                textTransform: "none",
+                borderColor: "primary.main",
+                color: "primary.main",
+                "&:hover": { bgcolor: "primary.main", color: "#fff", borderColor: "primary.main" },
+              }}
+            >
+              Call {PHONE_DISPLAY}
+            </Button>
+            <Button
+              component="a"
+              href={CATALOG_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outlined"
+              startIcon={<MenuBookIcon />}
+              sx={{
+                borderRadius: 0,
+                px: 3,
+                py: 1.2,
+                fontWeight: 700,
+                textTransform: "none",
+                borderColor: "rgba(0,0,0,0.25)",
+                color: "text.primary",
+                "&:hover": { borderColor: "text.primary", bgcolor: "rgba(0,0,0,0.03)" },
+              }}
+            >
+              Download the Catalogue
+            </Button>
           </Box>
         </Box>
 
-        {/* right: contact form card */}
+        {/* right: contact form card — opens a prefilled email on submit */}
         <Box
+          component="form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            window.location.href = mailtoHref;
+          }}
           sx={{
             bgcolor: "#fff",
             border: "1px solid",
@@ -114,6 +171,8 @@ export default function ContactCTA() {
               variant="outlined"
               size="small"
               fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   {
@@ -124,9 +183,12 @@ export default function ContactCTA() {
             />
             <TextField
               label="Email Address"
+              type="email"
               variant="outlined"
               size="small"
               fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   {
@@ -142,6 +204,8 @@ export default function ContactCTA() {
               fullWidth
               multiline
               rows={4}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   {
@@ -152,6 +216,7 @@ export default function ContactCTA() {
             />
 
             <Button
+              type="submit"
               variant="contained"
               disableElevation
               endIcon={<ArrowForwardIcon />}
