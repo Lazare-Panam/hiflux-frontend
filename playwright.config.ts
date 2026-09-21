@@ -15,6 +15,9 @@ export default defineConfig({
   timeout: 60_000,
   expect: { timeout: 15_000 },
   fullyParallel: true,
+  // Cap workers so the single dev server isn't saturated (on-demand route
+  // compilation under heavy parallelism causes spurious timeouts).
+  workers: process.env.CI ? 2 : 3,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: [["list"], ["html", { open: "never" }]],

@@ -136,3 +136,36 @@ test.describe("Product category editorial (backend-fed)", () => {
     ).toBeVisible();
   });
 });
+
+test.describe("Cart checkout (quote handoff)", () => {
+  test("checkout builds a mailto enquiry containing the cart", async ({ page }) => {
+    // Seed the zustand-persisted cart directly (no backend / add-to-cart flow).
+    await page.addInitScript(() => {
+      localStorage.setItem(
+        "cart-storage",
+        JSON.stringify({
+          state: {
+            items: [
+              {
+                productId: "p1",
+                sku: "SKU-TEST-1",
+                name: "Test Needle Valve",
+                thumbnailImage: "",
+                price: 100,
+                quantity: 2,
+              },
+            ],
+          },
+          version: 0,
+        }),
+      );
+    });
+    await page.goto("/cart");
+
+    const quote = page.getByRole("link", { name: "Request a Quote" });
+    await expect(quote).toBeVisible();
+    const href = await quote.getAttribute("href");
+    expect(href).toContain("mailto:sales@hiflux.uk.com");
+    expect(decodeURIComponent(href || "")).toContain("Test Needle Valve");
+  });
+});

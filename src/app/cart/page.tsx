@@ -34,6 +34,22 @@ export default function CartPage() {
   const totalPrice = useCartStore((state) => state.totalPrice());
   const totalItems = useCartStore((state) => state.totalItems());
 
+  // Quote-driven checkout: no payment backend, so "checkout" opens a prefilled
+  // enquiry email listing the cart to sales@. Frontend-only, mirrors the
+  // contact-form mailto handoff.
+  const enquiryBody =
+    "I'd like a quote for the following items:\n\n" +
+    items
+      .map(
+        (i) =>
+          `${i.quantity} x ${i.name} (${i.sku}) - £${(i.price * i.quantity).toFixed(2)}`,
+      )
+      .join("\n") +
+    `\n\nTotal: £${totalPrice.toFixed(2)}\n\nName:\nCompany:\nDelivery location:`;
+  const checkoutHref = `mailto:sales@hiflux.uk.com?subject=${encodeURIComponent(
+    `Quote request (${totalItems} item${totalItems === 1 ? "" : "s"})`,
+  )}&body=${encodeURIComponent(enquiryBody)}`;
+
   if (items.length === 0) {
     return (
       <Box sx={{ bgcolor: PAGE_BG, minHeight: "100vh" }}>
@@ -287,12 +303,14 @@ export default function CartPage() {
             </Box>
 
             <Button
+              component="a"
+              href={checkoutHref}
               variant="contained"
               fullWidth
               disableElevation
               sx={{ py: 1.4, fontWeight: 700 }}
             >
-              Checkout
+              Request a Quote
             </Button>
           </Box>
         </Box>

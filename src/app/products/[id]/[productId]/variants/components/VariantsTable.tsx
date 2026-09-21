@@ -307,7 +307,10 @@ function VariantRow({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goToDetail();
+                      }}
                       sx={{
                         textTransform: "none",
                         fontWeight: 700,

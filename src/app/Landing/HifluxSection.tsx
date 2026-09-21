@@ -65,7 +65,7 @@ export default function HifluxSection() {
             is the exclusive UK and EU distributor for HIFLUX Co., Ltd of
             Daejeon, South Korea — a manufacturer of ultra high-pressure valves,
             fittings and tubing since 2010, and a designated Hydrogen Specialist
-            Company under Korea's Ministry of Trade, Industry and Energy.
+            Company under Korea&apos;s Ministry of Trade, Industry and Energy.
           </Typography>
 
           <Typography
