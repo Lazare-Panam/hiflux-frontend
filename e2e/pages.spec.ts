@@ -93,13 +93,17 @@ test.describe("Sitemap URLs resolve", () => {
     expect(locs.length, "sitemap has URLs").toBeGreaterThan(0);
 
     // Convert absolute prod URLs to local paths so we test the running server.
-    const paths = locs.map((u) => {
-      try {
-        return new URL(u).pathname;
-      } catch {
-        return u;
-      }
-    });
+    const paths = locs
+      .map((u) => {
+        try {
+          return new URL(u).pathname;
+        } catch {
+          return u;
+        }
+      })
+      // This is a dead-PAGE check; skip static assets that can appear in the
+      // sitemap (e.g. /icon.svg), which aren't routes.
+      .filter((p) => !/\.(svg|png|jpe?g|webp|gif|ico|xml|txt|pdf|json)$/i.test(p));
 
     const toCheck = paths.slice(0, MAX);
     if (paths.length > MAX) {
