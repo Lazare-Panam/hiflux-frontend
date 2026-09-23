@@ -66,12 +66,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable}`}
     >
       <head>
-        {/* <script
+         <script
           data-cfasync="false"
           type="text/javascript"
           src="https://cdn.seoplatform.io/injector.js?websiteId=28611"
-        /> */}
-        {/* <script
+        /> 
+        <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
@@ -82,7 +82,7 @@ export default function RootLayout({
         })(window, document, "clarity", "script", "y5wirsyo68");
       `,
           }}
-        /> */}
+        /> 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
