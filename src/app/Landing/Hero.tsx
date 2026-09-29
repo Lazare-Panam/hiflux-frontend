@@ -22,7 +22,7 @@ export default function Hero() {
         muted
         loop
         playsInline
-        src="https://pblol2.blob.core.windows.net/hiflux/landing-video.mp4"
+        src="https://pblol2.blob.core.windows.net/hiflux/landing.mp4"
         sx={{
           position: 'absolute',
           inset: 0,
