@@ -32,6 +32,9 @@ export type EditorialBlock =
 
 export type CategoryEditorial = {
   seo?: { title: string; description: string };
+  // Frontend-only override for the visible hero <h1> (otherwise the CMS
+  // bannerTitle is used). Set when the SEO heading differs from the CMS banner.
+  bannerTitle?: string;
   canonical?: string;
   above?: { paragraphs: string[]; ctas: CTA[] };
   below?: EditorialBlock[];
@@ -46,12 +49,19 @@ const DOWNLOAD_CATALOGUE: CTA = {
 };
 
 export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
+  "high-pressure-valves": {
+    bannerTitle: "High pressure valves for extreme service | Hiflux UK",
+  },
+
   "high-pressure-fittings": {
     seo: {
-      title: "High Pressure Fittings UK | Cone & Thread to 150,000 psi",
+      title:
+        "High pressure fittings and manifold components for extreme service applications.",
       description:
         "Cone and thread fittings in 316 stainless, rated 10,000 to 150,000 psi. Elbow, tee and cross bodies with glands, collars and sleeves. UK stock.",
     },
+    bannerTitle:
+      "High pressure fittings and manifolds components for extreme service.",
     canonical: "https://www.hiflux.uk.com/products/high-pressure-fittings",
     above: {
       paragraphs: [
@@ -122,6 +132,8 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
       description:
         "Stainless steel high-pressure tube, coned and threaded nipples and tube support for cone and thread systems to 100,000 psi. UK stock and support.",
     },
+    bannerTitle:
+      "Ultra-high pressure tubing for extreme applications | Hiflux UK",
     canonical: "https://www.hiflux.uk.com/products/high-pressure-tubing",
     above: {
       paragraphs: [

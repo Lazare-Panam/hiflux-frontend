@@ -29,6 +29,15 @@ import { useCartStore } from "@/store/useCartStore";
 
 const BRAND = "#0072BC";
 
+// A variant counts as "priced" only when Price is present and a positive
+// number. Shared by the row (which button to show) and the table (sort order)
+// so both agree on what "has a price" means.
+function variantHasPrice(variant: ProductVariant): boolean {
+  const raw = variant.specs["Price"];
+  const parsed = raw ? parseFloat(raw) : NaN;
+  return !isNaN(parsed) && parsed > 0;
+}
+
 interface RowProps {
   variant: ProductVariant;
   specKeys: string[];
@@ -59,7 +68,7 @@ function VariantRow({
   // being missing, empty, or non-numeric before treating this as priced.
   const rawPrice = variant.specs["Price"];
   const parsedPrice = rawPrice ? parseFloat(rawPrice) : NaN;
-  const hasPrice = !isNaN(parsedPrice) && parsedPrice > 0;
+  const hasPrice = variantHasPrice(variant);
 
   const goToDetail = () => {
     router.push(detailHref);
@@ -361,6 +370,11 @@ export default function VariantsTable({
   };
 
   const sorted = [...variants].sort((a, b) => {
+    // Priced variants always float to the top, regardless of the active column
+    // or sort direction; the column sort only orders rows within each group.
+    const ap = variantHasPrice(a);
+    const bp = variantHasPrice(b);
+    if (ap !== bp) return ap ? -1 : 1;
     const av = a.specs[sortKey] ?? "";
     const bv = b.specs[sortKey] ?? "";
     return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);

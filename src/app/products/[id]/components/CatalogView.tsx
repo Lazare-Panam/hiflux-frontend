@@ -73,8 +73,8 @@ export default function CatalogView({
               letterSpacing: "-0.03em",
             }}
           >
-            {hero.title}
-            {hero.titleAccent && (
+            {editorial?.bannerTitle ?? hero.title}
+            {!editorial?.bannerTitle && hero.titleAccent && (
               <>
                 <br />
                 <Box component="span" sx={{ color: "primary.main" }}>
