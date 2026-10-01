@@ -36,11 +36,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${sku} — ${data.name}`;
   const description = `${sku}: ${data.name} — specifications, pressure rating and materials from Hiflux UK.`;
   const url = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}/variants/${sku}`;
+  // SKU pages are near-duplicates of their series page and were outranking it
+  // (Sept 2026 SEO audit), so consolidate ranking signals onto the parent product.
+  const canonical = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical },
     openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
     twitter: { card: "summary_large_image", title, description, images },
   };

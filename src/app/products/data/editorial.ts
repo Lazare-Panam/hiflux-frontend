@@ -50,13 +50,36 @@ const DOWNLOAD_CATALOGUE: CTA = {
 
 export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
   "high-pressure-valves": {
+    seo: {
+      title: "High Pressure Valves – Needle, Check & Relief | Hiflux UK",
+      description:
+        "High pressure needle, check, ball, relief, control and air operated (AOV) valves rated up to 100,000 psi. UK supply and engineering support from Hiflux.",
+    },
     bannerTitle: "High pressure valves for extreme service | Hiflux UK",
+    canonical: "https://www.hiflux.uk.com/products/high-pressure-valves",
+  },
+
+  "high-pressure-regulators": {
+    seo: {
+      title: "High Pressure Regulators – HPR & Back Pressure | Hiflux UK",
+      description:
+        "High pressure regulators from 500 to 20,000 psi: general, high pressure (HPR), back pressure and air operated back pressure regulators. UK supply.",
+    },
+    canonical: "https://www.hiflux.uk.com/products/high-pressure-regulators",
+  },
+
+  "union-adapters": {
+    seo: {
+      title: "High Pressure Unions & Adapters to 60,000 psi | Hiflux UK",
+      description:
+        "High pressure unions, male and female adapters, bulkhead unions and LOK adapters rated to 60,000 psi for joining tube sizes and pressure classes.",
+    },
+    canonical: "https://www.hiflux.uk.com/products/union-adapters",
   },
 
   "high-pressure-fittings": {
     seo: {
-      title:
-        "High pressure fittings and manifold components for extreme service applications.",
+      title: "High Pressure Cone & Thread Fittings to 150,000 psi | Hiflux",
       description:
         "Cone and thread fittings in 316 stainless, rated 10,000 to 150,000 psi. Elbow, tee and cross bodies with glands, collars and sleeves. UK stock.",
     },

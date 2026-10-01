@@ -12,9 +12,20 @@ describe("product category editorial overlay", () => {
     expect(getCategoryEditorial("high-pressure-tubing")).toBeDefined();
   });
 
+  it("covers the valves, regulators and adapters categories", () => {
+    expect(getCategoryEditorial("high-pressure-valves")).toBeDefined();
+    expect(getCategoryEditorial("high-pressure-regulators")).toBeDefined();
+    expect(getCategoryEditorial("union-adapters")).toBeDefined();
+  });
+
   it("returns undefined for a category without an overlay", () => {
-    expect(getCategoryEditorial("high-pressure-valves")).toBeUndefined();
-    expect(getCategoryEditorial("union-adapters")).toBeUndefined();
+    expect(getCategoryEditorial("not-a-category")).toBeUndefined();
+  });
+
+  it("SEO titles fit in a search result (<= 60 chars)", () => {
+    for (const key of keys) {
+      expect(CATEGORY_EDITORIAL[key].seo?.title.length, `${key} title`).toBeLessThanOrEqual(60);
+    }
   });
 
   it("each overlay has an SEO title, description and canonical URL", () => {

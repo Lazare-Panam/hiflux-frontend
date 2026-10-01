@@ -90,6 +90,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Hiflux UK",
+              // Searchers also type "hi flux" / "HiFlux" (Sept 2026 GSC).
+              alternateName: ["Hi Flux UK", "HiFlux UK", "Hiflux"],
               url: "https://www.hiflux.uk.com",
               logo: "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
               description:

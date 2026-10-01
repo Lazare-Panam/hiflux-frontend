@@ -19,11 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${data.name} — Models & Specs`;
   const description = `Compare ${count} ${data.name} model${count !== 1 ? "s" : ""} from Hiflux UK — specifications, pressure ratings and materials.`;
   const url = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}/variants`;
+  // The models table duplicates the series page; canonicalise to the parent
+  // product so the two don't compete in search (Sept 2026 SEO audit).
+  const canonical = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}`;
   const images = data.thumbnailImage ? [data.thumbnailImage] : undefined;
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical },
     openGraph: { type: "website", siteName: "Hiflux UK", title, description, url, images },
     twitter: { card: "summary_large_image", title, description, images },
   };

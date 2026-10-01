@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Box, Container, Typography, Button, Divider } from "@mui/material";
 
 const EMAIL = "sales@hiflux.uk.com";
@@ -7,9 +8,11 @@ const PHONE_HREF = "+447369243459";
 const PAGE_URL = "https://www.hiflux.uk.com/industrial-filtration-systems";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "Industrial Filtration Systems | HiFlux UK";
+  // Ranks ~#6 for "industrial filter suppliers" (Sept 2026 GSC) with zero
+  // clicks — title/snippet lead with that query plus the concrete offer.
+  const title = "Industrial Filter Suppliers UK | Filtration Systems | HiFlux";
   const description =
-    "Industrial filtration systems engineered for high-pressure, zero-failure operation across the UK and Europe. Contact HiFlux UK for support.";
+    "UK industrial filter suppliers: filtration systems, Y strainers and magnetic filters for high-pressure process and water duty. Talk to an engineer today.";
   return {
     title: { absolute: title },
     description,
@@ -76,6 +79,24 @@ const UK_EUROPE = [
   "Fast response from our UK team",
   "Direct technical contact by phone and email",
   "Products held in stock and available for fast dispatch where listed",
+];
+
+const FILTRATION_RANGE = [
+  {
+    href: "/industrial-strainers",
+    label: "Industrial strainers",
+    body: "Y strainers and basket strainers for line protection ahead of pumps, valves and instruments.",
+  },
+  {
+    href: "/magnetic-filters",
+    label: "Magnetic filters",
+    body: "Inline magnetic filters for ferrous capture in recirculating loops, cooling and process water.",
+  },
+  {
+    href: "/news/backwashing-filter-cycles-municipal-industrial",
+    label: "Backwashing filter cycles",
+    body: "Engineering guide to backwash triggers, DP recovery and cycle design for industrial filters.",
+  },
 ];
 
 const FAQS = [
@@ -150,7 +171,7 @@ const schemaGraph = {
       "@type": "WebPage",
       "@id": `${PAGE_URL}#webpage`,
       url: PAGE_URL,
-      name: "Industrial Filtration Systems | HiFlux UK",
+      name: "Industrial Filter Suppliers UK | Filtration Systems | HiFlux",
       description:
         "HiFlux UK supplies industrial filtration systems and high-pressure components for demanding applications, engineered for reliability, contaminant control, and zero-failure operation across the UK and Europe.",
       inLanguage: "en-GB",
@@ -220,8 +241,8 @@ export default function IndustrialFiltrationSystemsPage() {
             Industrial filtration systems
           </Typography>
           <Typography sx={{ color: "rgba(255,255,255,0.85)", fontSize: "1.05rem", lineHeight: 1.75, maxWidth: 660 }}>
-            Looking for a high-performance industrial filtration system that will not fail
-            under pressure? HiFlux UK supplies industrial filtration solutions engineered for
+            Looking for industrial filter suppliers who understand high pressure? HiFlux UK
+            supplies industrial filtration solutions engineered for
             demanding applications across the UK, Europe, and beyond — filtration hardware and
             high-pressure components for environments where reliability, process stability,
             and contaminant control are critical.
@@ -246,6 +267,28 @@ export default function IndustrialFiltrationSystemsPage() {
           >
             {PHONE_DISPLAY}
           </Button>
+        </Box>
+
+        <SectionHeading>Our industrial filter range</SectionHeading>
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" }, gap: 2, my: 2 }}>
+          {FILTRATION_RANGE.map((item) => (
+            <Link key={item.href} href={item.href} style={{ textDecoration: "none", color: "inherit" }}>
+              <Box
+                sx={{
+                  height: "100%",
+                  p: 2.5,
+                  border: "1px solid rgba(0,0,0,0.12)",
+                  transition: "border-color 0.15s",
+                  "&:hover": { borderColor: "primary.main" },
+                }}
+              >
+                <Typography component="h3" sx={{ fontWeight: 700, color: "primary.main", fontSize: "1.02rem", mb: 0.75 }}>
+                  {item.label}
+                </Typography>
+                <Typography sx={{ color: "text.secondary", fontSize: "0.95rem", lineHeight: 1.7 }}>{item.body}</Typography>
+              </Box>
+            </Link>
+          ))}
         </Box>
 
         <SectionHeading>Industrial filtration systems engineered for zero-failure operation</SectionHeading>

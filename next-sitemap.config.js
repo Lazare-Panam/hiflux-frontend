@@ -16,6 +16,8 @@ const catalogIds = [
 module.exports = {
   siteUrl: "https://www.hiflux.uk.com/",
   generateRobotsTxt: true,
+  // noindex pages must not be advertised in the sitemap.
+  exclude: ["/cart"],
   additionalPaths: async (config) => {
     const result = [];
 
@@ -27,25 +29,12 @@ module.exports = {
           `${API_BASE}api/product/${catalogId}`,
         );
 
+        // Only the series page is listed: /variants and /variants/<SKU> pages
+        // canonicalise to it, and a sitemap should contain canonical URLs only.
         for (const product of catalog.products) {
-          const base = `/products/${catalogId}/${product.id}`;
-          result.push(await config.transform(config, base));
-          result.push(await config.transform(config, `${base}/variants`));
-
-          try {
-            const { data: variantData } = await axios.get(
-              `${API_BASE}api/product/${product.id}/variants`,
-            );
-
-            for (const variant of variantData.variants) {
-              const slug = variant.specs?.["SKU"] ?? variant.id; // matches VariantDetail's lookup logic
-              result.push(
-                await config.transform(config, `${base}/variants/${slug}`),
-              );
-            }
-          } catch {
-            console.warn(`No variants found for ${product.id}, skipping`);
-          }
+          result.push(
+            await config.transform(config, `/products/${catalogId}/${product.id}`),
+          );
         }
       } catch {
         console.warn(`Failed to fetch catalog ${catalogId}, skipping`);
