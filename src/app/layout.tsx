@@ -5,6 +5,7 @@ import QueryProvider from "@/theme/QueryProvider";
 import Navbar from "./Common/Navbar/Navbar";
 import Script from "next/script";
 import Footer from "./Common/Footer";
+import RevealOnScroll from "./Common/RevealOnScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -120,6 +121,7 @@ export default function RootLayout({
         <QueryProvider>
           <ThemeRegistry>
             {" "}
+            <RevealOnScroll />
             <Navbar />
             {children}
             <Script

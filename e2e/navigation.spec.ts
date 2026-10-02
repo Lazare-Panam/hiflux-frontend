@@ -51,7 +51,7 @@ test.describe("Header navigation", () => {
 test.describe("Homepage CTAs", () => {
   const CTAS = [
     { name: "Request a Quote", url: /\/contact$/ }, // hero (first match)
-    { name: "View the Range", url: /\/products$/ },
+    { name: "Shop the Range", url: /\/shop$/ },
     { name: "About Hiflux UK", url: /\/about$/ },
     { name: "Browse all products", url: /\/products$/ },
     { name: "View certifications", url: /\/about$/ },

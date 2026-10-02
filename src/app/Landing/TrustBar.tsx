@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import CountUp from "../Common/CountUp";
 
 // Section 2 — Trust bar. Verifiable-from-catalogue figures that speak to an
 // engineer: max rating, full fitting span, material grade, temperature range.
@@ -16,9 +17,7 @@ export default function TrustBar() {
     <Box
       component="section"
       sx={{
-        bgcolor: "#fff",
-        borderBottom: "1px solid",
-        borderColor: "rgba(0,0,0,0.08)",
+        bgcolor: "primary.main",
       }}
     >
       <Box
@@ -37,11 +36,11 @@ export default function TrustBar() {
               py: { xs: 3, md: 4 },
               px: { xs: 2, md: 3 },
               textAlign: "center",
-              borderLeft: { md: i === 0 ? "none" : "1px solid rgba(0,0,0,0.08)" },
+              borderLeft: { md: i === 0 ? "none" : "1px solid rgba(255,255,255,0.2)" },
               // On the 2-col mobile layout, draw a divider before the right column
               // and above the bottom row.
               borderTop: {
-                xs: i >= 2 ? "1px solid rgba(0,0,0,0.08)" : "none",
+                xs: i >= 2 ? "1px solid rgba(255,255,255,0.2)" : "none",
                 md: "none",
               },
             }}
@@ -50,16 +49,17 @@ export default function TrustBar() {
               sx={{
                 fontWeight: 800,
                 fontSize: { xs: "1.35rem", md: "1.75rem" },
-                color: "text.primary",
+                color: "#fff",
                 lineHeight: 1.1,
+                textTransform: "none",
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {item.value}
+              <CountUp value={item.value} />
             </Typography>
             <Typography
               sx={{
-                color: "text.secondary",
+                color: "rgba(255,255,255,0.8)",
                 fontWeight: 700,
                 fontSize: "0.7rem",
                 letterSpacing: "0.06em",

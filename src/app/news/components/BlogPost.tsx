@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import type { ReactNode } from 'react';
 import {
   Box,
   Chip,
@@ -50,6 +52,36 @@ const ChevronIcon = () => (
   </svg>
 );
 
+// Inline links in post copy use markdown syntax: [anchor text](/path).
+// Internal paths render as next/link (crawlable <a href>), absolute URLs as
+// plain anchors.
+const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+function renderInline(text: string) {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(LINK_RE)) {
+    const [whole, label, href] = m;
+    const start = m.index ?? 0;
+    if (start > last) parts.push(text.slice(last, start));
+    const style = { color: '#0072BC', fontWeight: 600, textDecoration: 'underline' };
+    parts.push(
+      href.startsWith('/') ? (
+        <Link key={start} href={href} style={style}>
+          {label}
+        </Link>
+      ) : (
+        <a key={start} href={href} style={style} target="_blank" rel="noopener noreferrer">
+          {label}
+        </a>
+      ),
+    );
+    last = start + whole.length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
 function renderBody(body: string) {
   return body.split('\n').map((line, i) => {
     if (!line.trim()) return null;
@@ -58,14 +90,14 @@ function renderBody(body: string) {
         <Box key={i} sx={{ display: 'flex', gap: 1.5, mb: 1 }}>
           <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'primary.main', flexShrink: 0, mt: '10px' }} />
           <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1rem' }}>
-            {line.replace('• ', '')}
+            {renderInline(line.replace('• ', ''))}
           </Typography>
         </Box>
       );
     }
     return (
       <Typography key={i} variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.9, fontSize: '1rem', mb: 2 }}>
-        {line}
+        {renderInline(line)}
       </Typography>
     );
   });

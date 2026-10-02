@@ -24,6 +24,7 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 
 import { LEFT_NAV, RIGHT_NAV, type NavItem } from "./navData";
 import MegaMenuPanel from "./MegaMenuPanel";
+import TopBar from "./TopBar";
 import { useCartStore } from "@/store/useCartStore";
 
 const Navbar: React.FC = () => {
@@ -57,6 +58,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
+      <TopBar />
       <AppBar
         position="sticky"
         elevation={0}
@@ -266,11 +268,10 @@ const Navbar: React.FC = () => {
                 <StorefrontOutlinedIcon sx={{ fontSize: 18 }} />
                 Shop
               </Box>
+              {/* The catalogue download now lives in the TopBar. */}
               <Box
-                component="a"
-                href="https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                component={Link}
+                href="/contact"
                 sx={{
                   textDecoration: "none",
                   border: `1.5px solid ${ACCENT}`,
@@ -288,7 +289,7 @@ const Navbar: React.FC = () => {
                   },
                 }}
               >
-                Download Catalog
+                Request a Quote
               </Box>
             </Box>
 

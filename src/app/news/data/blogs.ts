@@ -1,6 +1,11 @@
 import { BlogData } from "../components/BlogPost";
+import { post as coneThread } from "./posts/high-pressure-cone-and-thread-fittings-guide";
+import { post as regulators } from "./posts/high-pressure-regulators-gpr-hpr-bpr-selection-guide";
+import { post as waterFilter } from "./posts/high-flow-industrial-water-filter-selection-guide";
 
 export const blogs: BlogData[] = [
+  // October 2026 SEO content programme (targets from the Sept 2026 audit)
+  coneThread, regulators, waterFilter,
   {
     slug: "backwashing-filter-cycles-municipal-industrial",
     title: "Backwashing 101: Setting filter cycles for reliable water treatment",
@@ -54,7 +59,7 @@ export const blogs: BlogData[] = [
       },
       {
         heading: "How HiFlux simplifies cycle control",
-        body: `HiFlux industrial filtration systems are engineered for predictable DP recovery and low operator input. Designs focus on:\n• Consistent bed and screen hydraulics for repeatable cleaning\n• Robust actuation and seals for frequent cycling\n• Minimal maintenance access with safe isolation\n• Full documentation, material traceability, and certification support for regulated sites\nFor solids that resist hydraulic cleaning, pairing with an upstream magnetic filter can reduce load on the primary filter and cut backwash frequency. See our range of inline magnetic filters for ferrous capture in recirculating loops and process water.\nIf you are integrating RO, consistent pre-filter control protects membranes. Explore our reverse osmosis solutions, including guidance on selecting the right water system filter and RO filter for industrial duty.\n• Learn more about our industrial filtration systems and engineering support at our filtration system overview: https://www.hiflux.uk.com/industrial-filtration-systems\n• Reduce ferrous load ahead of fine filtration with an inline magnetic filter: https://www.hiflux.uk.com/magnetic-filters\n• Plan RO pre-treatment and protection, including filters for reverse osmosis and reverse osmosis system manufacturers guidance: https://www.hiflux.uk.com/reverse-osmosis-water-filtration`,
+        body: `HiFlux industrial filtration systems are engineered for predictable DP recovery and low operator input. Designs focus on:\n• Consistent bed and screen hydraulics for repeatable cleaning\n• Robust actuation and seals for frequent cycling\n• Minimal maintenance access with safe isolation\n• Full documentation, material traceability, and certification support for regulated sites\nFor solids that resist hydraulic cleaning, pairing with an upstream magnetic filter can reduce load on the primary filter and cut backwash frequency. See our range of inline magnetic filters for ferrous capture in recirculating loops and process water.\nIf you are integrating RO, consistent pre-filter control protects membranes. Explore our reverse osmosis solutions, including guidance on selecting the right water system filter and RO filter for industrial duty.\n• Learn more about our [industrial filtration systems](/industrial-filtration-systems) and engineering support.\n• Reduce ferrous load ahead of fine filtration with an [inline magnetic filter](/magnetic-filters).\n• Plan RO pre-treatment and protection, including filters for reverse osmosis, with our [filtration engineers](/industrial-filtration-systems).`,
       },
       {
         heading: "Practical commissioning checklist",

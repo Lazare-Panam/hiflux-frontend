@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContactCTA from "./Landing/ContactCTA";
 import FeaturedProducts from "./Landing/FeaturedProducts";
 import Hero from "./Landing/Hero";
+import CategoryGrid from "./Landing/CategoryGrid";
 import HeaMembership from "./Landing/HeaMembership";
 import HifluxSection from "./Landing/HifluxSection";
 import TrustBar from "./Landing/TrustBar";
@@ -38,6 +39,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <CategoryGrid />
       <TrustBar />
       <HifluxSection />
       <ProductRange />
