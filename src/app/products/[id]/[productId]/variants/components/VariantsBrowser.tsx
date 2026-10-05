@@ -106,7 +106,8 @@ export default function VariantsBrowser({
       </Box>
 
       {/* Content */}
-      <Box sx={{ maxWidth: "1600px", mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
+      {/* Near full-width so wide spec tables have room */}
+      <Box sx={{ px: { xs: 2, md: 3 }, py: { xs: 3, md: 4 } }}>
         <Box
           sx={{
             display: "flex",
@@ -118,7 +119,7 @@ export default function VariantsBrowser({
           {/* Sidebar stays in view while the table scrolls */}
           <Box
             sx={{
-              width: { md: 270 },
+              width: { md: 260 },
               flexShrink: 0,
               position: { md: "sticky" },
               top: 16,
@@ -159,13 +160,13 @@ export default function VariantsBrowser({
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
-                <Typography component="h2" sx={{ fontSize: "1.05rem", fontWeight: 800, color: "text.primary" }}>
+                <Typography component="h2" sx={{ fontSize: "1.2rem", fontWeight: 800, color: "text.primary" }}>
                   All Models
                 </Typography>
                 <Chip
                   label={`${filtered.length} of ${data.variants.length}`}
                   size="small"
-                  sx={{ height: 22, fontSize: "0.72rem", fontWeight: 700, bgcolor: "rgba(0,114,188,0.1)", color: "#0072BC", "& .MuiChip-label": { textTransform: "none" } }}
+                  sx={{ height: 24, fontSize: "0.8rem", fontWeight: 700, bgcolor: "rgba(0,114,188,0.1)", color: "#0072BC", "& .MuiChip-label": { textTransform: "none" } }}
                 />
               </Box>
               <Box
@@ -174,8 +175,8 @@ export default function VariantsBrowser({
                   alignItems: "center",
                   gap: 1,
                   px: 1.5,
-                  height: 38,
-                  width: { xs: "100%", sm: 260 },
+                  height: 42,
+                  width: { xs: "100%", sm: 300 },
                   bgcolor: "#f5f8fb",
                   border: "1px solid rgba(15,40,70,0.08)",
                   borderRadius: "8px",
@@ -183,13 +184,13 @@ export default function VariantsBrowser({
                   "&:focus-within": { borderColor: "#0072BC", bgcolor: "#fff" },
                 }}
               >
-                <SearchIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                <SearchIcon sx={{ fontSize: 20, color: "text.secondary" }} />
                 <InputBase
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search SKU…"
                   inputProps={{ "aria-label": "Search models by SKU" }}
-                  sx={{ flex: 1, fontSize: "0.88rem" }}
+                  sx={{ flex: 1, fontSize: "0.98rem" }}
                 />
               </Box>
             </Box>

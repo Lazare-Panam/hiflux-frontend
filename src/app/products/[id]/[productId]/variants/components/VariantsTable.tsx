@@ -61,7 +61,7 @@ function AddButton({
       sx={{
         textTransform: "none",
         fontWeight: 700,
-        fontSize: size === "panel" ? "0.85rem" : "0.78rem",
+        fontSize: size === "panel" ? "0.95rem" : "0.86rem",
         borderRadius: "4px",
         whiteSpace: "nowrap",
         px: size === "panel" ? 2.5 : 1.5,
@@ -135,7 +135,7 @@ function VariantRow({
       sx={{
         textTransform: "none",
         fontWeight: 700,
-        fontSize: "0.78rem",
+        fontSize: "0.86rem",
         borderRadius: "4px",
         whiteSpace: "nowrap",
         borderColor: alpha(BRAND, 0.5),
@@ -147,7 +147,7 @@ function VariantRow({
     </Button>
   );
 
-  const cellSx = { py: 2, fontSize: "0.9rem", borderBottom: ROW_LINE, color: "text.primary", textTransform: "none" as const };
+  const cellSx = { py: 2.25, fontSize: "1rem", borderBottom: ROW_LINE, color: "text.primary", textTransform: "none" as const };
   const colCount = specKeys.length + (showPrice ? 1 : 0) + 3;
 
   return (
@@ -187,8 +187,8 @@ function VariantRow({
         <TableCell sx={{ ...cellSx, width: 72, py: 1.25 }}>
           <Box
             sx={{
-              width: 52,
-              height: 52,
+              width: 58,
+              height: 58,
               background: "linear-gradient(180deg, #fff 0%, #f3f6f9 100%)",
               border: "1px solid rgba(15,40,70,0.08)",
               borderRadius: "8px",
@@ -198,7 +198,7 @@ function VariantRow({
             }}
           >
             {thumbnailImage && (
-              <Image src={thumbnailImage} alt="" width={40} height={40} style={{ objectFit: "contain" }} />
+              <Image src={thumbnailImage} alt="" width={46} height={46} style={{ objectFit: "contain" }} />
             )}
           </Box>
         </TableCell>
@@ -229,7 +229,7 @@ function VariantRow({
                 ...(index === 0 && {
                   fontFamily: MONO,
                   fontWeight: 600,
-                  fontSize: "0.88rem",
+                  fontSize: "0.98rem",
                   letterSpacing: "0.02em",
                   "& .sku-link": {
                     color: "inherit",
@@ -257,7 +257,7 @@ function VariantRow({
         })}
 
         {showPrice && (
-          <TableCell sx={{ ...cellSx, fontWeight: 800, fontSize: "0.98rem", whiteSpace: "nowrap" }}>
+          <TableCell sx={{ ...cellSx, fontWeight: 800, fontSize: "1.08rem", whiteSpace: "nowrap" }}>
             {price !== null ? formatPrice(price) : "—"}
           </TableCell>
         )}
@@ -300,7 +300,7 @@ function VariantRow({
               )}
               <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography
-                  sx={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.12em", color: BRAND, mb: 2, textTransform: "uppercase" }}
+                  sx={{ fontSize: "0.82rem", fontWeight: 800, letterSpacing: "0.12em", color: BRAND, mb: 2, textTransform: "uppercase" }}
                 >
                   Specifications
                 </Typography>
@@ -308,12 +308,12 @@ function VariantRow({
                   {Object.entries(variant.specs).map(([k, v]) => (
                     <Box key={k}>
                       <Typography
-                        sx={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "primary.dark", mb: 0.25 }}
+                        sx={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "primary.dark", mb: 0.25 }}
                       >
                         {k}
                       </Typography>
                       <Typography
-                        sx={{ fontSize: "0.92rem", fontWeight: 700, color: "text.primary", textTransform: "none", ...(k === "SKU" && { fontFamily: MONO }) }}
+                        sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary", textTransform: "none", ...(k === "SKU" && { fontFamily: MONO }) }}
                       >
                         {k === "Price" && price !== null ? formatPrice(price) : v}
                       </Typography>
@@ -384,7 +384,7 @@ export default function VariantsTable({ variants, specKeys, thumbnailImage, prod
     bgcolor: "#f6f9fc",
     borderBottom: "1px solid rgba(15,40,70,0.08)",
     fontWeight: 700,
-    fontSize: "0.7rem",
+    fontSize: "0.78rem",
     color: "#5b6b7c",
     textTransform: "uppercase" as const,
     letterSpacing: "0.08em",
@@ -397,7 +397,7 @@ export default function VariantsTable({ variants, specKeys, thumbnailImage, prod
       active={sortKey === key}
       direction={sortKey === key ? sortDir : "asc"}
       onClick={() => handleSort(key)}
-      sx={{ "&.Mui-active": { color: BRAND }, "& .MuiTableSortLabel-icon": { fontSize: 16 } }}
+      sx={{ "&.Mui-active": { color: BRAND }, "& .MuiTableSortLabel-icon": { fontSize: 18 } }}
     >
       {label}
     </TableSortLabel>
@@ -423,7 +423,7 @@ export default function VariantsTable({ variants, specKeys, thumbnailImage, prod
           {sorted.length === 0 ? (
             <TableRow>
               <TableCell colSpan={colCount} align="center" sx={{ py: 8 }}>
-                <Typography sx={{ color: "text.secondary", fontSize: "0.9rem" }}>
+                <Typography sx={{ color: "text.secondary", fontSize: "1rem" }}>
                   No models match these filters.
                 </Typography>
               </TableCell>

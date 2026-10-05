@@ -61,7 +61,7 @@ export default function VariantsSidebar({
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", mb: 2 }}>
-        <Typography component="h2" sx={{ fontSize: "1.15rem", fontWeight: 800, color: "text.primary" }}>
+        <Typography component="h2" sx={{ fontSize: "1.3rem", fontWeight: 800, color: "text.primary" }}>
           Shop By
         </Typography>
         {activeCount > 0 && (
@@ -72,7 +72,7 @@ export default function VariantsSidebar({
               border: 0,
               bgcolor: "transparent",
               p: 0,
-              fontSize: "0.78rem",
+              fontSize: "0.86rem",
               fontWeight: 700,
               color: BRAND,
               cursor: "pointer",
@@ -109,14 +109,14 @@ export default function VariantsSidebar({
                 sx={{ px: 2, minHeight: 52, "& .MuiAccordionSummary-content": { my: 1 } }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography sx={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary" }}>
+                  <Typography sx={{ fontSize: "1.05rem", fontWeight: 700, color: "text.primary" }}>
                     {key}
                   </Typography>
                   {selected.length > 0 && (
                     <Chip
                       label={selected.length}
                       size="small"
-                      sx={{ height: 18, fontSize: "0.68rem", fontWeight: 700, bgcolor: BRAND, color: "#fff" }}
+                      sx={{ height: 20, fontSize: "0.74rem", fontWeight: 700, bgcolor: BRAND, color: "#fff" }}
                     />
                   )}
                 </Box>
@@ -152,7 +152,7 @@ export default function VariantsSidebar({
                         />
                       }
                       label={
-                        <Typography sx={{ fontSize: "0.88rem", color: "text.primary", textTransform: "none" }}>
+                        <Typography sx={{ fontSize: "0.98rem", color: "text.primary", textTransform: "none" }}>
                           {opt}
                         </Typography>
                       }
