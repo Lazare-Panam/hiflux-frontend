@@ -41,7 +41,7 @@ export default function NewsPage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%)",
+              "linear-gradient(to right, rgba(0,58,110,0.85) 0%, rgba(0,83,155,0.45) 60%, rgba(0,114,188,0.15) 100%)",
           }}
         />
 
@@ -95,7 +95,7 @@ export default function NewsPage() {
           <Typography
             variant="overline"
             sx={{
-              color: "primary.light",
+              color: "rgba(255,255,255,0.8)",
               letterSpacing: 6,
               fontSize: "0.7rem",
               display: "block",

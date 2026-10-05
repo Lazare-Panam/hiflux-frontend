@@ -16,7 +16,7 @@ export default function ProductsPage() {
           display: "flex",
           alignItems: "flex-end",
           overflow: "hidden",
-          bgcolor: "#0a0604",
+          bgcolor: "#00539B",
         }}
       >
         <Box
@@ -37,7 +37,7 @@ export default function ProductsPage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(180deg, rgba(10,6,4,0.2) 0%, rgba(10,6,4,0.9) 100%)",
+              "linear-gradient(180deg, rgba(0,58,110,0.2) 0%, rgba(0,58,110,0.9) 100%)",
           }}
         />
 
@@ -87,7 +87,7 @@ export default function ProductsPage() {
         >
           <Typography
             sx={{
-              color: "primary.light",
+              color: "rgba(255,255,255,0.8)",
               letterSpacing: "0.2em",
               fontSize: "0.72rem",
               fontWeight: 700,

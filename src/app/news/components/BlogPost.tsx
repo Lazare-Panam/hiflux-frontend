@@ -123,7 +123,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
           alt={blog.title}
           sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
-        <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%)' }} />
+        <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,45,84,0.88) 0%, rgba(0,83,155,0.4) 60%, rgba(0,114,188,0.1) 100%)' }} />
         <Box
           sx={{
             position: 'relative',
@@ -223,7 +223,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
         {blog.cta && (
           <Box
             sx={{
-              bgcolor: 'secondary.main',
+              background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)',
               p: { xs: 4, md: 6 },
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
@@ -246,7 +246,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
                 color="primary"
                 component="a"
                 href={`mailto:${blog.cta.email}`}
-                sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 600, textTransform: 'none' }}
+                sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 600, textTransform: 'none', bgcolor: '#fff', color: 'primary.main', '&:hover': { bgcolor: '#e6f1f9' } }}
               >
                 {blog.cta.email}
               </Button>

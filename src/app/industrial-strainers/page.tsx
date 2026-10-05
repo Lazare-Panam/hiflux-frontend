@@ -423,7 +423,7 @@ export default function IndustrialStrainersPage() {
       </Container>
 
       {/* CTA */}
-      <Box sx={{ bgcolor: "secondary.main", py: { xs: 6, md: 8 } }}>
+      <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", py: { xs: 6, md: 8 } }}>
         <Container maxWidth="md" sx={{ textAlign: "center" }}>
           <Typography
             component="h2"
@@ -437,7 +437,7 @@ export default function IndustrialStrainersPage() {
             solution that protects your process and your high-pressure hardware.
           </Typography>
           <Box sx={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
-            <Button variant="contained" href={`mailto:${EMAIL}`} sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 700, textTransform: "none" }}>
+            <Button variant="contained" href={`mailto:${EMAIL}`} sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 700, textTransform: "none", bgcolor: "#fff", color: "primary.main", "&:hover": { bgcolor: "#e6f1f9" } }}>
               {EMAIL}
             </Button>
             <Button

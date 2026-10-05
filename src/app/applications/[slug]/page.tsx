@@ -68,7 +68,7 @@ function CtaButton({
   cta: CTA;
   variant: "contained" | "outlined";
 }) {
-  // Rendered only inside the dark closing band, so the outlined variant needs
+  // Rendered only inside the blue closing band, so the outlined variant needs
   // white border/text for contrast (default outlined uses the primary colour).
   const sx = {
     borderRadius: 0,
@@ -76,6 +76,12 @@ function CtaButton({
     py: 1.25,
     fontWeight: 700,
     textTransform: "none" as const,
+    // Contained = white on the blue band so it doesn't disappear into it.
+    ...(variant === "contained" && {
+      bgcolor: "#fff",
+      color: "primary.main",
+      "&:hover": { bgcolor: "#e6f1f9" },
+    }),
     ...(variant === "outlined" && {
       borderColor: "rgba(255,255,255,0.4)",
       color: "#fff",
@@ -408,7 +414,7 @@ export default async function ApplicationPage({ params }: Props) {
       </Container>
 
       {/* Closing CTA */}
-      <Box sx={{ bgcolor: "secondary.main", py: { xs: 6, md: 8 } }}>
+      <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", py: { xs: 6, md: 8 } }}>
         <Container maxWidth="md" sx={{ textAlign: "center" }}>
           <Typography
             component="h2"

@@ -19,15 +19,15 @@ export default function ProductDetailView({ data, id }: Props) {
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
       {/* Hero */}
-      <Box sx={{ bgcolor: '#0a0604', px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
+      <Box sx={{ background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)', px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
         <Box sx={{ maxWidth: '1280px', mx: 'auto' }}>
-          <Typography sx={{ color: 'primary.light', letterSpacing: '0.2em', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', mb: 1 }}>
+          <Typography sx={{ color: 'rgba(255,255,255,0.75)', letterSpacing: '0.2em', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', mb: 1 }}>
             Ball Valves
           </Typography>
           <Typography component="h1" sx={{ color: '#fff', fontSize: { xs: '1.8rem', md: '2.6rem' }, fontWeight: 800, lineHeight: 1.1 }}>
             {data.bannerTitle}
           </Typography>
-          <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', mt: 1 }}>
+          <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', mt: 1 }}>
             {data.bannerSubtitle}
           </Typography>
         </Box>

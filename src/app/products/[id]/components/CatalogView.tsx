@@ -40,7 +40,7 @@ export default function CatalogView({
           display: "flex",
           alignItems: "center",
           overflow: "hidden",
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.52), rgba(0,0,0,0.52)), url("${hero.bannerImage}")`,
+          backgroundImage: `linear-gradient(rgba(0,58,110,0.72), rgba(0,45,84,0.82)), url("${hero.bannerImage}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           py: { xs: 8, md: 12 },

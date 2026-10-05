@@ -18,7 +18,8 @@ export type MegaMenuColumn = {
   href: string;
   items: MegaMenuItem[];
   // Optional extra columns in the desktop panel (MARS-style layout).
-  applications?: NavSubItem[];
+  // Ratings are the products' "Pressure Rating" specs from the product API.
+  ratings?: { label: string; links: NavSubItem[] }[];
   resources?: NavLinkGroup[];
 };
 
@@ -31,13 +32,6 @@ const CATALOGUE: NavLinkGroup = {
       external: true,
     },
   ],
-};
-
-const APP = {
-  hydrogen: { label: "Hydrogen Refuelling", href: "/applications/hydrogen-refuelling" },
-  wellhead: { label: "Wellhead & Pressure Control", href: "/applications/wellhead-pressure-control" },
-  research: { label: "Research & Testing", href: "/applications/research-and-testing" },
-  chemical: { label: "Chemical Processing", href: "/applications/chemical-processing" },
 };
 
 const CONE_THREAD_GUIDE = {
@@ -60,7 +54,12 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Valves",
         href: "/products/high-pressure-valves",
-        applications: [APP.hydrogen, APP.wellhead, APP.chemical],
+        ratings: [
+          { label: "Up to 100,000 psi", links: [{ label: "Needle Valve", href: "/products/high-pressure-valves/ndl-ultra-100k" }, { label: "Check Valve", href: "/products/high-pressure-valves/chk-ultra-100k" }] },
+          { label: "Up to 60,000 psi", links: [{ label: "Air Operated Valve", href: "/products/high-pressure-valves/aov-nc-60k" }, { label: "Safety Valve", href: "/products/high-pressure-valves/saf-rel-factory-60k" }] },
+          { label: "Up to 20,000 psi", links: [{ label: "Ball Valve", href: "/products/high-pressure-valves/ball-med-20k" }] },
+          { label: "Up to 7,500 psi", links: [{ label: "Control Valve", href: "/products/high-pressure-valves/spc-ctrl-75k" }] },
+        ],
         resources: [
           { heading: "View All", links: [{ label: "View All High Pressure Valves", href: "/products/high-pressure-valves" }] },
           { heading: "Guides", links: [{ label: "Check Valves Guide", href: "/news/high-pressure-check-valves-reverse-flow-prevention" }] },
@@ -96,7 +95,10 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Fittings",
         href: "/products/high-pressure-fittings",
-        applications: [APP.hydrogen, APP.wellhead, APP.research, APP.chemical],
+        ratings: [
+          { label: "Up to 150,000 psi", links: [{ label: "Fitting", href: "/products/high-pressure-fittings/fit-ultra-150k" }, { label: "Fitting Accessory", href: "/products/high-pressure-fittings/acc-ultra-150k" }] },
+          { label: "Up to 60,000 psi", links: [{ label: "Manifold Block", href: "/products/high-pressure-fittings/mfb-high-60k" }, { label: "Tube Cap", href: "/products/high-pressure-fittings/cap-high-60k" }] },
+        ],
         resources: [
           { heading: "View All", links: [{ label: "View All High Pressure Fittings", href: "/products/high-pressure-fittings" }] },
           { heading: "Guides", links: [CONE_THREAD_GUIDE] },
@@ -128,7 +130,9 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Tubing",
         href: "/products/high-pressure-tubing",
-        applications: [APP.hydrogen, APP.research],
+        ratings: [
+          { label: "Up to 100,000 psi", links: [{ label: "Tube", href: "/products/high-pressure-tubing/tube-ultra-100k" }, { label: "Nipple", href: "/products/high-pressure-tubing/nip-ultra-100k" }] },
+        ],
         resources: [
           { heading: "View All", links: [{ label: "View All High Pressure Tubing", href: "/products/high-pressure-tubing" }] },
           { heading: "Guides", links: [CONE_THREAD_GUIDE] },
@@ -156,6 +160,10 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "Union & Adapters",
         href: "/products/union-adapters",
+        ratings: [
+          { label: "Up to 60,000 psi", links: [{ label: "Union", href: "/products/union-adapters/unn-ff-60k" }, { label: "Male to Male", href: "/products/union-adapters/adp-mm-60k" }, { label: "Male to Female", href: "/products/union-adapters/adp-mf-60k" }, { label: "Bulkhead", href: "/products/union-adapters/adp-bulkhead-60k" }] },
+          { label: "Up to 20,000 psi", links: [{ label: "LOK to Female", href: "/products/union-adapters/adp-lokf-f-20k" }] },
+        ],
         resources: [
           { heading: "View All", links: [{ label: "View All Unions & Adapters", href: "/products/union-adapters" }] },
           CATALOGUE,
@@ -186,7 +194,11 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Regulators",
         href: "/products/high-pressure-regulators",
-        applications: [APP.chemical, APP.research],
+        ratings: [
+          { label: "Up to 3,000 psi", links: [{ label: "General (GPR)", href: "/products/high-pressure-regulators/gpr-normal-3000" }] },
+          { label: "Up to 15,000 psi", links: [{ label: "High Pressure (HPR)", href: "/products/high-pressure-regulators/hpr-10000" }, { label: "Back Pressure (BPR)", href: "/products/high-pressure-regulators/bpr-15000" }] },
+          { label: "Up to 20,000 psi", links: [{ label: "Air Operated BPR", href: "/products/high-pressure-regulators/abpr-10000" }] },
+        ],
         resources: [
           { heading: "View All", links: [{ label: "View All High Pressure Regulators", href: "/products/high-pressure-regulators" }] },
           { heading: "Guides", links: [{ label: "Regulator Selection Guide", href: "/news/high-pressure-regulators-gpr-hpr-bpr-selection-guide" }] },
