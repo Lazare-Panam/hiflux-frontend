@@ -343,7 +343,8 @@ const Navbar: React.FC = () => {
         {/* Mega menu */}
         {openMenu && activeItem?.megaMenu && (
           <Box onMouseEnter={() => activeItem && handleEnter(activeItem.label)}>
-            <MegaMenuPanel columns={activeItem.megaMenu} />
+            {/* keyed so each menu opens on its own first tab */}
+            <MegaMenuPanel key={activeItem.label} columns={activeItem.megaMenu} />
           </Box>
         )}
       </AppBar>

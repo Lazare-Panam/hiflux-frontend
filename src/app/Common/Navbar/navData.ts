@@ -9,10 +9,40 @@ export type MegaMenuItem = {
   subItems?: NavSubItem[];
 };
 
+export type NavLink = NavSubItem & { external?: boolean };
+
+export type NavLinkGroup = { heading: string; links: NavLink[] };
+
 export type MegaMenuColumn = {
   heading: string;
   href: string;
   items: MegaMenuItem[];
+  // Optional extra columns in the desktop panel (MARS-style layout).
+  applications?: NavSubItem[];
+  resources?: NavLinkGroup[];
+};
+
+const CATALOGUE: NavLinkGroup = {
+  heading: "Catalogue",
+  links: [
+    {
+      label: "Download E-Catalogue (PDF)",
+      href: "https://pblol2.blob.core.windows.net/hiflux/catalogs/hiflux_catalog_en.pdf",
+      external: true,
+    },
+  ],
+};
+
+const APP = {
+  hydrogen: { label: "Hydrogen Refuelling", href: "/applications/hydrogen-refuelling" },
+  wellhead: { label: "Wellhead & Pressure Control", href: "/applications/wellhead-pressure-control" },
+  research: { label: "Research & Testing", href: "/applications/research-and-testing" },
+  chemical: { label: "Chemical Processing", href: "/applications/chemical-processing" },
+};
+
+const CONE_THREAD_GUIDE = {
+  label: "Cone & Thread Fittings Guide",
+  href: "/news/high-pressure-cone-and-thread-fittings-guide",
 };
 
 export type NavItem = {
@@ -30,6 +60,12 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Valves",
         href: "/products/high-pressure-valves",
+        applications: [APP.hydrogen, APP.wellhead, APP.chemical],
+        resources: [
+          { heading: "View All", links: [{ label: "View All High Pressure Valves", href: "/products/high-pressure-valves" }] },
+          { heading: "Guides", links: [{ label: "Check Valves Guide", href: "/news/high-pressure-check-valves-reverse-flow-prevention" }] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "Needle Valve",
@@ -60,6 +96,12 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Fittings",
         href: "/products/high-pressure-fittings",
+        applications: [APP.hydrogen, APP.wellhead, APP.research, APP.chemical],
+        resources: [
+          { heading: "View All", links: [{ label: "View All High Pressure Fittings", href: "/products/high-pressure-fittings" }] },
+          { heading: "Guides", links: [CONE_THREAD_GUIDE] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "Fitting",
@@ -86,6 +128,12 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Tubing",
         href: "/products/high-pressure-tubing",
+        applications: [APP.hydrogen, APP.research],
+        resources: [
+          { heading: "View All", links: [{ label: "View All High Pressure Tubing", href: "/products/high-pressure-tubing" }] },
+          { heading: "Guides", links: [CONE_THREAD_GUIDE] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "Tube",
@@ -108,6 +156,10 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "Union & Adapters",
         href: "/products/union-adapters",
+        resources: [
+          { heading: "View All", links: [{ label: "View All Unions & Adapters", href: "/products/union-adapters" }] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "Union",
@@ -134,6 +186,12 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "High Pressure Regulators",
         href: "/products/high-pressure-regulators",
+        applications: [APP.chemical, APP.research],
+        resources: [
+          { heading: "View All", links: [{ label: "View All High Pressure Regulators", href: "/products/high-pressure-regulators" }] },
+          { heading: "Guides", links: [{ label: "Regulator Selection Guide", href: "/news/high-pressure-regulators-gpr-hpr-bpr-selection-guide" }] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "General Pressure Regulator",
@@ -153,6 +211,24 @@ export const LEFT_NAV: NavItem[] = [
           },
         ],
       },
+      {
+        heading: "Industrial Filtration",
+        href: "/industrial-filtration-systems",
+        items: [
+          { label: "Industrial Filtration Systems", href: "/industrial-filtration-systems" },
+          { label: "Y & Basket Strainers", href: "/industrial-strainers" },
+          { label: "Magnetic Filters", href: "/magnetic-filters" },
+        ],
+        resources: [
+          {
+            heading: "Guides",
+            links: [
+              { label: "High Flow Water Filter Guide", href: "/news/high-flow-industrial-water-filter-selection-guide" },
+              { label: "Backwashing Filter Cycles", href: "/news/backwashing-filter-cycles-municipal-industrial" },
+            ],
+          },
+        ],
+      },
     ],
   },
   {
@@ -162,6 +238,10 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "Applications",
         href: "/applications",
+        resources: [
+          { heading: "View All", links: [{ label: "View All Applications", href: "/applications" }] },
+          CATALOGUE,
+        ],
         items: [
           {
             label: "Hydrogen Refuelling",
