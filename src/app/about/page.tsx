@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Box, Container, Typography, Divider, Button } from "@mui/material";
 import ProductIndexSection from "./ProductIndexSection";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = "About Hiflux UK | UK High-Pressure Flow Control Distributor";
@@ -210,6 +211,7 @@ export default async function AboutPage() {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs items={[{ label: "About Us" }]} />
           <Typography
             component="span"
             sx={{

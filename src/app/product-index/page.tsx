@@ -3,6 +3,7 @@ import { getCatalog } from "@/api/useProductCatalog";
 import { getProductVariants } from "@/api/useProductVariants";
 import { blogs } from "../news/data/blogs";
 import styles from "./product-index.module.css";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 const PAGE_URL = "https://www.hiflux.uk.com/product-index";
 
@@ -66,6 +67,7 @@ export default async function ProductIndexPage() {
 
   return (
     <div className={styles.wrap}>
+      <PageBreadcrumbs tone="dark" items={[{ label: "Product Index" }]} />
       <h1 className={styles.h1}>Product Index</h1>
       <p className={styles.intro}>
         Every Hiflux high-pressure product we supply in the UK — browse by

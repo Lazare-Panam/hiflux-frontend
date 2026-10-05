@@ -112,7 +112,15 @@ export default async function ProductDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <ProductDetailHero name={data.name} category={category} />
+      <ProductDetailHero
+        name={data.name}
+        category={category}
+        crumbs={[
+          { label: 'Products', href: '/products' },
+          { label: category, href: `/products/${catalogId}` },
+          { label: data.name },
+        ]}
+      />
       <Box sx={{ maxWidth: '1280px', mx: 'auto', px: { xs: 3, md: 8 }, py: { xs: 6, md: 10 } }}>
         <Grid container spacing={{ xs: 6, md: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>

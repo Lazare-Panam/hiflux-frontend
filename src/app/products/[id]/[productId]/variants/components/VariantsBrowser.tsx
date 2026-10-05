@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Box, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { Box, Typography, Chip, InputBase } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import { useParams } from "next/navigation";
 import type { ProductSeriesVariants } from "@/api/useProductVariants";
 import VariantsSidebar from "./VariantsSidebar";
 import VariantsTable from "./VariantsTable";
 import VariantsActiveFilters from "./VariantsActiveFilters";
 
-const BRAND = "#0072BC";
 
 /**
  * Client-side variants browser (filtering UI). Receives the already-fetched
@@ -22,6 +23,8 @@ export default function VariantsBrowser({
   data: ProductSeriesVariants;
   category?: string;
 }) {
+  const { id, productId } = useParams<{ id: string; productId: string }>();
+  const [query, setQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(
     {},
   );
@@ -48,18 +51,29 @@ export default function VariantsBrowser({
   }, [data, allSpecKeys]);
 
   const filtered = useMemo(() => {
-    return data.variants.filter((v) =>
-      Object.entries(activeFilters).every(
-        ([key, vals]) => vals.length === 0 || vals.includes(v.specs[key]),
-      ),
+    const q = query.trim().toLowerCase();
+    return data.variants.filter(
+      (v) =>
+        (!q || (v.specs["SKU"] ?? v.id).toLowerCase().includes(q)) &&
+        Object.entries(activeFilters).every(
+          ([key, vals]) => vals.length === 0 || vals.includes(v.specs[key]),
+        ),
     );
-  }, [data, activeFilters]);
+  }, [data, activeFilters, query]);
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       {/* Hero */}
       <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
         <Box sx={{ maxWidth: "1280px", mx: "auto" }}>
+          <PageBreadcrumbs
+            items={[
+              { label: "Products", href: "/products" },
+              ...(category ? [{ label: category, href: `/products/${id}` }] : []),
+              { label: data.name, href: `/products/${id}/${productId}` },
+              { label: "All Models" },
+            ]}
+          />
           {category && (
             <Typography
               sx={{
@@ -93,28 +107,97 @@ export default function VariantsBrowser({
 
       {/* Content */}
       <Box sx={{ maxWidth: "1600px", mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
-        <VariantsActiveFilters
-          activeFilters={activeFilters}
-          setActiveFilters={setActiveFilters}
-        />
-
         <Box
           sx={{
             display: "flex",
-            gap: 0,
-            alignItems: "flex-start",
-            border: `1px solid ${alpha(BRAND, 0.15)}`,
-            borderRadius: "8px",
-            bgcolor: "#fff",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { md: "flex-start" },
+            gap: 3,
           }}
         >
-          <VariantsSidebar
-            specKeys={allSpecKeys}
-            filterOptions={filterOptions}
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-          />
-          <Box sx={{ flex: 1, minWidth: 0, borderLeft: "1px solid rgba(0,0,0,0.06)" }}>
+          {/* Sidebar stays in view while the table scrolls */}
+          <Box
+            sx={{
+              width: { md: 270 },
+              flexShrink: 0,
+              position: { md: "sticky" },
+              top: 16,
+              maxHeight: { md: "calc(100vh - 32px)" },
+              overflowY: { md: "auto" },
+            }}
+          >
+            <VariantsSidebar
+              specKeys={allSpecKeys}
+              filterOptions={filterOptions}
+              activeFilters={activeFilters}
+              setActiveFilters={setActiveFilters}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              flex: 1,
+              minWidth: 0,
+              bgcolor: "#fff",
+              border: "1px solid rgba(15,40,70,0.08)",
+              borderRadius: "12px",
+              boxShadow: "0 1px 2px rgba(15,40,70,0.04), 0 12px 32px rgba(15,40,70,0.06)",
+              overflow: "hidden",
+            }}
+          >
+            {/* Toolbar */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: 2,
+                px: 3,
+                py: 2,
+                borderBottom: "1px solid rgba(15,40,70,0.08)",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                <Typography component="h2" sx={{ fontSize: "1.05rem", fontWeight: 800, color: "text.primary" }}>
+                  All Models
+                </Typography>
+                <Chip
+                  label={`${filtered.length} of ${data.variants.length}`}
+                  size="small"
+                  sx={{ height: 22, fontSize: "0.72rem", fontWeight: 700, bgcolor: "rgba(0,114,188,0.1)", color: "#0072BC", "& .MuiChip-label": { textTransform: "none" } }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  px: 1.5,
+                  height: 38,
+                  width: { xs: "100%", sm: 260 },
+                  bgcolor: "#f5f8fb",
+                  border: "1px solid rgba(15,40,70,0.08)",
+                  borderRadius: "8px",
+                  transition: "border-color 0.15s ease, background-color 0.15s ease",
+                  "&:focus-within": { borderColor: "#0072BC", bgcolor: "#fff" },
+                }}
+              >
+                <SearchIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+                <InputBase
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search SKU…"
+                  inputProps={{ "aria-label": "Search models by SKU" }}
+                  sx={{ flex: 1, fontSize: "0.88rem" }}
+                />
+              </Box>
+            </Box>
+
+            <Box sx={{ px: 3, pt: 2, "&:empty": { display: "none" } }}>
+              <VariantsActiveFilters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
+            </Box>
+
             <VariantsTable
               variants={filtered}
               specKeys={allSpecKeys}

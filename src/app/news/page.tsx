@@ -2,6 +2,7 @@ import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { blogs } from "./data/blogs";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 const internalLinks = [
    { label: "Home", href: "/" },
@@ -92,6 +93,7 @@ export default function NewsPage() {
             mx: "auto",
           }}
         >
+          <PageBreadcrumbs items={[{ label: "News" }]} />
           <Typography
             variant="overline"
             sx={{

@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Typography, Divider, Button } from "@mui/material";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import { ProductCatalog } from "@/api/useProductCatalog";
 import ProductCard from "./ProductCard";
 import { getCategoryEditorial } from "../../data/editorial";
@@ -47,6 +48,10 @@ export default function CatalogView({
         }}
       >
         <Container maxWidth="lg">
+          <PageBreadcrumbs
+            schema={false}
+            items={[{ label: "Products", href: "/products" }, { label: data.bannerTitle ?? hero.title }]}
+          />
           {hero.overline && (
             <Typography
               variant="overline"

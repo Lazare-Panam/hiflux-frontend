@@ -11,6 +11,7 @@ import {
   AccordionDetails,
   Button,
 } from '@mui/material';
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 interface BlogSection {
   heading: string | null;
@@ -138,6 +139,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
             mx: 'auto',
           }}
         >
+          <PageBreadcrumbs items={[{ label: "News", href: "/news" }, { label: blog.title }]} />
           <Chip
             label={blog.category}
             size="small"

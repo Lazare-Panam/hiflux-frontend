@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Box, Container, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { APPLICATIONS } from "./data";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title =
@@ -36,6 +37,7 @@ export default function ApplicationsIndexPage() {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs items={[{ label: "Applications" }]} />
           <Typography
             component="span"
             sx={{

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Box, Container, Typography, Button, Divider } from "@mui/material";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 const EMAIL = "sales@hiflux.uk.com";
 const PHONE_DISPLAY = "+44 7369 243459";
@@ -245,6 +246,7 @@ export default function MagneticFiltersPage() {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs items={[{ label: "Industrial Filtration", href: "/industrial-filtration-systems" }, { label: "Magnetic Filters" }]} />
           <Typography
             component="span"
             sx={{ color: "rgba(255,255,255,0.75)", letterSpacing: "0.2em", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}

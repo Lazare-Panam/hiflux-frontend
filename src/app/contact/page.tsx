@@ -3,6 +3,7 @@ import { Box, Container, Typography, Divider, Button } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 const EMAIL = "sales@hiflux.uk.com";
 const PHONE_DISPLAY = "+44 7369 243459";
@@ -88,6 +89,7 @@ export default function ContactPage() {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs items={[{ label: "Contact Us" }]} />
           <Typography
             component="span"
             sx={{

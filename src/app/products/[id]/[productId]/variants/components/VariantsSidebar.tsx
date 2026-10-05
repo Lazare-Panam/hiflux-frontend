@@ -10,8 +10,9 @@ import {
   FormControlLabel,
   Checkbox,
   Chip,
-  Divider,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import { compareSpec } from "./specSort";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const BRAND = "#0072BC";
@@ -52,133 +53,117 @@ export default function VariantsSidebar({
 
   return (
     <Box
+      component="aside"
+      aria-label="Filter models"
       sx={{
-        width: 220,
-        flexShrink: 0,
-        p: 2,
-        bgcolor: "#fff",
-        position: "sticky",
-        top: 0,
-        alignSelf: "flex-start",
-        maxHeight: "100vh",
-        overflowY: "auto",
-        borderRadius: "6px",
-        border: "1px solid rgba(0,0,0,0.08)",
+        width: "100%",
         boxSizing: "border-box",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: "0.72rem",
-            fontWeight: 900,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: "text.secondary",
-          }}
-        >
-          Filter
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", mb: 2 }}>
+        <Typography component="h2" sx={{ fontSize: "1.15rem", fontWeight: 800, color: "text.primary" }}>
+          Shop By
         </Typography>
         {activeCount > 0 && (
           <Typography
+            component="button"
             onClick={() => setActiveFilters({})}
             sx={{
-              fontSize: "0.72rem",
+              border: 0,
+              bgcolor: "transparent",
+              p: 0,
+              fontSize: "0.78rem",
               fontWeight: 700,
               color: BRAND,
               cursor: "pointer",
+              "&:hover": { textDecoration: "underline" },
             }}
           >
-            Clear all
+            Clear all ({activeCount})
           </Typography>
         )}
       </Box>
 
-      {filterableKeys.map((key, i) => {
-        const options = filterOptions[key] ?? [];
-        if (options.length <= 1) return null;
-        const selected = activeFilters[key] ?? [];
-
-        return (
-          <Box key={key}>
-            {i > 0 && <Divider sx={{ my: 0.5 }} />}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+        {filterableKeys.map((key) => {
+          const options = [...(filterOptions[key] ?? [])].sort(compareSpec);
+          if (options.length <= 1) return null;
+          const selected = activeFilters[key] ?? [];
+          return (
             <Accordion
+              key={key}
               defaultExpanded
               disableGutters
               elevation={0}
               sx={{
-                bgcolor: "transparent",
+                border: "1px solid rgba(15,40,70,0.08)",
+                borderRadius: "10px !important",
+                bgcolor: "#fff",
+                boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
+                overflow: "hidden",
                 "&:before": { display: "none" },
-                mb: 0.5,
               }}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
-                sx={{
-                  px: 0,
-                  minHeight: 36,
-                  "& .MuiAccordionSummary-content": { my: 0.5 },
-                }}
+                expandIcon={<ExpandMoreIcon sx={{ fontSize: 20, color: "text.primary" }} />}
+                sx={{ px: 2, minHeight: 52, "& .MuiAccordionSummary-content": { my: 1 } }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography
-                    sx={{
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      color: "text.primary",
-                    }}
-                  >
+                  <Typography sx={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary" }}>
                     {key}
                   </Typography>
                   {selected.length > 0 && (
                     <Chip
                       label={selected.length}
                       size="small"
-                      sx={{
-                        height: 16,
-                        fontSize: "0.65rem",
-                        bgcolor: BRAND,
-                        color: "#fff",
-                      }}
+                      sx={{ height: 18, fontSize: "0.68rem", fontWeight: 700, bgcolor: BRAND, color: "#fff" }}
                     />
                   )}
                 </Box>
               </AccordionSummary>
-              <AccordionDetails sx={{ px: 0, pt: 0 }}>
-                <FormGroup>
-                  <Box sx={{ maxHeight: 200, overflowY: "auto" }}>
-                    {options.map((opt) => (
-                      <FormControlLabel
-                        key={opt}
-                        control={
-                          <Checkbox
-                            size="small"
-                            checked={selected.includes(opt)}
-                            onChange={() => toggle(key, opt)}
-                            sx={{ py: 0.25, "&.Mui-checked": { color: BRAND } }}
-                          />
-                        }
-                        label={
-                          <Typography sx={{ fontSize: "0.8rem" }}>
-                            {opt}
-                          </Typography>
-                        }
-                      />
-                    ))}
-                  </Box>
+              <AccordionDetails sx={{ px: 2, pt: 0, pb: 2 }}>
+                <FormGroup
+                  sx={{
+                    border: "1px solid rgba(15,40,70,0.08)",
+                    borderRadius: "6px",
+                    bgcolor: "#fbfcfe",
+                    px: 1.5,
+                    py: 1,
+                    maxHeight: 260,
+                    overflowY: "auto",
+                    flexWrap: "nowrap",
+                  }}
+                >
+                  {options.map((opt) => (
+                    <FormControlLabel
+                      key={opt}
+                      sx={{ mx: 0, my: 0.1 }}
+                      control={
+                        <Checkbox
+                          size="small"
+                          checked={selected.includes(opt)}
+                          onChange={() => toggle(key, opt)}
+                          sx={{
+                            py: 0.5,
+                            pl: 0,
+                            color: alpha(BRAND, 0.6),
+                            "&.Mui-checked": { color: BRAND },
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography sx={{ fontSize: "0.88rem", color: "text.primary", textTransform: "none" }}>
+                          {opt}
+                        </Typography>
+                      }
+                    />
+                  ))}
                 </FormGroup>
               </AccordionDetails>
             </Accordion>
-          </Box>
-        );
-      })}
+          );
+        })}
+      </Box>
     </Box>
   );
 }

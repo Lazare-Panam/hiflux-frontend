@@ -2,6 +2,7 @@
 
 import { Box, Typography, Grid } from "@mui/material";
 import Link from "next/link";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ProductCategoryCard from "./components/ProductCategoryCard";
 import { CATEGORIES } from "./data/categories";
@@ -85,6 +86,7 @@ export default function ProductsPage() {
             pb: { xs: 5, md: 7 },
           }}
         >
+          <PageBreadcrumbs items={[{ label: "Products" }]} />
           <Typography
             sx={{
               color: "rgba(255,255,255,0.8)",

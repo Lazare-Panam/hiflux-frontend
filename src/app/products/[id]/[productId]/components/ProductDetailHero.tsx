@@ -1,17 +1,22 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
+import PageBreadcrumbs, { type Crumb } from '@/app/Common/PageBreadcrumbs';
 
 export default function ProductDetailHero({
   name,
   category,
+  crumbs,
 }: {
   name: string;
   category?: string;
+  // Trail after "Home"; the page itself emits the BreadcrumbList JSON-LD.
+  crumbs?: Crumb[];
 }) {
   return (
     <Box sx={{ background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)', px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
       <Box sx={{ maxWidth: '1280px', mx: 'auto' }}>
+        {crumbs && <PageBreadcrumbs schema={false} items={crumbs} />}
         {category && (
           <Typography
             sx={{

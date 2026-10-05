@@ -19,6 +19,7 @@ import {
   type Block,
   type CTA,
 } from "../data";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -324,6 +325,7 @@ export default async function ApplicationPage({ params }: Props) {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs schema={false} items={[{ label: "Applications", href: "/applications" }, { label: app.h1 }]} />
           <Typography
             component="span"
             sx={{

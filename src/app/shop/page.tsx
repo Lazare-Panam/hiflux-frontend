@@ -8,6 +8,7 @@ import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import { useCartStore } from "@/store/useCartStore";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 const BRAND = "#0072BC";
 const BRAND_DARK = "#00539B";
@@ -622,6 +623,7 @@ export default function ShopLandingPage() {
           }}
         />
         <Box sx={{ maxWidth: "1280px", mx: "auto", textAlign: "center" }}>
+          <PageBreadcrumbs tone="dark" align="center" items={[{ label: "Shop" }]} />
           <Typography
             sx={{
               color: "primary.main",

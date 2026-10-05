@@ -11,13 +11,16 @@ import {
   TableCell,
   Button,
   Grid,
-  Breadcrumbs,
   Divider,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
 import { getProductVariants } from "@/api/useProductVariants";
 import { categorySlug } from "@/api/catalogSlug";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+
+// "high-pressure-valves" -> "High Pressure Valves"
+const humanizeCategory = (slug: string) =>
+  slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 import AddToCartButton from "./components/AddToCartButton";
 
 const BRAND = "#0072BC";
@@ -98,33 +101,18 @@ export default async function VariantDetail({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
       <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
-        {/* Breadcrumb / back */}
-        <Breadcrumbs
-          separator="/"
-          sx={{
-            mb: 4,
-            fontSize: "0.8rem",
-            "& .MuiBreadcrumbs-separator": { color: "text.disabled" },
-          }}
-        >
-          <Link
-            href={`/products/${id}/${productId}/variants`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              color: BRAND,
-              textDecoration: "none",
-              fontWeight: 700,
-            }}
-          >
-            <ArrowBackIcon sx={{ fontSize: 12 }} />
-            {data.name}
-          </Link>
-          <Typography sx={{ fontSize: "0.8rem", color: "text.secondary", fontFamily: "monospace" }}>
-            {sku}
-          </Typography>
-        </Breadcrumbs>
+        <Box sx={{ mb: 2 }}>
+          <PageBreadcrumbs
+            tone="dark"
+            items={[
+              { label: "Products", href: "/products" },
+              { label: humanizeCategory(categorySlug(id)), href: `/products/${categorySlug(id)}` },
+              { label: data.name, href: `/products/${categorySlug(id)}/${productId}` },
+              { label: "All Models", href: `/products/${categorySlug(id)}/${productId}/variants` },
+              { label: sku },
+            ]}
+          />
+        </Box>
 
         <Grid container spacing={6}>
           {/* Image */}

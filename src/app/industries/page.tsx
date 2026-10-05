@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Box, Container, Typography, Button, Divider } from "@mui/material";
 import Link from "next/link";
+import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title =
@@ -77,6 +78,7 @@ export default async function IndustriesPage() {
         }}
       >
         <Container maxWidth="md">
+          <PageBreadcrumbs items={[{ label: "Industries" }]} />
           <Typography
             component="span"
             sx={{
