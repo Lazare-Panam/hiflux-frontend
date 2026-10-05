@@ -14,7 +14,15 @@ const fadeDown = keyframes`
 
 const LINE = "rgba(0,0,0,0.1)";
 
-function LinkColumn({ heading, links }: { heading: string; links: NavLink[] }) {
+function LinkColumn({
+  heading,
+  links,
+  onNavigate,
+}: {
+  heading: string;
+  links: NavLink[];
+  onNavigate?: () => void;
+}) {
   return (
     <Box>
       <Typography
@@ -37,6 +45,7 @@ function LinkColumn({ heading, links }: { heading: string; links: NavLink[] }) {
             key={link.href + link.label}
             component={link.external ? "a" : Link}
             href={link.href}
+            onClick={onNavigate}
             {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             sx={{
               py: 0.85,
@@ -55,63 +64,21 @@ function LinkColumn({ heading, links }: { heading: string; links: NavLink[] }) {
   );
 }
 
-function RatingsColumn({ ratings }: { ratings: NonNullable<MegaMenuColumn["ratings"]> }) {
-  return (
-    <Box>
-      <Typography
-        sx={{
-          color: "primary.main",
-          fontSize: "0.72rem",
-          fontWeight: 700,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          pb: 1.5,
-          mb: 1.5,
-          borderBottom: `1px solid ${LINE}`,
-        }}
-      >
-        By Pressure Rating
-      </Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-        {ratings.map((r) => (
-          <Box key={r.label}>
-            <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, color: "text.secondary", textTransform: "none" }}>
-              {r.label}
-            </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap", columnGap: 1, rowGap: 0.25 }}>
-              {r.links.map((link, i) => (
-                <Box key={link.href} sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-                  {i > 0 && <Box component="span" sx={{ color: "text.disabled" }}>·</Box>}
-                  <Box
-                    component={Link}
-                    href={link.href}
-                    sx={{
-                      fontSize: "0.95rem",
-                      color: "text.primary",
-                      textDecoration: "none",
-                      transition: "color 0.15s ease",
-                      "&:hover": { color: "primary.main" },
-                    }}
-                  >
-                    {link.label}
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        ))}
-      </Box>
-    </Box>
-  );
-}
-
 /**
  * Desktop mega menu. With several columns (Products) it shows a full-width
  * tab bar of categories; hovering a tab swaps the panel below to that
- * category's types, pressure ratings, and guides/catalogue links. With a
+ * category's types, related applications, and guides/catalogue links. With a
  * single column (Applications) it shows the panel on its own.
  */
-export default function MegaMenuPanel({ columns }: { columns: MegaMenuColumn[] }) {
+export default function MegaMenuPanel({
+  columns,
+  onNavigate,
+}: {
+  columns: MegaMenuColumn[];
+  // Called when a link in the panel is clicked, so the menu closes and the
+  // new page is visible straight away.
+  onNavigate?: () => void;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = columns[activeIndex] ?? columns[0];
   const tabbed = columns.length > 1;
@@ -145,6 +112,7 @@ export default function MegaMenuPanel({ columns }: { columns: MegaMenuColumn[] }
                   key={col.heading}
                   component={Link}
                   href={col.href}
+                  onClick={onNavigate}
                   onMouseEnter={() => setActiveIndex(i)}
                   onFocus={() => setActiveIndex(i)}
                   sx={{
@@ -159,11 +127,16 @@ export default function MegaMenuPanel({ columns }: { columns: MegaMenuColumn[] }
                     fontSize: "0.85rem",
                     fontWeight: 600,
                     color: isActive ? "primary.main" : "primary.dark",
-                    bgcolor: isActive ? "rgba(0,114,188,0.06)" : "transparent",
+                    background: isActive
+                      ? "linear-gradient(180deg, rgba(0,114,188,0.07) 0%, rgba(0,114,188,0.2) 100%)"
+                      : "transparent",
                     borderLeft: i === 0 ? "none" : `1px solid ${LINE}`,
-                    boxShadow: isActive ? "inset 0 -2px 0 #0072BC" : "none",
-                    transition: "background-color 0.15s ease, color 0.15s ease",
-                    "&:hover": { bgcolor: "rgba(0,114,188,0.06)" },
+                    boxShadow: isActive ? "inset 0 -3px 0 #0072BC" : "none",
+                    transition: "background 0.2s ease, color 0.15s ease, box-shadow 0.2s ease",
+                    "&:hover": {
+                      background: "linear-gradient(180deg, rgba(0,114,188,0.07) 0%, rgba(0,114,188,0.2) 100%)",
+                    },
+                    "&:active": { background: "rgba(0,114,188,0.26)" },
                   }}
                 >
                   {col.heading}
@@ -196,11 +169,13 @@ export default function MegaMenuPanel({ columns }: { columns: MegaMenuColumn[] }
             animation: `${fadeDown} 0.22s ease-out`,
           }}
         >
-          <LinkColumn heading={tabbed ? "By Type" : active.heading} links={active.items} />
-          {!!active.ratings?.length && <RatingsColumn ratings={active.ratings} />}
+          <LinkColumn heading={tabbed ? "By Type" : active.heading} links={active.items} onNavigate={onNavigate} />
+          {!!active.applications?.length && (
+            <LinkColumn heading="By Application" links={active.applications} onNavigate={onNavigate} />
+          )}
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             {(active.resources ?? []).map((group) => (
-              <LinkColumn key={group.heading} heading={group.heading} links={group.links} />
+              <LinkColumn key={group.heading} heading={group.heading} links={group.links} onNavigate={onNavigate} />
             ))}
           </Box>
         </Box>

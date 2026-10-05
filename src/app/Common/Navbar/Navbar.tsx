@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import {
   AppBar,
@@ -53,6 +54,19 @@ const Navbar: React.FC = () => {
   const handleLeave = () => {
     closeTimer.current = setTimeout(() => setOpenMenu(null), 120);
   };
+
+  const closeMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenMenu(null);
+  };
+
+  // Close the mega menu whenever the route changes (link click, back/forward).
+  const pathname = usePathname();
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setOpenMenu(null);
+  }
 
   const activeItem = LEFT_NAV.find((i) => i.label === openMenu);
 
@@ -344,7 +358,7 @@ const Navbar: React.FC = () => {
         {openMenu && activeItem?.megaMenu && (
           <Box onMouseEnter={() => activeItem && handleEnter(activeItem.label)}>
             {/* keyed so each menu opens on its own first tab */}
-            <MegaMenuPanel key={activeItem.label} columns={activeItem.megaMenu} />
+            <MegaMenuPanel key={activeItem.label} columns={activeItem.megaMenu} onNavigate={closeMenu} />
           </Box>
         )}
       </AppBar>
