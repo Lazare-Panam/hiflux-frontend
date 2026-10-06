@@ -35,6 +35,13 @@ export const metadata: Metadata = {
   // no title.template is used because several page titles already carry the brand.
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
+  // Absolute icon URL: crawlers that start on the bare hiflux.uk.com domain
+  // (which only forwards the homepage) resolve a relative "/favicon.ico"
+  // against that domain and get a 404 ("Favicon missing" in SE Ranking).
+  icons: {
+    icon: [{ url: "https://www.hiflux.uk.com/favicon.ico", sizes: "any" }],
+    shortcut: "https://www.hiflux.uk.com/favicon.ico",
+  },
   // Site-wide Open Graph + X (Twitter) Card defaults. Pages that export their
   // own `openGraph`/`twitter` override these; pages that don't (e.g. /shop)
   // inherit them, so every page ships a valid `twitter:card` tag. `twitter` is
