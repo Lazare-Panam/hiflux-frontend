@@ -198,7 +198,7 @@ function VariantRow({
             }}
           >
             {thumbnailImage && (
-              <Image src={thumbnailImage} alt="" width={46} height={46} style={{ objectFit: "contain" }} />
+              <Image src={thumbnailImage} alt={`${productName} ${sku}`.trim()} width={46} height={46} style={{ objectFit: "contain" }} />
             )}
           </Box>
         </TableCell>

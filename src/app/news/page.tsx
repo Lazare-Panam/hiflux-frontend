@@ -108,6 +108,7 @@ export default function NewsPage() {
           </Typography>
           <Typography
             variant="h2"
+            component="h1"
             sx={{
               fontWeight: 700,
               color: "#fff",

@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Cap generated widths at 1920px. Without this the srcset offers 2048 and
+    // 3840px versions, which crawlers fetch and flag as "Image too big".
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     remotePatterns: [
       { protocol: "https", hostname: "pblol2.blob.core.windows.net" },
       { protocol: "https", hostname: "images.unsplash.com" },

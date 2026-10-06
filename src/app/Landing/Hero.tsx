@@ -241,7 +241,7 @@ function ProductFinder() {
               }}
             >
               {row.image ? (
-                <Image src={row.image} alt="" fill sizes="40px" style={{ objectFit: 'contain' }} />
+                <Image src={row.image} alt={row.label} fill sizes="40px" style={{ objectFit: 'contain' }} />
               ) : (
                 <FilterAltOutlinedIcon sx={{ color: 'primary.main' }} />
               )}
