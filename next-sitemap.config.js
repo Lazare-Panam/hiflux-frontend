@@ -29,12 +29,27 @@ module.exports = {
           `${API_BASE}api/product/${catalogId}`,
         );
 
-        // Only the series page is listed: /variants and /variants/<SKU> pages
-        // canonicalise to it, and a sitemap should contain canonical URLs only.
+        // /variants and /variants/<SKU> pages are self-canonical, so they are
+        // listed alongside their series page.
         for (const product of catalog.products) {
-          result.push(
-            await config.transform(config, `/products/${catalogId}/${product.id}`),
-          );
+          const base = `/products/${catalogId}/${product.id}`;
+          result.push(await config.transform(config, base));
+          result.push(await config.transform(config, `${base}/variants`));
+
+          try {
+            const { data: variantData } = await axios.get(
+              `${API_BASE}api/product/${product.id}/variants`,
+            );
+
+            for (const variant of variantData.variants) {
+              const slug = variant.specs?.["SKU"] ?? variant.id; // matches VariantDetail's lookup logic
+              result.push(
+                await config.transform(config, `${base}/variants/${slug}`),
+              );
+            }
+          } catch {
+            console.warn(`No variants found for ${product.id}, skipping`);
+          }
         }
       } catch {
         console.warn(`Failed to fetch catalog ${catalogId}, skipping`);

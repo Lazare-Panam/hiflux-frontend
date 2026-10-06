@@ -237,7 +237,8 @@ const Navbar: React.FC = () => {
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 0.75,
+                  // Room for the count badge so it never overlaps the label.
+                  gap: 2.25,
                   textDecoration: "none",
                   color: totalItems > 0 ? ACCENT : RUST,
                   fontSize: "0.82rem",
@@ -250,6 +251,18 @@ const Navbar: React.FC = () => {
                   badgeContent={totalItems}
                   color="primary"
                   invisible={totalItems === 0}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      height: 18,
+                      minWidth: 18,
+                      px: 0.5,
+                      fontSize: "0.66rem",
+                      fontWeight: 700,
+                      border: "2px solid #fff",
+                      right: -2,
+                      top: 2,
+                    },
+                  }}
                 >
                   <ShoppingBagOutlinedIcon sx={{ fontSize: 22 }} />
                 </Badge>
@@ -321,6 +334,18 @@ const Navbar: React.FC = () => {
                   badgeContent={totalItems}
                   color="primary"
                   invisible={totalItems === 0}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      height: 18,
+                      minWidth: 18,
+                      px: 0.5,
+                      fontSize: "0.66rem",
+                      fontWeight: 700,
+                      border: "2px solid #fff",
+                      right: -2,
+                      top: 2,
+                    },
+                  }}
                 >
                   <ShoppingBagOutlinedIcon sx={{ fontSize: 20 }} />
                 </Badge>
