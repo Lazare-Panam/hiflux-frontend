@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Shop High-Pressure Valves, Fittings & Tubing | Hiflux UK",
   description:
     "Shop high-pressure valves, fittings, tubing and flow-control components from Hiflux UK — rated up to 150,000 psi in 316 stainless steel for industrial, energy and hydrogen service.",
+  alternates: { canonical: "https://www.hiflux.uk.com/shop" },
 };
 
 export default function ShopLayout({
