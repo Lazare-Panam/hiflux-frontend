@@ -74,11 +74,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable}`}
     >
       <head>
-         {/* <script
+         <script
           data-cfasync="false"
           type="text/javascript"
           src="https://cdn.seoplatform.io/injector.js?websiteId=28611"
-        />  */}
+        /> 
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
