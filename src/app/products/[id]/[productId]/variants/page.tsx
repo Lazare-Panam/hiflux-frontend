@@ -4,6 +4,18 @@ import { getProductVariants } from "@/api/useProductVariants";
 import { categorySlug } from "@/api/catalogSlug";
 import VariantsBrowser from "./components/VariantsBrowser";
 
+// Cache the rendered page (ISR): built on the first visit, then served from
+// cache and regenerated in the background at most once an hour. Without this
+// every request re-rendered and re-fetched the product API, which SE Ranking
+// flagged as "Slow page loading speed".
+export const revalidate = 3600;
+
+// No paths are prebuilt at deploy time (there are 1,300+ SKUs); an empty list
+// means each page is rendered on its first request and then cached.
+export function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ id: string; productId: string }> };
 
 function humanizeCategory(slug: string): string {

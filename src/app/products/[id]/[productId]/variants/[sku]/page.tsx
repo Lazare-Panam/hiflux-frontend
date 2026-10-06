@@ -23,6 +23,18 @@ const humanizeCategory = (slug: string) =>
   slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 import AddToCartButton from "./components/AddToCartButton";
 
+// Cache the rendered page (ISR): built on the first visit, then served from
+// cache and regenerated in the background at most once an hour. Without this
+// every request re-rendered and re-fetched the product API, which SE Ranking
+// flagged as "Slow page loading speed".
+export const revalidate = 3600;
+
+// No paths are prebuilt at deploy time (there are 1,300+ SKUs); an empty list
+// means each page is rendered on its first request and then cached.
+export function generateStaticParams() {
+  return [];
+}
+
 const BRAND = "#0072BC";
 const HIDDEN_SPEC_KEYS = ["SKU", "Price"];
 

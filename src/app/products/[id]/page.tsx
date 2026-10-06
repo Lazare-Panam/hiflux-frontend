@@ -5,6 +5,18 @@ import CatalogView from "./components/CatalogView";
 import ProductDetailContent from "../components/ProductDetailContent";
 import { getCategoryEditorial } from "../data/editorial";
 
+// Cache the rendered page (ISR): built on the first visit, then served from
+// cache and regenerated in the background at most once an hour. Without this
+// every request re-rendered and re-fetched the product API, which SE Ranking
+// flagged as "Slow page loading speed".
+export const revalidate = 3600;
+
+// No paths are prebuilt at deploy time (there are 1,300+ SKUs); an empty list
+// means each page is rendered on its first request and then cached.
+export function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
