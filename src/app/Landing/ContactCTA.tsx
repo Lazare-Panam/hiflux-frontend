@@ -30,7 +30,7 @@ export default function ContactCTA() {
     )}`;
 
   return (
-    <Box component="section" sx={{ py: { xs: 8, md: 12 }, bgcolor: "#FAF6F4" }}>
+    <Box component="section" sx={{ py: { xs: 8, md: 12 }, bgcolor: "#f3f6fa" }}>
       <Box
         sx={{
           maxWidth: "1280px",
@@ -99,7 +99,7 @@ export default function ContactCTA() {
                 bgcolor: "primary.main",
                 color: "#fff",
                 fontWeight: 700,
-                borderRadius: 0,
+                borderRadius: "8px",
                 px: 3,
                 py: 1.2,
                 textTransform: "none",
@@ -114,7 +114,7 @@ export default function ContactCTA() {
               variant="outlined"
               startIcon={<PhoneIcon />}
               sx={{
-                borderRadius: 0,
+                borderRadius: "8px",
                 px: 3,
                 py: 1.2,
                 fontWeight: 700,
@@ -134,7 +134,7 @@ export default function ContactCTA() {
               variant="outlined"
               startIcon={<MenuBookIcon />}
               sx={{
-                borderRadius: 0,
+                borderRadius: "8px",
                 px: 3,
                 py: 1.2,
                 fontWeight: 700,
@@ -160,7 +160,7 @@ export default function ContactCTA() {
             bgcolor: "#fff",
             border: "1px solid",
             borderColor: "rgba(0,0,0,0.08)",
-            borderRadius: "4px",
+            borderRadius: "8px",
             p: { xs: 3, md: 4 },
             boxShadow: "0 12px 32px rgba(0,0,0,0.06)",
           }}
@@ -224,7 +224,7 @@ export default function ContactCTA() {
                 bgcolor: "primary.main",
                 color: "#fff",
                 fontWeight: 700,
-                borderRadius: "2px",
+                borderRadius: "8px",
                 py: 1.3,
                 textTransform: "none",
                 fontSize: "0.95rem",

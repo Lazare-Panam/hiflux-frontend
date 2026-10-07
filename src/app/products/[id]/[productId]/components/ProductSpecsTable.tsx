@@ -14,10 +14,16 @@ export default function ProductSpecsTable({ specs }: { specs: Record<string, str
         {Object.entries(specs).map(([label, value]) => (
           <Box key={label} sx={{ display: 'flex', justifyContent: 'space-between', py: 1, borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
             <Typography sx={{ color: 'text.secondary', fontSize: '0.85rem' }}>{label}</Typography>
-            <Typography sx={{ color: 'text.primary', fontWeight: 600, fontSize: '0.85rem' }}>{value}</Typography>
+            <Typography sx={{ color: 'text.primary', fontWeight: 600, fontSize: '0.85rem', textTransform: 'none' }}>{formatSpec(value)}</Typography>
           </Box>
         ))}
       </Box>
     </Box>
   );
+}
+
+// The API writes maximum ratings as "~150,000 psi". A tilde reads as
+// "approximately", which is wrong for a rating, so show "Up to 150,000 psi".
+function formatSpec(value: string): string {
+  return typeof value === 'string' ? value.replace(/^~\s*/, 'Up to ') : value;
 }

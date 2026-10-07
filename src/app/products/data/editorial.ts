@@ -81,10 +81,10 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
     seo: {
       title: "High Pressure Cone & Thread Fittings to 150,000 psi | Hiflux",
       description:
-        "Cone and thread fittings in 316 stainless, rated 10,000 to 150,000 psi. Elbow, tee and cross bodies with glands, collars and sleeves. UK stock.",
+        "Cone and thread fittings in 316 stainless, rated 10,000 to 150,000 psi. Elbow, tee and cross bodies with glands, collars and sleeves. Request a quote.",
     },
     bannerTitle:
-      "High pressure fittings and manifolds components for extreme service.",
+      "High-pressure fittings and manifold components for extreme service",
     canonical: "https://www.hiflux.uk.com/products/high-pressure-fittings",
     above: {
       paragraphs: [
@@ -131,6 +131,10 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
             label: "View fitting accessories",
             href: "/products/high-pressure-fittings/acc-ultra-150k",
           },
+          {
+            label: "Read the cone and thread fittings guide",
+            href: "/news/high-pressure-cone-and-thread-fittings-guide",
+          },
         ],
       },
       {
@@ -153,14 +157,14 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
     seo: {
       title: "High Pressure Tubing & Nipples UK | Hiflux UK",
       description:
-        "Stainless steel high-pressure tube, coned and threaded nipples and tube support for cone and thread systems to 100,000 psi. UK stock and support.",
+        "Stainless steel high-pressure tube, coned and threaded nipples and tube support for cone and thread systems to 100,000 psi. Certificates on request.",
     },
     bannerTitle:
       "Ultra-high pressure tubing for extreme applications | Hiflux UK",
     canonical: "https://www.hiflux.uk.com/products/high-pressure-tubing",
     above: {
       paragraphs: [
-        `Stainless steel high-pressure tube, pre-coned and threaded nipples, and tube support for cone and thread systems rated to 100,000 psi. Supplied from UK stock.`,
+        `Stainless steel high-pressure tube, pre-coned and threaded nipples, and tube support for cone and thread systems rated to 100,000 psi. Supplied from the HIFLUX factory, with lead times quoted up front.`,
       ],
       ctas: [REQUEST_QUOTE, DOWNLOAD_CATALOGUE],
     },

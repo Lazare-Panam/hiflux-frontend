@@ -25,7 +25,7 @@ const manrope = Manrope({
 
 const SITE_TITLE = "High-Pressure Valves, Fittings & Tubing | Hiflux UK";
 const SITE_DESCRIPTION =
-  "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.";
+  "Hiflux UK is an authorised UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.";
 const SITE_OG_IMAGE =
   "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png";
 
@@ -98,18 +98,24 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Hiflux UK",
+              legalName: "Hiflux Hydrogen Ltd",
+              vatID: "GB452408800",
+              identifier: { "@type": "PropertyValue", propertyID: "UK Companies House number", value: "14976525" },
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "St. Edburgs Hall, Priory Rd",
+                addressLocality: "Bicester",
+                postalCode: "OX26 6BL",
+                addressCountry: "GB",
+              },
               // Searchers also type "hi flux" / "HiFlux" (Sept 2026 GSC).
               alternateName: ["Hi Flux UK", "HiFlux UK", "Hiflux"],
               url: "https://www.hiflux.uk.com",
               logo: "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
               description:
-                "Hiflux UK is the exclusive UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
+                "Hiflux UK is an authorised UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
               email: "sales@hiflux.uk.com",
               telephone: "+44 7369 243459",
-              address: {
-                "@type": "PostalAddress",
-                addressCountry: "GB",
-              },
               memberOf: {
                 "@type": "Organization",
                 name: "Hydrogen Energy Association",

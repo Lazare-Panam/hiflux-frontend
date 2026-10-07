@@ -103,10 +103,11 @@ const Navbar: React.FC = () => {
             {/* Left nav (desktop) */}
             <Box
               sx={{
-                display: { xs: "none", md: "flex" },
+                display: { xs: "none", lg: "flex" },
                 flexDirection: "row",
-                gap: 4,
-                ml: 6,
+                gap: { lg: 2.5, xl: 4 },
+                ml: { lg: 3, xl: 6 },
+                "@media (max-width: 1279px)": { gap: 1.75, ml: 2 },
               }}
             >
               {LEFT_NAV.map((item) => {
@@ -132,6 +133,7 @@ const Navbar: React.FC = () => {
                         fontWeight: 600,
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",
+                        whiteSpace: "nowrap",
                         py: 3,
                         transition: "color 0.15s ease",
                         "&:hover": { color: INK },
@@ -169,10 +171,13 @@ const Navbar: React.FC = () => {
             {/* Right nav (desktop) */}
             <Box
               sx={{
-                display: { xs: "none", md: "flex" },
+                display: { xs: "none", lg: "flex" },
                 flexDirection: "row",
                 alignItems: "center",
-                gap: 4,
+                gap: { lg: 2.5, xl: 3.5 },
+                ml: { lg: 3, xl: 5 },
+                flexShrink: 0,
+                "@media (max-width: 1279px)": { gap: 1.5, ml: 2 },
               }}
             >
               {RIGHT_NAV.map((item) => (
@@ -200,6 +205,10 @@ const Navbar: React.FC = () => {
                 rel="noopener noreferrer"
                 aria-label="Hydrogen Energy Association"
                 sx={{
+                  // Divider separating the menu from the badge and actions.
+                  pl: { lg: 2.5, xl: 3.5 },
+                  borderLeft: `1px solid ${LINE}`,
+                  "@media (max-width: 1279px)": { pl: 1.5 },
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 1,
@@ -209,7 +218,7 @@ const Navbar: React.FC = () => {
                 }}
               >
                 <Image
-                  src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+                  src="/hea-logo.png"
                   alt="Hydrogen Energy Association"
                   width={48}
                   height={48}
@@ -223,6 +232,8 @@ const Navbar: React.FC = () => {
                     lineHeight: 1.25,
                     maxWidth: 120,
                     color: "inherit",
+                    // Logo only on smaller laptops, where the full nav is tight.
+                    [`@media (max-width: ${COMPACT_BELOW}px)`]: { display: "none" },
                   }}
                 >
                   Hydrogen Energy Association
@@ -266,7 +277,9 @@ const Navbar: React.FC = () => {
                 >
                   <ShoppingBagOutlinedIcon sx={{ fontSize: 22 }} />
                 </Badge>
-                Cart
+                <Box component="span" sx={{ [`@media (max-width: ${COMPACT_BELOW}px)`]: { display: "none" } }}>
+                  Cart
+                </Box>
               </Box>
 
               <Box
@@ -309,6 +322,7 @@ const Navbar: React.FC = () => {
                   textTransform: "uppercase",
                   px: 2.5,
                   py: 1,
+                  whiteSpace: "nowrap",
                   transition: "all 0.15s ease",
                   "&:hover": {
                     bgcolor: ACCENT,
@@ -322,7 +336,7 @@ const Navbar: React.FC = () => {
 
             {/* Mobile trigger row: cart + hamburger */}
             <Box
-              sx={{ display: { md: "none" }, alignItems: "center", gap: 0.5 }}
+              sx={{ display: { lg: "none" }, alignItems: "center", gap: 0.5 }}
             >
               <IconButton
                 component={Link}
@@ -553,7 +567,7 @@ const Navbar: React.FC = () => {
             sx={{ display: "inline-flex", alignItems: "center" }}
           >
             <Image
-              src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+              src="/hea-logo.png"
               alt="HEA"
               width={36}
               height={36}
@@ -587,5 +601,8 @@ const Navbar: React.FC = () => {
     </>
   );
 };
+
+// Below this width the desktop bar drops the HEA and "Cart" text labels.
+const COMPACT_BELOW = 1599;
 
 export default Navbar;

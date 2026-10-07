@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Box, Container, Typography, Button, Divider } from "@mui/material";
-import Link from "next/link";
+import { Box, Container, Typography, Divider } from "@mui/material";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import { BLUE_BG } from "@/theme/brand";
+import CtaBanner from "@/app/Common/CtaBanner";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title =
@@ -74,7 +75,7 @@ export default async function IndustriesPage() {
           py: { xs: 8, md: 12 },
           color: "#fff",
           background:
-            "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)",
+            BLUE_BG,
         }}
       >
         <Container maxWidth="md">
@@ -149,48 +150,16 @@ export default async function IndustriesPage() {
       </Container>
 
       {/* CTA */}
-      <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="md" sx={{ textAlign: "center" }}>
-          <Typography
-            component="h2"
-            sx={{ fontSize: { xs: "1.4rem", md: "1.75rem" }, fontWeight: 800, color: "#fff", mb: 1.5 }}
-          >
-            Not sure which valve fits your application?
-          </Typography>
-          <Typography sx={{ color: "rgba(255,255,255,0.7)", mb: 3 }}>
-            Tell us the pressure, media and connection requirements and
-            we&apos;ll help identify the right Hiflux high-pressure solution.
-          </Typography>
-          <Box sx={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/products" style={{ textDecoration: "none" }}>
-              <Button
-                variant="contained"
-                component="span"
-                sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 700, textTransform: "none", bgcolor: "#fff", color: "primary.main", "&:hover": { bgcolor: "#e6f1f9" } }}
-              >
-                Explore Products
-              </Button>
-            </Link>
-            <Button
-              variant="outlined"
-              component="a"
-              href="mailto:sales@hiflux.uk.com"
-              sx={{
-                borderRadius: 0,
-                px: 3,
-                py: 1.25,
-                fontWeight: 700,
-                textTransform: "none",
-                borderColor: "rgba(255,255,255,0.4)",
-                color: "#fff",
-                "&:hover": { borderColor: "#fff", bgcolor: "rgba(255,255,255,0.08)" },
-              }}
-            >
-              sales@hiflux.uk.com
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+      <Container maxWidth="lg" sx={{ pb: { xs: 6, md: 9 } }}>
+        <CtaBanner
+          heading="Not sure which valve fits your application?"
+          body="Tell us the pressure, media and connection requirements and we'll help identify the right Hiflux high-pressure solution."
+          buttons={[
+            { label: "Request a Quote", href: "/contact" },
+            { label: "Explore Products", href: "/products" },
+          ]}
+        />
+      </Container>
     </Box>
   );
 }

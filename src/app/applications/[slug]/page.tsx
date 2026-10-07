@@ -6,7 +6,6 @@ import {
   Container,
   Typography,
   Button,
-  Divider,
   Table,
   TableBody,
   TableRow,
@@ -20,6 +19,8 @@ import {
   type CTA,
 } from "../data";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import { BLUE_BG } from "@/theme/brand";
+import CtaBanner from "@/app/Common/CtaBanner";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -62,57 +63,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Shared CTA renderer: internal links use next/link, external (catalogue PDF)
 // opens in a new tab with rel="noopener".
-function CtaButton({
-  cta,
-  variant,
-}: {
-  cta: CTA;
-  variant: "contained" | "outlined";
-}) {
-  // Rendered only inside the blue closing band, so the outlined variant needs
-  // white border/text for contrast (default outlined uses the primary colour).
-  const sx = {
-    borderRadius: 0,
-    px: 3,
-    py: 1.25,
-    fontWeight: 700,
-    textTransform: "none" as const,
-    // Contained = white on the blue band so it doesn't disappear into it.
-    ...(variant === "contained" && {
-      bgcolor: "#fff",
-      color: "primary.main",
-      "&:hover": { bgcolor: "#e6f1f9" },
-    }),
-    ...(variant === "outlined" && {
-      borderColor: "rgba(255,255,255,0.4)",
-      color: "#fff",
-      "&:hover": { borderColor: "#fff", bgcolor: "rgba(255,255,255,0.08)" },
-    }),
-  };
-
-  if (cta.external) {
-    return (
-      <Button
-        variant={variant}
-        component="a"
-        href={cta.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={sx}
-      >
-        {cta.label}
-      </Button>
-    );
-  }
-
-  return (
-    <Link href={cta.href} style={{ textDecoration: "none" }}>
-      <Button variant={variant} component="span" sx={sx}>
-        {cta.label}
-      </Button>
-    </Link>
-  );
-}
 
 // Inline "View X →" text links that sit between content sections.
 function InlineLink({ cta }: { cta: CTA }) {
@@ -151,10 +101,10 @@ function SectionHeading({ children }: { children: string }) {
     <Typography
       component="h2"
       sx={{
-        fontSize: { xs: "1.5rem", md: "1.85rem" },
+        fontSize: { xs: "1.35rem", md: "1.6rem" },
         fontWeight: 800,
         color: "text.primary",
-        mb: 2.5,
+        mb: 2,
       }}
     >
       {children}
@@ -165,7 +115,7 @@ function SectionHeading({ children }: { children: string }) {
 function Paragraph({ children }: { children: string }) {
   return (
     <Typography
-      sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.8, mb: 2 }}
+      sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.8, mb: 2, "&:last-child": { mb: 0 } }}
     >
       {children}
     </Typography>
@@ -191,20 +141,18 @@ function BlockView({ block }: { block: Block }) {
           {block.paragraphs?.map((p, i) => (
             <Paragraph key={i}>{p}</Paragraph>
           ))}
-          <Box component="ul" sx={{ pl: 3, m: 0 }}>
+          <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0, display: "grid", gap: 1.5 }}>
             {block.items.map((item, i) => (
-              <Typography
+              <Box
                 key={i}
                 component="li"
-                sx={{
-                  color: "text.secondary",
-                  fontSize: "1rem",
-                  lineHeight: 1.8,
-                  mb: 1.5,
-                }}
+                sx={{ display: "flex", gap: 1.5, p: 2, borderRadius: "10px", bgcolor: "#f6f9fc", color: "text.secondary", fontSize: "1rem", lineHeight: 1.7 }}
               >
+                <Box sx={{ width: 22, height: 22, flexShrink: 0, mt: "3px", borderRadius: "50%", bgcolor: "primary.main", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 800 }}>
+                  ✓
+                </Box>
                 {item}
-              </Typography>
+              </Box>
             ))}
           </Box>
         </Box>
@@ -217,16 +165,16 @@ function BlockView({ block }: { block: Block }) {
           {block.paragraphs?.map((p, i) => (
             <Paragraph key={i}>{p}</Paragraph>
           ))}
-          <Box sx={{ overflowX: "auto" }}>
+          <Box sx={{ overflowX: "auto", border: "1px solid rgba(15,40,70,0.08)", borderRadius: "12px" }}>
             <Table
               sx={{
-                borderTop: "1px solid",
-                borderColor: "divider",
-                "& td": { verticalAlign: "top" },
+                "& td": { verticalAlign: "top", borderColor: "rgba(15,40,70,0.07)" },
+                "& tr:last-of-type td": { borderBottom: "none" },
+                "& tbody tr:not(:first-of-type):hover": { bgcolor: "rgba(0,114,188,0.03)" },
               }}
             >
               <TableBody>
-                <TableRow sx={{ bgcolor: "action.hover" }}>
+                <TableRow sx={{ bgcolor: "#f6f9fc", "& td": { color: "#5b6b7c", fontSize: "0.78rem", letterSpacing: "0.08em", textTransform: "uppercase" } }}>
                   <TableCell sx={{ fontWeight: 800, width: { md: "42%" } }}>
                     {block.columns[0]}
                   </TableCell>
@@ -267,7 +215,7 @@ function BlockView({ block }: { block: Block }) {
 
     case "links":
       return (
-        <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap", "& a": { px: 2, py: 1, borderRadius: "999px", bgcolor: "rgba(0,114,188,0.08)", "&:hover": { bgcolor: "rgba(0,114,188,0.14)" } } }}>
           {block.links.map((l, i) => (
             <InlineLink key={i} cta={l} />
           ))}
@@ -280,6 +228,15 @@ export default async function ApplicationPage({ params }: Props) {
   const { slug } = await params;
   const app: Application | undefined = getApplication(slug);
   if (!app) notFound();
+
+  // The last block is usually the page's product links ("View fittings"...).
+  // Those become the banner buttons, so the banner points at products and the
+  // closing banner alone handles quotes (no repeated "Request a Quote").
+  const last = app.blocks[app.blocks.length - 1];
+  const productLinks = last?.type === "links" ? last.links : [];
+  const bodyBlocks = productLinks.length ? app.blocks.slice(0, -1) : app.blocks;
+  const heroLinks = productLinks.length ? productLinks.slice(0, 3) : app.heroCtas;
+
 
   const url = `https://www.hiflux.uk.com/applications/${app.slug}`;
   const breadcrumbSchema = {
@@ -321,7 +278,7 @@ export default async function ApplicationPage({ params }: Props) {
           py: { xs: 8, md: 12 },
           color: "#fff",
           background:
-            "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)",
+            BLUE_BG,
         }}
       >
         <Container maxWidth="md">
@@ -365,7 +322,7 @@ export default async function ApplicationPage({ params }: Props) {
             </Typography>
           ))}
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 3 }}>
-            {app.heroCtas.map((cta, i) => (
+            {heroLinks.map((cta, i) => (
               <Link
                 key={i}
                 href={cta.href}
@@ -375,7 +332,7 @@ export default async function ApplicationPage({ params }: Props) {
                   variant={i === 0 ? "contained" : "outlined"}
                   component="span"
                   sx={{
-                    borderRadius: 0,
+                    borderRadius: "8px",
                     px: 3,
                     py: 1.25,
                     fontWeight: 700,
@@ -400,56 +357,36 @@ export default async function ApplicationPage({ params }: Props) {
         </Container>
       </Box>
 
-      {/* Content blocks */}
-      <Container maxWidth="md" sx={{ py: { xs: 6, md: 10 } }}>
-        {app.blocks.map((block, i) => (
-          <Box
-            key={i}
-            sx={{ mb: i === app.blocks.length - 1 ? 0 : 6 }}
-          >
-            <BlockView block={block} />
-            {i !== app.blocks.length - 1 && block.type !== "links" && (
-              <Divider sx={{ mt: 5 }} />
+      {/* Content blocks: each section as a card on a tinted band */}
+      <Box sx={{ bgcolor: "#f3f6fa", py: { xs: 5, md: 8 } }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: "grid", gap: { xs: 2.5, md: 3 }, maxWidth: 980, mx: "auto" }}>
+            {bodyBlocks.map((block, i) =>
+              block.type === "links" ? (
+                <BlockView key={i} block={block} />
+              ) : (
+                <Box
+                  key={i}
+                  sx={{
+                    bgcolor: "#fff",
+                    border: "1px solid rgba(15,40,70,0.08)",
+                    borderRadius: "14px",
+                    boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
+                    p: { xs: 3, md: 4.5 },
+                  }}
+                >
+                  <BlockView block={block} />
+                </Box>
+              ),
             )}
-          </Box>
-        ))}
-      </Container>
-
-      {/* Closing CTA */}
-      <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="md" sx={{ textAlign: "center" }}>
-          <Typography
-            component="h2"
-            sx={{
-              fontSize: { xs: "1.4rem", md: "1.75rem" },
-              fontWeight: 800,
-              color: "#fff",
-              mb: 1.5,
-            }}
-          >
-            {app.closing.heading}
-          </Typography>
-          <Typography sx={{ color: "rgba(255,255,255,0.7)", mb: 3 }}>
-            {app.closing.body}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              justifyContent: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            {app.closing.buttons.map((cta, i) => (
-              <CtaButton
-                key={i}
-                cta={cta}
-                variant={i === 0 ? "contained" : "outlined"}
-              />
-            ))}
           </Box>
         </Container>
       </Box>
+
+      {/* Closing CTA */}
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+        <CtaBanner heading={app.closing.heading} body={app.closing.body} buttons={app.closing.buttons} />
+      </Container>
     </Box>
   );
 }

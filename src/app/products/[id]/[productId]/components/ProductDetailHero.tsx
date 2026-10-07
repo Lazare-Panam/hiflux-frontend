@@ -2,6 +2,7 @@
 
 import { Box, Typography } from '@mui/material';
 import PageBreadcrumbs, { type Crumb } from '@/app/Common/PageBreadcrumbs';
+import { BLUE_BG } from "@/theme/brand";
 
 export default function ProductDetailHero({
   name,
@@ -14,7 +15,7 @@ export default function ProductDetailHero({
   crumbs?: Crumb[];
 }) {
   return (
-    <Box sx={{ background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)', px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
+    <Box sx={{ background: BLUE_BG, px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
       <Box sx={{ maxWidth: '1280px', mx: 'auto' }}>
         {crumbs && <PageBreadcrumbs schema={false} items={crumbs} />}
         {category && (

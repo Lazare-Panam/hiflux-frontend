@@ -9,6 +9,7 @@ import type { ProductSeriesVariants } from "@/api/useProductVariants";
 import VariantsSidebar from "./VariantsSidebar";
 import VariantsTable from "./VariantsTable";
 import VariantsActiveFilters from "./VariantsActiveFilters";
+import { BLUE_BG } from "@/theme/brand";
 
 
 /**
@@ -64,7 +65,7 @@ export default function VariantsBrowser({
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       {/* Hero */}
-      <Box sx={{ background: "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)", px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
+      <Box sx={{ background: BLUE_BG, px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
         <Box sx={{ maxWidth: "1280px", mx: "auto" }}>
           <PageBreadcrumbs
             items={[

@@ -194,7 +194,7 @@ export default function FeaturedProducts() {
   return (
     <Box
       component="section"
-      sx={{ py: { xs: 6, md: 10 }, bgcolor: "#FAF6F4" }}
+      sx={{ py: { xs: 6, md: 10 }, bgcolor: "#f3f6fa" }}
     >
       <Box sx={{ maxWidth: "1280px", mx: "auto", px: { xs: 3, md: 8 }, mb: 5 }}>
         <Typography

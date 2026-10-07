@@ -9,7 +9,7 @@ import { CATEGORIES } from "../products/data/categories";
 // Category cards directly under the hero — the same cards as /products.
 export default function CategoryGrid() {
   return (
-    <Box component="section" sx={{ bgcolor: "background.default", py: { xs: 6, md: 9 }, px: { xs: 2, md: 8 } }}>
+    <Box component="section" sx={{ bgcolor: "#f3f6fa", py: { xs: 6, md: 9 }, px: { xs: 2, md: 8 } }}>
       <Box sx={{ maxWidth: "1280px", mx: "auto" }}>
         <Box
           sx={{

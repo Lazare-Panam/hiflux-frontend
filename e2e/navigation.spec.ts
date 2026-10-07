@@ -54,7 +54,7 @@ test.describe("Homepage CTAs", () => {
     { name: "Shop the Range", url: /\/shop$/ },
     { name: "About Hiflux UK", url: /\/about$/ },
     { name: "Browse all products", url: /\/products$/ },
-    { name: "View certifications", url: /\/about$/ },
+    { name: "Download certificates", url: /\/certifications$/ },
   ];
 
   for (const cta of CTAS) {

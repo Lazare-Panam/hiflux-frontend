@@ -2,6 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import CountUp from "../Common/CountUp";
+import { BLUE_BG_STRIP } from "@/theme/brand";
 
 // Section 2 — Trust bar. Verifiable-from-catalogue figures that speak to an
 // engineer: max rating, full fitting span, material grade, temperature range.
@@ -17,7 +18,7 @@ export default function TrustBar() {
     <Box
       component="section"
       sx={{
-        bgcolor: "primary.main",
+        background: BLUE_BG_STRIP,
       }}
     >
       <Box

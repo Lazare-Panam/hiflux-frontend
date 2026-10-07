@@ -9,9 +9,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Button,
 } from '@mui/material';
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import CtaBanner from "@/app/Common/CtaBanner";
 
 interface BlogSection {
   heading: string | null;
@@ -143,7 +143,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
           <Chip
             label={blog.category}
             size="small"
-            sx={{ mb: 2, fontWeight: 600, borderRadius: 0, width: 'fit-content', bgcolor: 'primary.main', color: 'white' }}
+            sx={{ mb: 2, fontWeight: 600, borderRadius: "8px", width: 'fit-content', bgcolor: 'primary.main', color: 'white' }}
           />
           <Typography variant="h2" component="h1" sx={{ fontWeight: 700, color: 'white', lineHeight: 1.15, mb: 1.5, fontSize: { xs: '1.8rem', md: '2.8rem' } }}>
             {blog.title}
@@ -192,7 +192,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
                 sx={{
                   border: '1px solid',
                   borderColor: 'divider',
-                  borderRadius: '0 !important',
+                  borderRadius: '10px !important',
                   mb: 1.5,
                   '&:before': { display: 'none' },
                 }}
@@ -215,7 +215,7 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
         {/* Tags */}
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 6 }}>
           {blog.tags.map((t) => (
-            <Chip key={t} label={t} size="small" variant="outlined" sx={{ borderRadius: 0, fontSize: '0.75rem' }} />
+            <Chip key={t} label={t} size="small" variant="outlined" sx={{ borderRadius: "8px", fontSize: '0.75rem' }} />
           ))}
         </Box>
 
@@ -223,45 +223,14 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
 
         {/* CTA */}
         {blog.cta && (
-          <Box
-            sx={{
-              background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)',
-              p: { xs: 4, md: 6 },
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignItems: { md: 'center' },
-              justifyContent: 'space-between',
-              gap: 4,
-            }}
-          >
-            <Box>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: '#fff', mb: 1 }}>
-                {blog.cta.heading}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, maxWidth: 420 }}>
-                {blog.cta.body}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, flexShrink: 0 }}>
-              <Button
-                variant="contained"
-                color="primary"
-                component="a"
-                href={`mailto:${blog.cta.email}`}
-                sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 600, textTransform: 'none', bgcolor: '#fff', color: 'primary.main', '&:hover': { bgcolor: '#e6f1f9' } }}
-              >
-                {blog.cta.email}
-              </Button>
-              <Button
-                variant="outlined"
-                component="a"
-                href={`tel:${blog.cta.phone.replace(/\s/g, '')}`}
-                sx={{ borderRadius: 0, px: 3, py: 1.25, fontWeight: 600, textTransform: 'none', borderColor: 'rgba(255,255,255,0.3)', color: '#fff', '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.08)' } }}
-              >
-                {blog.cta.phone}
-              </Button>
-            </Box>
-          </Box>
+          <CtaBanner
+            heading={blog.cta.heading}
+            body={blog.cta.body}
+            buttons={[
+              { label: `Email ${blog.cta.email}`, href: `mailto:${blog.cta.email}` },
+              { label: `Call ${blog.cta.phone}`, href: `tel:${blog.cta.phone.replace(/\s/g, '')}` },
+            ]}
+          />
         )}
 
       </Container>

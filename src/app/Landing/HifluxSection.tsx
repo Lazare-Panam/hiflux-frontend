@@ -62,7 +62,7 @@ export default function HifluxSection() {
             >
               Hiflux UK
             </Box>{" "}
-            is the exclusive UK and EU distributor for HIFLUX Co., Ltd of
+            is an authorised UK and EU distributor for HIFLUX Co., Ltd of
             Daejeon, South Korea — a manufacturer of ultra high-pressure valves,
             fittings and tubing since 2010, and a designated Hydrogen Specialist
             Company under Korea&apos;s Ministry of Trade, Industry and Energy.
@@ -76,10 +76,9 @@ export default function HifluxSection() {
               mb: 2.5,
             }}
           >
-            We hold UK stock, handle EU-facing supply, and provide the technical
-            and documentation support a UK or EU project needs. Every series,
-            every certificate and every batch is genuine HIFLUX product,
-            traceable back to the manufacturer.
+            Supplied direct from the HIFLUX factory with lead times quoted up
+            front, plus the technical and documentation support a UK or EU
+            project needs.
           </Typography>
 
           <Typography
@@ -92,16 +91,16 @@ export default function HifluxSection() {
               mb: 1.5,
             }}
           >
-            Buy genuine, buy traceable
+            Documented and traceable
           </Typography>
 
           <Typography
             sx={{ color: "text.secondary", fontSize: "1rem", lineHeight: 1.75, mb: 3 }}
           >
-            If you are sourcing HIFLUX components in the UK or EU, source them
-            from the authorised distributor. Grey-market product carries no
-            traceable material certification — and on a 150,000 psi line, that
-            documentation is the whole point.
+            Every HIFLUX product we supply comes with manufacturer material
+            certification traceable to the batch. On a high pressure line, that
+            documentation matters as much as the component. Tell us the series
+            and quantity and we will send the certificates with your quote.
           </Typography>
 
           <Button
@@ -110,7 +109,7 @@ export default function HifluxSection() {
             variant="outlined"
             endIcon={<ArrowForwardIcon />}
             sx={{
-              borderRadius: 0,
+              borderRadius: "8px",
               textTransform: "none",
               fontWeight: 700,
               px: 3,

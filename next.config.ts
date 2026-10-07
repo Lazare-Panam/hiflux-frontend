@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Filtration pages and water-treatment posts removed Oct 2026: HIFLUX
+      // Co., Ltd. doesn't make industrial filtration, so Hiflux UK doesn't sell
+      // it. Permanent redirects keep existing links and rankings off a 404.
+      ...[
+        "/industrial-filtration-systems",
+        "/industrial-strainers",
+        "/magnetic-filters",
+        "/news/backwashing-filter-cycles-municipal-industrial",
+        "/news/high-flow-industrial-water-filter-selection-guide",
+      ].map((source) => ({ source, destination: "/products", permanent: true })),
       // The product API uses catalogId "regulators", but the canonical category
       // slug across the site is "high-pressure-regulators". Permanently redirect
       // the alias so the duplicate /products/regulators/... URLs collapse to one.

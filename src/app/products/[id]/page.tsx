@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const data = await getCatalog(id).catch(() => null);
   if (!data) {
-    return { title: "Hiflux Valves" };
+    return { title: "High-Pressure Products | Hiflux UK" };
   }
 
   const seo = data.seo;
@@ -32,11 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // (the catalog API returns null seo for the overlaid categories).
   const editorial = getCategoryEditorial(id);
   const title =
-    editorial?.seo?.title ?? seo?.title ?? data.bannerTitle ?? "Hiflux Valves";
+    editorial?.seo?.title ?? seo?.title ?? data.bannerTitle ?? "High-Pressure Products | Hiflux UK";
   const description =
     editorial?.seo?.description ?? seo?.description ?? data.bannerSubtitle ?? "";
   const ogImage = seo?.ogImage ?? data.bannerImage;
-  const canonical = editorial?.canonical ?? seo?.canonical;
+  const canonical =
+    editorial?.canonical ?? seo?.canonical ?? `https://www.hiflux.uk.com/products/${id}`;
 
   return {
     title,
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: canonical ? { canonical } : undefined,
     openGraph: {
       type: "website",
-      siteName: "Hiflux Valves",
+      siteName: "Hiflux UK",
       title,
       description,
       url: canonical,

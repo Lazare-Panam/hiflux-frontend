@@ -18,17 +18,22 @@ async function RelatedProductCard({ productId }: { productId: string }) {
     >
       <Box
         sx={{
-          border: '1px solid rgba(0,0,0,0.08)',
-          borderRadius: '6px',
+          height: '100%',
+          bgcolor: '#fff',
+          border: '1px solid rgba(15,40,70,0.08)',
+          borderRadius: '14px',
           overflow: 'hidden',
-          transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+          boxShadow: '0 1px 2px rgba(15,40,70,0.04)',
+          transition: 'box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease',
           '&:hover': {
-            boxShadow: '0 12px 32px rgba(0,0,0,0.10)',
-            transform: 'translateY(-2px)',
+            transform: 'translateY(-4px)',
+            borderColor: 'rgba(0,114,188,0.35)',
+            boxShadow: '0 18px 40px rgba(0,83,155,0.12)',
           },
+          '& .MuiTypography-root': { textTransform: 'none' },
         }}
       >
-        <Box sx={{ position: 'relative', pt: '65%', bgcolor: '#fff' }}>
+        <Box sx={{ position: 'relative', pt: '65%', background: 'linear-gradient(180deg, #f6f9fc 0%, #ffffff 100%)' }}>
           {data.image ? (
             <Image
               src={data.image}
@@ -43,9 +48,8 @@ async function RelatedProductCard({ productId }: { productId: string }) {
             </Box>
           )}
         </Box>
-        <Box sx={{ height: '1px', bgcolor: 'rgba(0,0,0,0.06)' }} />
-        <Box sx={{ p: 2.5, bgcolor: '#FAF6F4' }}>
-          <Typography sx={{ fontWeight: 700, fontSize: '0.95rem', color: 'text.primary', mb: 0.5 }}>
+        <Box sx={{ p: 2.5 }}>
+          <Typography sx={{ fontWeight: 800, fontSize: '1rem', color: 'text.primary', mb: 0.5 }}>
             {data.name}
           </Typography>
           <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary', lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>

@@ -107,7 +107,7 @@ export default function CatalogView({
                 href={hero.primaryCta.link}
                 variant="contained"
                 size="large"
-                sx={{ borderRadius: 0, px: 4, py: 1.5, fontWeight: 700 }}
+                sx={{ borderRadius: "8px", px: 4, py: 1.5, fontWeight: 700 }}
               >
                 {hero.primaryCta.label}
               </Button>
@@ -120,7 +120,7 @@ export default function CatalogView({
                 sx={{
                   borderColor: "rgba(255,255,255,0.5)",
                   color: "#fff",
-                  borderRadius: 0,
+                  borderRadius: "8px",
                   px: 4,
                   py: 1.5,
                   fontWeight: 600,
@@ -350,71 +350,6 @@ export default function CatalogView({
           </>
         )}
 
-        {/* CTA */}
-        {data.cta && (
-          <>
-            <Divider sx={{ mb: 10 }} />
-            <Box sx={{ textAlign: "center", py: 6 }}>
-              {data.cta.heading && (
-                <Typography
-                  variant="h3"
-                  sx={{ fontSize: { xs: 24, md: 32 }, fontWeight: 800, mb: 2 }}
-                >
-                  {data.cta.heading}
-                </Typography>
-              )}
-              {data.cta.text && (
-                <Typography
-                  sx={{
-                    color: "text.secondary",
-                    lineHeight: 1.8,
-                    mb: 4,
-                    maxWidth: 520,
-                    mx: "auto",
-                  }}
-                >
-                  {data.cta.text}
-                </Typography>
-              )}
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                {data.cta.emailCta && (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    href={data.cta.emailCta.link}
-                    sx={{ borderRadius: 0, px: 4, py: 1.5, fontWeight: 700 }}
-                  >
-                    {data.cta.emailCta.label}
-                  </Button>
-                )}
-                {data.cta.quoteCta && (
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    href={data.cta.quoteCta.link}
-                    sx={{
-                      borderColor: "#ddd",
-                      color: "text.primary",
-                      borderRadius: 0,
-                      px: 4,
-                      py: 1.5,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {data.cta.quoteCta.label}
-                  </Button>
-                )}
-              </Box>
-            </Box>
-          </>
-        )}
       </Container>
     </Box>
   );

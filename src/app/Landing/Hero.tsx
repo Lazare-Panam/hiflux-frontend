@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { Box, Typography, Stack, Button, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import BoltOutlinedIcon from '@mui/icons-material/BoltOutlined';
@@ -16,16 +15,16 @@ import { CATEGORIES } from '../products/data/categories';
 import { LEFT_NAV } from '../Common/Navbar/navData';
 
 const TRUST_ITEMS = [
-  { label: 'Exclusive UK & EU HIFLUX Distributor', Icon: VerifiedOutlinedIcon },
-  { label: 'Rated To 150,000 psi', Icon: SpeedOutlinedIcon },
-  { label: 'UK Hydrogen Energy Association Member', Icon: BoltOutlinedIcon },
+  // Wording from the Oct 2026 marketing plan (banner edit).
   { label: 'Prices Online For Standard Items', Icon: SellOutlinedIcon },
+  { label: 'Quotes For Projects', Icon: SpeedOutlinedIcon },
+  { label: 'Documentation With Every Order', Icon: VerifiedOutlinedIcon },
+  { label: 'Rated To 150,000 psi', Icon: BoltOutlinedIcon },
 ];
 
 // Rows shown in the finder before the visitor types anything.
 const FINDER_ROWS: { label: string; href: string; image?: string }[] = [
   ...CATEGORIES.map((c) => ({ label: c.label, href: c.href, image: c.image })),
-  { label: 'Industrial Filtration Systems', href: '/industrial-filtration-systems' },
 ];
 
 type SearchEntry = { label: string; group: string; href: string };
@@ -46,9 +45,6 @@ function buildIndex(): SearchEntry[] {
     }
   }
   entries.push(
-    { label: 'Industrial Filtration Systems', group: 'Filtration', href: '/industrial-filtration-systems' },
-    { label: 'Y Strainers & Basket Strainers', group: 'Filtration', href: '/industrial-strainers' },
-    { label: 'Magnetic Filters', group: 'Filtration', href: '/magnetic-filters' },
     { label: 'Cone & Thread Fittings Guide', group: 'Guide', href: '/news/high-pressure-cone-and-thread-fittings-guide' },
   );
   return entries;
@@ -138,7 +134,7 @@ function ProductFinder() {
     <Box
       sx={{
         bgcolor: '#fff',
-        borderRadius: '4px',
+        borderRadius: "8px",
         boxShadow: '0 20px 50px rgba(0,0,0,0.35)',
         overflow: 'hidden',
         width: '100%',
@@ -167,7 +163,7 @@ function ProductFinder() {
             px: 1.5,
             height: 42,
             border: '1px solid rgba(0,0,0,0.2)',
-            borderRadius: '2px',
+            borderRadius: "8px",
             position: 'relative',
             '&:focus-within': { borderColor: 'primary.main' },
           }}
@@ -240,11 +236,7 @@ function ProductFinder() {
                 justifyContent: 'center',
               }}
             >
-              {row.image ? (
-                <Image src={row.image} alt={row.label} fill sizes="40px" style={{ objectFit: 'contain' }} />
-              ) : (
-                <FilterAltOutlinedIcon sx={{ color: 'primary.main' }} />
-              )}
+              {row.image && <Image src={row.image} alt={row.label} fill sizes="40px" style={{ objectFit: 'contain' }} />}
             </Box>
             <Typography sx={{ flex: 1, fontSize: '0.95rem', fontWeight: 600 }}>{row.label}</Typography>
             <ChevronRightIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
@@ -325,7 +317,7 @@ export default function Hero() {
                 textTransform: 'uppercase',
               }}
             >
-              Exclusive UK &amp; EU Distributor · HIFLUX Co., Ltd., Korea
+              Authorised UK &amp; EU Distributor · HIFLUX Co., Ltd., Korea
             </Typography>
 
             <Typography
@@ -338,7 +330,7 @@ export default function Hero() {
                 letterSpacing: '-0.02em',
               }}
             >
-              HIFLUX High-Pressure Valves &amp; Fittings, Supplied In The UK By The Exclusive Distributor
+              HIFLUX High-Pressure Valves &amp; Fittings, Supplied In The UK &amp; EU By An Authorised Distributor
             </Typography>
 
             <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: { xs: '1rem', md: '1.1rem' }, maxWidth: 720, textTransform: 'none' }}>
@@ -354,7 +346,7 @@ export default function Hero() {
                 variant="contained"
                 size="large"
                 disableElevation
-                sx={{ px: 4, py: 1.5, fontWeight: 700, textTransform: 'none', fontSize: '1rem', borderRadius: '2px' }}
+                sx={{ px: 4, py: 1.5, fontWeight: 700, textTransform: 'none', fontSize: '1rem', borderRadius: "8px" }}
               >
                 Shop the Range
               </Button>
@@ -369,7 +361,7 @@ export default function Hero() {
                   fontWeight: 700,
                   textTransform: 'none',
                   fontSize: '1rem',
-                  borderRadius: '2px',
+                  borderRadius: "8px",
                   color: '#fff',
                   borderColor: 'rgba(255,255,255,0.5)',
                   '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.06)' },

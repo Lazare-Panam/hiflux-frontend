@@ -4,6 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { APPLICATIONS } from "./data";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import { BLUE_BG } from "@/theme/brand";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title =
@@ -25,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function ApplicationsIndexPage() {
   return (
-    <Box sx={{ bgcolor: "background.default" }}>
+    <Box sx={{ bgcolor: "#f3f6fa" }}>
       {/* Hero */}
       <Box
         component="section"
@@ -33,7 +34,7 @@ export default function ApplicationsIndexPage() {
           py: { xs: 8, md: 12 },
           color: "#fff",
           background:
-            "linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)",
+            BLUE_BG,
         }}
       >
         <Container maxWidth="md">
@@ -98,14 +99,13 @@ export default function ApplicationsIndexPage() {
                 flexDirection: "column",
                 width: "100%",
                 textDecoration: "none",
-                border: "1px solid",
-                borderColor: "divider",
+                bgcolor: "#fff",
+                border: "1px solid rgba(15,40,70,0.08)",
+                borderRadius: "14px",
+                boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
                 p: { xs: 3, md: 4 },
-                transition: "border-color 0.15s ease, box-shadow 0.15s ease",
-                "&:hover": {
-                  borderColor: "primary.main",
-                  boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
-                },
+                transition: "box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease",
+                "&:hover": { transform: "translateY(-4px)", borderColor: "rgba(0,114,188,0.35)", boxShadow: "0 18px 40px rgba(0,83,155,0.12)" },
               }}
             >
               <Typography

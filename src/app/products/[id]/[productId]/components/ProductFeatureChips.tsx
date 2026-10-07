@@ -19,7 +19,7 @@ export default function ProductFeatureChips({ features }: { features: string[] }
             sx={{
               fontSize: '0.75rem',
               height: 26,
-              bgcolor: 'rgba(231,57,15,0.08)',
+              bgcolor: 'rgba(0,114,188,0.08)',
               color: 'primary.main',
               fontWeight: 600,
               borderRadius: '3px',

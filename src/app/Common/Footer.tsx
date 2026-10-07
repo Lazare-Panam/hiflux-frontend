@@ -6,12 +6,14 @@ import Link from "next/link";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { COMPANY } from "./company";
 
 const FOOTER_COLUMNS = [
   {
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
+      { label: "Certifications", href: "/certifications" },
       { label: "Latest News", href: "/news" },
       { label: "Contact Us", href: "/contact" },
       { label: "Product Index", href: "/product-index" },
@@ -116,7 +118,8 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, #00539B 55%, #062940 100%)`,
+        // Same rings as the other blue sections, on the footer's darker gradient.
+        background: `radial-gradient(circle at 96% 108%, transparent 0 150px, rgba(255,255,255,0.06) 151px 205px, transparent 206px), radial-gradient(circle at 8% -20%, rgba(255,255,255,0.05) 0 120px, transparent 121px), linear-gradient(135deg, ${theme.palette.primary.dark} 0%, #00539B 55%, #062940 100%)`,
         color: "rgba(255,255,255,0.7)",
       }}
     >
@@ -184,8 +187,12 @@ export default function Footer() {
               <LocationOnOutlinedIcon
                 sx={{ fontSize: 16, color: "primary.light", mt: 0.2 }}
               />
-              <Typography sx={{ fontSize: "0.85rem" }}>
-                United Kingdom
+              <Typography sx={{ fontSize: "0.85rem", lineHeight: 1.6 }}>
+                {COMPANY.office.lines.map((l) => (
+                  <Box component="span" key={l} sx={{ display: "block" }}>
+                    {l}
+                  </Box>
+                ))}
               </Typography>
             </Box>
           </Box>
@@ -199,7 +206,7 @@ export default function Footer() {
             sx={{ display: "inline-flex", alignItems: "center", mt: 3 }}
           >
             <Image
-              src="https://cdn.jsdelivr.net/gh/Lazare-Panam/panam-images@main/certificates/HEA_SumbolAsset-13%20(1).png"
+              src="/hea-logo.png"
               alt="HEA"
               width={38}
               height={38}
@@ -261,9 +268,15 @@ export default function Footer() {
           }}
         >
           <Typography
-            sx={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}
+            sx={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", textTransform: "none" }}
           >
-            © {new Date().getFullYear()} Hiflux. All rights reserved.
+            © {new Date().getFullYear()} {COMPANY.legalName}. All rights reserved.
+          </Typography>
+          <Typography
+            sx={{ fontSize: "0.75rem", lineHeight: 1.6, color: "rgba(255,255,255,0.5)", textTransform: "none", textAlign: { xs: "center", sm: "right" } }}
+          >
+            Registered in England and Wales, company no. {COMPANY.companyNumber}. Registered office:{" "}
+            {COMPANY.registeredOffice}. VAT no. {COMPANY.vatDisplay}.
           </Typography>
         </Box>
       </Box>

@@ -1,12 +1,25 @@
-import { Box, Button, Chip, Container, Typography } from "@mui/material";
+import type { Metadata } from "next";
+import { Box, Chip, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { blogs } from "./data/blogs";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
-const internalLinks = [
-   { label: "Home", href: "/" },
-];
+const NEWS_TITLE = "High-Pressure Valve News & Technical Guides | Hiflux UK";
+const NEWS_DESCRIPTION =
+  "Technical guides on high-pressure cone and thread fittings, check valves and regulators, plus Hiflux UK company news.";
+const NEWS_URL = "https://www.hiflux.uk.com/news";
+
+// Own canonical and social tags (previously inherited the homepage's og:url and copy).
+export const metadata: Metadata = {
+  title: NEWS_TITLE,
+  description: NEWS_DESCRIPTION,
+  alternates: { canonical: NEWS_URL },
+  openGraph: { type: "website", siteName: "Hiflux UK", title: NEWS_TITLE, description: NEWS_DESCRIPTION, url: NEWS_URL },
+  twitter: { card: "summary_large_image", title: NEWS_TITLE, description: NEWS_DESCRIPTION },
+};
+
+
 
 export default function NewsPage() {
   const featured = blogs[0];
@@ -142,12 +155,13 @@ export default function NewsPage() {
             gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
             mb: 8,
             textDecoration: "none",
-            border: "1px solid",
-            borderColor: "divider",
-            transition: "border-color 0.2s ease",
-            borderRadius: "8px",
+            bgcolor: "#fff",
+            border: "1px solid rgba(15,40,70,0.08)",
+            borderRadius: "16px",
             overflow: "hidden",
-            "&:hover": { borderColor: "primary.main" },
+            boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
+            transition: "box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease",
+            "&:hover": { transform: "translateY(-4px)", borderColor: "rgba(0,114,188,0.35)", boxShadow: "0 18px 40px rgba(0,83,155,0.12)" },
           }}
         >
           <Box
@@ -174,7 +188,7 @@ export default function NewsPage() {
               size="small"
               color="primary"
               sx={{
-                borderRadius: 0,
+                borderRadius: "8px",
                 fontWeight: 600,
                 width: "fit-content",
                 mb: 2,
@@ -195,47 +209,9 @@ export default function NewsPage() {
           </Box>
         </Box>
 
-        {/* Explore More - internal links */}
-        <Box sx={{ mb: 8, textAlign: "center" }}>
-          <Typography
-            variant="overline"
-            sx={{
-              color: "text.secondary",
-              letterSpacing: 3,
-              fontSize: "0.7rem",
-              display: "block",
-              mb: 2,
-            }}
-          >
-            Explore More
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: 1.5,
-            }}
-          >
-            {internalLinks.map((link) => (
-              <Button
-                key={link.href}
-                component="a"
-                href={link.href}
-                variant="outlined"
-                color="primary"
-                sx={{
-                  borderRadius: "999px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  px: 3,
-                }}
-              >
-                {link.label}
-              </Button>
-            ))}
-          </Box>
-        </Box>
+        <Typography component="h2" sx={{ fontSize: { xs: "1.4rem", md: "1.6rem" }, fontWeight: 800, color: "text.primary", mb: 3 }}>
+          More articles
+        </Typography>
 
         {/* Rest */}
         <Grid container spacing={3}>
@@ -248,12 +224,14 @@ export default function NewsPage() {
                   display: "flex",
                   flexDirection: "column",
                   textDecoration: "none",
-                  border: "1px solid",
-                  borderColor: "divider",
                   height: "100%",
-                  bgcolor: "background.default",
-                  transition: "border-color 0.2s ease",
-                  "&:hover": { borderColor: "primary.main" },
+                  bgcolor: "#fff",
+                  border: "1px solid rgba(15,40,70,0.08)",
+                  borderRadius: "14px",
+                  overflow: "hidden",
+                  boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
+                  transition: "box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease",
+                  "&:hover": { transform: "translateY(-4px)", borderColor: "rgba(0,114,188,0.35)", boxShadow: "0 18px 40px rgba(0,83,155,0.12)" },
                   "&:hover .blog-title": { color: "primary.main" },
                 }}
               >
@@ -266,9 +244,7 @@ export default function NewsPage() {
                     height: 200,
                     objectFit: "cover",
                     display: "block",
-                    bgcolor: "background.paper",
-                    borderBottom: "1px solid",
-                    borderColor: "divider",
+                    bgcolor: "#f6f9fc",
                   }}
                 />
                 <Box
@@ -285,7 +261,7 @@ export default function NewsPage() {
                     variant="outlined"
                     color="primary"
                     sx={{
-                      borderRadius: 0,
+                      borderRadius: "8px",
                       fontWeight: 600,
                       width: "fit-content",
                       mb: 1.5,

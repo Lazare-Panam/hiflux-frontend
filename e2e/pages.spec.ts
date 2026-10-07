@@ -19,9 +19,6 @@ const STATIC_ROUTES = [
   "/applications",
   "/product-index",
   "/returns-policy",
-  "/industrial-filtration-systems",
-  "/industrial-strainers",
-  "/magnetic-filters",
 ];
 
 // Known dynamic routes.

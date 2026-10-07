@@ -36,6 +36,8 @@ export function generateStaticParams() {
 }
 
 const BRAND = "#0072BC";
+const FITTINGS_SERIES = "fit-ultra-150k";
+const ACCESSORY_SERIES = "acc-ultra-150k";
 const HIDDEN_SPEC_KEYS = ["SKU", "Price"];
 
 type Props = {
@@ -80,7 +82,28 @@ export default async function VariantDetail({ params }: Props) {
     ([key]) => !HIDDEN_SPEC_KEYS.includes(key),
   );
 
-  const related = data.variants.filter((v) => v.id !== variant.id).slice(0, 4);
+  // "Related" = same pressure class and tube size (then same class only), never
+  // a different class: fitting components don't cross pressure classes.
+  const rating = variant.specs["Pressure Rating"];
+  const tube = variant.specs["Tube Size"];
+  const score = (v: typeof variant) =>
+    (rating && v.specs["Pressure Rating"] === rating ? 2 : 0) + (tube && v.specs["Tube Size"] === tube ? 1 : 0);
+  const related = data.variants
+    .filter((v) => v.id !== variant.id && score(v) >= 2)
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, 4);
+
+  // A fitting body needs a matched accessory set of the same class and size
+  // (gland + sleeve below 20,000 psi, gland + collar above).
+  const accessories =
+    productId === FITTINGS_SERIES && rating && tube
+      ? ((await getProductVariants(ACCESSORY_SERIES).catch(() => null))?.variants ?? []).filter(
+          (a) =>
+            a.specs["Pressure Rating"] === rating &&
+            a.specs["Tube Size"] === tube &&
+            ["Gland", "Collar", "Sleeve"].includes(a.specs["Type"] ?? ""),
+        )
+      : [];
 
   const productSchema = {
     "@context": "https://schema.org",
@@ -237,13 +260,35 @@ export default async function VariantDetail({ params }: Props) {
             </Table>
 
             {hasPrice ? (
-              <AddToCartButton
-                productId={productId}
-                sku={sku}
-                name={data.name}
-                thumbnailImage={data.thumbnailImage}
-                price={parsedPrice}
-              />
+              <>
+                <AddToCartButton
+                  productId={productId}
+                  sku={sku}
+                  name={data.name}
+                  thumbnailImage={data.thumbnailImage}
+                  price={parsedPrice}
+                />
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  href="/contact"
+                  sx={{
+                    mt: 1.5,
+                    py: 1.25,
+                    borderColor: alpha(BRAND, 0.5),
+                    color: BRAND,
+                    textTransform: "none",
+                    fontWeight: 700,
+                    borderRadius: "8px",
+                    "&:hover": { borderColor: BRAND, bgcolor: alpha(BRAND, 0.06) },
+                  }}
+                >
+                  Request a Quote
+                </Button>
+                <Typography sx={{ mt: 1.25, fontSize: "0.82rem", color: "text.secondary", textAlign: "center", textTransform: "none" }}>
+                  Material certificates and documentation on request.
+                </Typography>
+              </>
             ) : (
               <Button
                 variant="contained"
@@ -267,12 +312,64 @@ export default async function VariantDetail({ params }: Props) {
           </Grid>
         </Grid>
 
+        {/* Required accessories (fitting bodies only) */}
+        {accessories.length > 0 && (
+          <Box
+            sx={{
+              mt: 6,
+              p: { xs: 2.5, md: 3 },
+              borderRadius: "12px",
+              border: `1px solid ${alpha(BRAND, 0.2)}`,
+              bgcolor: alpha(BRAND, 0.04),
+            }}
+          >
+            <Typography sx={{ fontSize: "1.05rem", fontWeight: 800, mb: 0.5 }}>
+              Required accessories for {sku}
+            </Typography>
+            <Typography sx={{ fontSize: "0.9rem", color: "text.secondary", mb: 2, textTransform: "none" }}>
+              A fitting body needs a matched accessory set of the same pressure class and tube size
+              ({rating}, {tube}). Order one set per connection.
+            </Typography>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+              {accessories.map((a) => {
+                const aSku = a.specs["SKU"] ?? a.id;
+                return (
+                  <Link
+                    key={a.id}
+                    href={`/products/high-pressure-fittings/${ACCESSORY_SERIES}/variants/${aSku}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        px: 2,
+                        py: 1.25,
+                        borderRadius: "8px",
+                        bgcolor: "#fff",
+                        border: `1px solid ${alpha(BRAND, 0.2)}`,
+                        "&:hover": { borderColor: BRAND },
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "0.75rem", color: "text.secondary", fontWeight: 700 }}>{a.specs["Type"]}</Typography>
+                      <Typography sx={{ fontFamily: "monospace", fontWeight: 700, color: BRAND }}>{aSku}</Typography>
+                      {a.specs["Price"] && (
+                        <Typography sx={{ fontSize: "0.85rem", fontWeight: 700 }}>£{a.specs["Price"]}</Typography>
+                      )}
+                    </Box>
+                  </Link>
+                );
+              })}
+            </Box>
+          </Box>
+        )}
+
         {/* Related */}
         {related.length > 0 && (
           <Box sx={{ mt: 8 }}>
             <Divider sx={{ mb: 4 }} />
             <Typography sx={{ fontSize: "1.15rem", fontWeight: 800, mb: 3 }}>
-              Related products
+              Same pressure class and size
             </Typography>
             <Grid container spacing={2.5}>
               {related.map((item) => {

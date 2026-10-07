@@ -155,7 +155,7 @@ export default function IndustriesSection() {
               fontWeight: 700,
               fontSize: "0.8rem",
               letterSpacing: "0.05em",
-              borderRadius: "2px",
+              borderRadius: "8px",
               borderColor: "primary.main",
               color: "primary.main",
               "&:hover": {

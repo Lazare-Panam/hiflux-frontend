@@ -44,6 +44,17 @@ const theme = createTheme({
         },
       },
     },
+    // Modern defaults: white rounded cards with a hairline border, rounded buttons.
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF',
+          borderRadius: 14,
+          border: '1px solid rgba(15,40,70,0.08)',
+          boxShadow: '0 1px 2px rgba(15,40,70,0.04)',
+        },
+      },
+    },
     MuiChip: {
       styleOverrides: {
         label: {
@@ -54,6 +65,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          borderRadius: 8,
           textTransform: 'capitalize',
         },
       },

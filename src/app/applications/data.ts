@@ -14,7 +14,6 @@ const VALVES = "/products/high-pressure-valves";
 const FITTINGS = "/products/high-pressure-fittings";
 const TUBING = "/products/high-pressure-tubing";
 const TOOLING = "/products/high-pressure-tubing/tool-coning";
-const ABOUT = "/about";
 
 export type CTA = { label: string; href: string; external?: boolean };
 
@@ -79,11 +78,17 @@ export const APPLICATIONS: Application[] = [
         type: "prose",
         heading: "Certification",
         paragraphs: [
-          `HIFLUX Co., Ltd holds KS certification for manual valves for hydrogen refuelling stations, awarded by the Korea Gas Safety Corporation (KGS) in October 2023, and its valves are in service at hydrogen refuelling station sites. In 2024 the company was designated a Hydrogen Specialist Company by Korea's Ministry of Trade, Industry and Energy. Its H70 valve and fitting programme for 700 bar refuelling stations began in 2020, and it has been a member of the Korea Hydrogen Industry Association since 2019.`,
+          `HIFLUX Co., Ltd holds KS certification for manual valves for hydrogen refuelling stations, awarded by the Korea Gas Safety Corporation (KGS) in October 2023 (certificate KGS-23-0003). The certificate covers the H70 manual valve to KS B ISO 19880-3:2018 (Hydrogen gas-charging station, Part 3: Valves) in four sizes from 1/4" to 3/4": models HRS-NV20VS04-S, HRS-NV20VS06-S, HRS-NV20VS09-S and HRS-NV20VS12-S. Its valves are in service at hydrogen refuelling station sites. In 2024 the company was designated a Hydrogen Specialist Company by Korea's Ministry of Trade, Industry and Energy. Its H70 valve and fitting programme for 700 bar refuelling stations began in 2020, and it has been a member of the Korea Hydrogen Industry Association since 2019.`,
           `Hiflux UK is a member of the Hydrogen Energy Association.`,
         ],
       },
-      { type: "links", links: [{ label: "View certifications", href: ABOUT }] },
+      {
+        type: "links",
+        links: [
+          { label: "KS certificate KGS-23-0003 (PDF)", href: "https://pblol2.blob.core.windows.net/hiflux/certification/KGS-23-0003.pdf", external: true },
+          { label: "All certifications", href: "/certifications" },
+        ],
+      },
       {
         type: "table",
         heading: "What we supply",
@@ -125,7 +130,7 @@ export const APPLICATIONS: Application[] = [
     ],
     closing: {
       heading: "Discuss your hydrogen project",
-      body: `Send the working pressure, temperature range, connection type and whether the duty is gaseous or liquefied. Hiflux UK is the exclusive UK and EU distributor for HIFLUX Co., Ltd of Daejeon.`,
+      body: `Send the working pressure, temperature range, connection type and whether the duty is gaseous or liquefied. Hiflux UK is an authorised UK and EU distributor for HIFLUX Co., Ltd of Daejeon.`,
       buttons: [REQUEST_QUOTE, DOWNLOAD_CATALOGUE],
     },
   },
@@ -226,7 +231,7 @@ export const APPLICATIONS: Application[] = [
       },
       {
         type: "links",
-        links: [{ label: "Read the cone and thread guide", href: FITTINGS }],
+        links: [{ label: "Read the cone and thread guide", href: "/news/high-pressure-cone-and-thread-fittings-guide" }],
       },
       {
         type: "table",
@@ -423,6 +428,14 @@ export const APPLICATIONS: Application[] = [
         ],
         footnote:
           "All in cold-formed stainless steel 316 as standard, with Inconel 600, 625 and 825 available where temperature and media require them.",
+      },
+      {
+        type: "links",
+        links: [
+          { label: "View valves", href: VALVES },
+          { label: "View fittings", href: FITTINGS },
+          { label: "View tubing", href: TUBING },
+        ],
       },
     ],
     closing: {

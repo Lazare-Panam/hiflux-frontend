@@ -78,7 +78,7 @@ export default async function ProductDetailContent({ id }: Props) {
                   bgcolor: "primary.main",
                   color: "#fff",
                   fontWeight: 700,
-                  borderRadius: "4px",
+                  borderRadius: "8px",
                   textTransform: "none",
                   px: 3,
                   py: 1.25,

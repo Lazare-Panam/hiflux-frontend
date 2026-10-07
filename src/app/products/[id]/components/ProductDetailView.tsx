@@ -5,6 +5,7 @@ import { Box, Typography, Button, Divider, Chip, Grid } from '@mui/material';
 import Image from 'next/image';
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import { ProductCatalog } from '@/api/useProductCatalog';
+import { BLUE_BG } from "@/theme/brand";
 
 interface Props {
   data: ProductCatalog;
@@ -20,7 +21,7 @@ export default function ProductDetailView({ data, id }: Props) {
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
       {/* Hero */}
-      <Box sx={{ background: 'linear-gradient(135deg, #0072BC 0%, #00539B 60%, #002d54 100%)', px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
+      <Box sx={{ background: BLUE_BG, px: { xs: 3, md: 8 }, py: { xs: 4, md: 5 } }}>
         <Box sx={{ maxWidth: '1280px', mx: 'auto' }}>
           <PageBreadcrumbs schema={false} items={[{ label: 'Products', href: '/products' }, { label: data.bannerTitle }]} />
           <Typography sx={{ color: 'rgba(255,255,255,0.75)', letterSpacing: '0.2em', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', mb: 1 }}>
@@ -92,7 +93,7 @@ export default function ProductDetailView({ data, id }: Props) {
                   </Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                     {first.features.map((f) => (
-                      <Chip key={f} label={f} size="small" sx={{ fontSize: '0.75rem', height: 26, bgcolor: 'rgba(231,57,15,0.08)', color: 'primary.main', fontWeight: 600, borderRadius: '3px' }} />
+                      <Chip key={f} label={f} size="small" sx={{ fontSize: '0.75rem', height: 26, bgcolor: 'rgba(0,114,188,0.08)', color: 'primary.main', fontWeight: 600, borderRadius: '3px' }} />
                     ))}
                   </Box>
                 </Box>
@@ -102,7 +103,7 @@ export default function ProductDetailView({ data, id }: Props) {
               <Button
                 onClick={() => router.push(`/products/${id}/variants`)}
                 variant="contained"
-                sx={{ alignSelf: 'flex-start', bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: '4px', textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
+                sx={{ alignSelf: 'flex-start', bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: "8px", textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
               >
                 View All Models
               </Button>

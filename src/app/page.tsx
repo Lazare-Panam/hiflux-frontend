@@ -12,7 +12,7 @@ import IndustriesSection from "./Landing/IndustryApplications";
 
 const TITLE = "High-Pressure Valves & Fittings to 150,000 psi | Hiflux UK";
 const DESCRIPTION =
-  "Exclusive UK & EU distributor for HIFLUX Co., Ltd of Daejeon. Ultra high-pressure valves, fittings and tubing rated to 150,000 psi. UK stock and support.";
+  "Authorised UK & EU distributor for HIFLUX Co., Ltd of Daejeon. Ultra high-pressure valves, fittings and tubing rated to 150,000 psi. Certificates with every order.";
 const URL = "https://www.hiflux.uk.com";
 const OG_IMAGE =
   "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png";

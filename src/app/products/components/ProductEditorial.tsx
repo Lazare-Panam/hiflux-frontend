@@ -36,7 +36,7 @@ function ButtonRow({
             variant={i === 0 ? "contained" : "outlined"}
             size="large"
             sx={{
-              borderRadius: 0,
+              borderRadius: "8px",
               px: 4,
               py: 1.5,
               fontWeight: 700,

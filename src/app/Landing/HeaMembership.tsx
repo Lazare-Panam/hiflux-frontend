@@ -10,7 +10,7 @@ const HEA_PDF =
 
 export default function HeaMembership() {
   return (
-    <Box component="section" sx={{ py: { xs: 6, md: 10 }, bgcolor: "#FAF6F4" }}>
+    <Box component="section" sx={{ py: { xs: 6, md: 10 }, bgcolor: "#f3f6fa" }}>
       <Box
         sx={{
           maxWidth: "1280px",
@@ -65,7 +65,7 @@ export default function HeaMembership() {
             variant="contained"
             endIcon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
             sx={{
-              borderRadius: 0,
+              borderRadius: "8px",
               textTransform: "none",
               fontWeight: 700,
               px: 3,

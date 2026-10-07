@@ -213,24 +213,6 @@ export const LEFT_NAV: NavItem[] = [
           },
         ],
       },
-      {
-        heading: "Industrial Filtration",
-        href: "/industrial-filtration-systems",
-        items: [
-          { label: "Industrial Filtration Systems", href: "/industrial-filtration-systems" },
-          { label: "Y & Basket Strainers", href: "/industrial-strainers" },
-          { label: "Magnetic Filters", href: "/magnetic-filters" },
-        ],
-        resources: [
-          {
-            heading: "Guides",
-            links: [
-              { label: "High Flow Water Filter Guide", href: "/news/high-flow-industrial-water-filter-selection-guide" },
-              { label: "Backwashing Filter Cycles", href: "/news/backwashing-filter-cycles-municipal-industrial" },
-            ],
-          },
-        ],
-      },
     ],
   },
   {
@@ -269,6 +251,7 @@ export const LEFT_NAV: NavItem[] = [
       },
     ],
   },
+  { label: "Certifications", href: "/certifications" },
   { label: "latest News", href: "/news" },
   { label: "Contact Us", href: "/contact" },
 ];

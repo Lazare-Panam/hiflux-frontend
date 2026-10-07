@@ -679,7 +679,7 @@ export default function ShopLandingPage() {
                   color: "text.primary",
                 }}
               >
-                All products shown are in stock
+                Lead times confirmed with your quote
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

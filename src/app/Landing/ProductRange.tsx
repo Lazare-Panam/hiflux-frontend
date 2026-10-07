@@ -70,20 +70,29 @@ export default function ProductRange() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: { xs: "1fr", sm: "minmax(200px, 1fr) 2fr" },
-              borderTop: "1px solid",
-              borderColor: "divider",
+              gridTemplateColumns: { xs: "1fr", sm: "minmax(220px, 1fr) 2fr" },
               minWidth: { sm: 640 },
+              border: "1px solid rgba(15,40,70,0.08)",
+              borderRadius: "14px",
+              overflow: "hidden",
+              boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
+              // the last row has no bottom rule
+              "& > .range-row:last-of-type > *": { borderBottom: "none" },
+              "& > .range-row:hover > *": { bgcolor: "rgba(0,114,188,0.04)" },
             }}
           >
             {/* Header row */}
             <Box
               sx={{
-                p: 2,
-                fontWeight: 800,
-                borderBottom: "1px solid",
-                borderColor: "divider",
-                bgcolor: "action.hover",
+                px: 2.5,
+                py: 1.75,
+                fontWeight: 700,
+                borderBottom: "1px solid rgba(15,40,70,0.08)",
+                bgcolor: "#f6f9fc",
+                color: "#5b6b7c",
+                fontSize: "0.78rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
                 display: { xs: "none", sm: "block" },
               }}
             >
@@ -91,11 +100,15 @@ export default function ProductRange() {
             </Box>
             <Box
               sx={{
-                p: 2,
-                fontWeight: 800,
-                borderBottom: "1px solid",
-                borderColor: "divider",
-                bgcolor: "action.hover",
+                px: 2.5,
+                py: 1.75,
+                fontWeight: 700,
+                borderBottom: "1px solid rgba(15,40,70,0.08)",
+                bgcolor: "#f6f9fc",
+                color: "#5b6b7c",
+                fontSize: "0.78rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
                 display: { xs: "none", sm: "block" },
               }}
             >
@@ -103,28 +116,34 @@ export default function ProductRange() {
             </Box>
 
             {ROWS.map((row) => (
-              <Box key={row.category} sx={{ display: "contents" }}>
+              <Box key={row.category} className="range-row" sx={{ display: "contents" }}>
                 <Box
                   component={Link}
                   href={row.href}
                   sx={{
-                    p: 2,
+                    px: 2.5,
+                    py: 2.25,
                     fontWeight: 700,
-                    color: "text.primary",
+                    color: "primary.dark",
                     textDecoration: "none",
-                    borderBottom: "1px solid",
-                    borderColor: "divider",
+                    borderBottom: "1px solid rgba(15,40,70,0.07)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.75,
+                    transition: "background-color 0.15s ease",
                     "&:hover": { color: "primary.main" },
                   }}
                 >
                   {row.category}
+                  <ArrowForwardIcon sx={{ fontSize: 16 }} />
                 </Box>
                 <Box
                   sx={{
-                    p: 2,
+                    px: 2.5,
+                    py: 2.25,
                     color: "text.secondary",
-                    borderBottom: "1px solid",
-                    borderColor: "divider",
+                    borderBottom: "1px solid rgba(15,40,70,0.07)",
+                    transition: "background-color 0.15s ease",
                   }}
                 >
                   {row.covers}
@@ -156,7 +175,7 @@ export default function ProductRange() {
           endIcon={<ArrowForwardIcon />}
           sx={{
             mt: 4,
-            borderRadius: 0,
+            borderRadius: "8px",
             textTransform: "none",
             fontWeight: 700,
             px: 3,

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { Box, Grid, Typography, Divider, Button } from '@mui/material';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
@@ -147,13 +148,34 @@ export default async function ProductDetailPage({ params }: Props) {
               <ProductSpecsTable specs={data.specs} />
               <ProductFeatureChips features={data.features} />
               <ProductApplicationsList applications={data.applications} />
-              <Button
-                href={`/products/${catalogId}/${productId}/variants`}
-                variant="contained"
-                sx={{ alignSelf: 'flex-start', bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: '4px', textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
-              >
-                View All Models
-              </Button>
+              <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+                <Button
+                  href={`/products/${catalogId}/${productId}/variants`}
+                  variant="contained"
+                  sx={{ bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: "8px", textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
+                >
+                  View All Models
+                </Button>
+                <Button
+                  href="/contact"
+                  variant="outlined"
+                  sx={{ fontWeight: 700, borderRadius: "8px", textTransform: 'none', px: 3, py: 1.25 }}
+                >
+                  Request a Quote
+                </Button>
+              </Box>
+              {catalogId === 'high-pressure-fittings' || catalogId === 'high-pressure-tubing' ? (
+                <Typography sx={{ fontSize: '0.9rem', color: 'text.secondary', textTransform: 'none' }}>
+                  New to cone and thread?{' '}
+                  <Link href="/news/high-pressure-cone-and-thread-fittings-guide" style={{ color: '#0072BC', fontWeight: 600 }}>
+                    Read the cone and thread fittings guide
+                  </Link>
+                  {' · '}
+                  <Link href={`/products/${catalogId}`} style={{ color: '#0072BC', fontWeight: 600 }}>
+                    All {category.toLowerCase()}
+                  </Link>
+                </Typography>
+              ) : null}
             </Box>
           </Grid>
         </Grid>
