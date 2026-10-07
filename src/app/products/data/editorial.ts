@@ -79,7 +79,7 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
 
   "high-pressure-fittings": {
     seo: {
-      title: "High Pressure Cone & Thread Fittings to 150,000 psi | Hiflux",
+      title: "High pressure fittings and manifold components for extreme service applications",
       description:
         "Cone and thread fittings in 316 stainless, rated 10,000 to 150,000 psi. Elbow, tee and cross bodies with glands, collars and sleeves. Request a quote.",
     },

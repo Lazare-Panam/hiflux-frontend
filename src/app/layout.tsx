@@ -74,11 +74,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable}`}
     >
       <head>
+         {/* Hike (seoplatform) injector disabled: it overwrites titles, descriptions,
+             canonicals and some H1s in the browser with copies stored in the Hike
+             dashboard (old filtration text, "All items in stock", a duplicate
+             NV15VS04-A title on NV15VS04-D, 19 over-long descriptions). Re-enable
+             only after those entries are cleared in Hike.
          <script
           data-cfasync="false"
           type="text/javascript"
           src="https://cdn.seoplatform.io/injector.js?websiteId=28611"
-        /> 
+        /> */}
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
