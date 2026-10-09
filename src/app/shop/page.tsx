@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Box, Typography, Chip, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import { useCartStore } from "@/store/useCartStore";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import CtaBanner from "@/app/Common/CtaBanner";
+import { BLUE_BG } from "@/theme/brand";
 
 const BRAND = "#0072BC";
 const BRAND_DARK = "#00539B";
-const PAGE_BG = "#EAF3FB"; // light blue wash to contrast white cards
 
 type ProductVariant = {
   id: string;
@@ -30,6 +31,14 @@ function specEntries(specs: Record<string, string>) {
     ([key]) => key !== "SKU" && key !== "Price",
   );
 }
+
+// "15000psi" -> "15,000 psi" so every card shows ratings the same way.
+function tidySpec(value: string) {
+  const m = value.match(/^(\d+)\s*psi$/i);
+  return m ? `${Number(m[1]).toLocaleString("en-GB")} psi` : value;
+}
+
+const fmtPrice = (p: string) => `£${Number(p).toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 // Route shape: /products/[categorySlug]/[productId]/variants/[sku]
 function variantHref(categorySlug: string, productId: string, sku: string) {
@@ -79,125 +88,65 @@ function GridCard({
   return (
     <Link
       href={variantHref(categorySlug, productId, specs.SKU)}
-      style={{ textDecoration: "none", color: "inherit" }}
+      style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}
     >
       <Box
         sx={{
           bgcolor: "#fff",
-          border: "1px solid rgba(0,0,0,0.08)",
-          borderRadius: 2,
-          p: 2,
+          border: "1px solid rgba(15,40,70,0.08)",
+          borderRadius: "16px",
+          overflow: "hidden",
           display: "flex",
           flexDirection: "column",
-          gap: 1,
           height: "100%",
-          cursor: "pointer",
-          transition: "box-shadow 0.15s, transform 0.15s",
-          "&:hover": {
-            boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-            transform: "translateY(-2px)",
-          },
+          transition: "box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease",
+          "&:hover": { transform: "translateY(-4px)", borderColor: "rgba(0,114,188,0.3)", boxShadow: "0 18px 40px rgba(0,83,155,0.12)" },
+          "&:hover .shop-img": { transform: "scale(1.06)" },
+          "& .MuiTypography-root": { textTransform: "none" },
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            aspectRatio: "1 / 1",
-            bgcolor: "background.paper",
-            borderRadius: 1.5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-            mb: 0.5,
-          }}
-        >
-          <Box
-            component="img"
-            src={thumbnailImage}
-            alt={productName}
-            sx={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain" }}
-          />
+        <Box sx={{ position: "relative", aspectRatio: "4 / 3", bgcolor: "#fff", display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid rgba(15,40,70,0.06)" }}>
+          <Box component="img" className="shop-img" src={thumbnailImage} alt={`${productName} ${specs.SKU}`} sx={{ maxWidth: "72%", maxHeight: "78%", objectFit: "contain", transition: "transform 0.35s ease" }} />
+          <Box component="span" sx={{ position: "absolute", top: 12, left: 12, px: 1, py: 0.35, borderRadius: "6px", bgcolor: "#f3f6fa", fontFamily: "monospace", fontSize: "0.75rem", fontWeight: 700, color: "text.primary" }}>
+            {specs.SKU}
+          </Box>
         </Box>
 
-        <Typography
-          sx={{
-            fontSize: "0.7rem",
-            fontWeight: 700,
-            color: BRAND,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
-          {productName}
-        </Typography>
-
-        <Typography
-          sx={{
-            fontSize: "0.72rem",
-            color: "text.secondary",
-            fontFamily: "monospace",
-          }}
-        >
-          {specs.SKU}
-        </Typography>
-
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mt: 0.5 }}>
-          {specEntries(specs)
-            .slice(0, 3)
-            .map(([key, value]) => (
-              <Chip
-                key={key}
-                label={value}
-                size="small"
-                sx={{
-                  fontSize: "0.68rem",
-                  height: 22,
-                  bgcolor: "background.paper",
-                  color: "text.primary",
-                  textTransform: "capitalize",
-                }}
-              />
+        <Box sx={{ p: 2.25, display: "flex", flexDirection: "column", gap: 1, flex: 1 }}>
+          <Typography sx={{ fontSize: "0.95rem", fontWeight: 800, color: "text.primary", lineHeight: 1.3 }}>{productName}</Typography>
+          <Box component="dl" sx={{ m: 0 }}>
+            {specEntries(specs).slice(0, 3).map(([key, value]) => (
+              <Box key={key} sx={{ display: "flex", justifyContent: "space-between", gap: 1.5, py: 0.6, borderBottom: "1px solid rgba(15,40,70,0.06)" }}>
+                <Typography component="dt" sx={{ fontSize: "0.8rem", color: "text.secondary" }}>{key}</Typography>
+                <Typography component="dd" sx={{ m: 0, fontSize: "0.8rem", fontWeight: 700, color: "text.primary", textAlign: "right" }}>{tidySpec(value)}</Typography>
+              </Box>
             ))}
+          </Box>
+          <Box sx={{ mt: "auto", pt: 1.25, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+            <Typography sx={{ fontSize: "1.25rem", fontWeight: 800, color: BRAND_DARK }}>{fmtPrice(specs.Price)}</Typography>
+            {hasPrice && (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleAddToCart}
+                startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 700,
+                  borderRadius: "999px",
+                  px: 1.75,
+                  bgcolor: justAdded ? "#2e7d32" : BRAND,
+                  boxShadow: "none",
+                  fontSize: "0.8rem",
+                  whiteSpace: "nowrap",
+                  "&:hover": { bgcolor: justAdded ? "#2e7d32" : "#005a94", boxShadow: "none" },
+                }}
+              >
+                {justAdded ? "Added" : "Add to cart"}
+              </Button>
+            )}
+          </Box>
         </Box>
-
-        <Typography
-          sx={{
-            fontSize: "1.15rem",
-            fontWeight: 800,
-            color: "text.primary",
-            mt: "auto",
-            pt: 1,
-          }}
-        >
-          £{specs.Price}
-        </Typography>
-
-        {hasPrice && (
-          <Button
-            variant="contained"
-            size="small"
-            fullWidth
-            onClick={handleAddToCart}
-            startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
-            sx={{
-              mt: 1,
-              textTransform: "none",
-              fontWeight: 700,
-              borderRadius: "6px",
-              bgcolor: justAdded ? "#2e7d32" : BRAND,
-              boxShadow: "none",
-              fontSize: "0.78rem",
-              transition: "background-color 0.2s",
-              "&:hover": {
-                bgcolor: justAdded ? "#2e7d32" : "#005a94",
-                boxShadow: "none",
-              },
-            }}
-          >
-            {justAdded ? "Added" : "Add to cart"}
-          </Button>
-        )}
       </Box>
     </Link>
   );
@@ -238,139 +187,45 @@ function FeaturedCard({
   };
 
   return (
-    <Link
-      href={variantHref(categorySlug, productId, specs.SKU)}
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link href={variantHref(categorySlug, productId, specs.SKU)} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       <Box
         sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "0.9fr 1.1fr" },
           bgcolor: "#fff",
-          border: `1px solid rgba(0,0,0,0.08)`,
-          borderRadius: 3,
-          p: { xs: 3, md: 4 },
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          gap: 4,
-          alignItems: "center",
-          position: "relative",
+          borderRadius: "22px",
+          border: "1px solid rgba(15,40,70,0.08)",
           overflow: "hidden",
-          cursor: "pointer",
+          transition: "box-shadow 0.25s ease",
+          "&:hover": { boxShadow: "0 22px 48px rgba(0,83,155,0.14)" },
+          "& .MuiTypography-root": { textTransform: "none" },
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "6px",
-            height: "100%",
-            bgcolor: BRAND,
-          }}
-        />
-        <Box
-          sx={{
-            width: { xs: "100%", md: 260 },
-            height: 260,
-            flexShrink: 0,
-            bgcolor: "background.paper",
-            borderRadius: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
-          <Box
-            component="img"
-            src={thumbnailImage}
-            alt={productName}
-            sx={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain" }}
-          />
+        <Box sx={{ minHeight: { xs: 220, md: 320 }, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(160deg, #f3f6fa 0%, #e4edf7 100%)" }}>
+          <Box component="img" src={thumbnailImage} alt={`${productName} ${specs.SKU}`} sx={{ maxWidth: "60%", maxHeight: 240, objectFit: "contain", mixBlendMode: "multiply" }} />
         </Box>
-
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Chip
-            label="Best Value"
-            size="small"
-            sx={{
-              bgcolor: BRAND,
-              color: "#fff",
-              fontWeight: 700,
-              fontSize: "0.7rem",
-              mb: 1.5,
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: { xs: "1.3rem", md: "1.6rem" },
-              fontWeight: 800,
-              color: "text.primary",
-              mb: 0.5,
-            }}
-          >
-            {productName}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.8rem",
-              color: "text.secondary",
-              fontFamily: "monospace",
-              mb: 2,
-            }}
-          >
-            {specs.SKU}
-          </Typography>
-
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mb: 2.5 }}>
-            {specEntries(specs).map(([key, value]) => (
-              <Chip
-                key={key}
-                label={`${key}: ${value}`}
-                size="small"
-                sx={{
-                  fontSize: "0.72rem",
-                  height: 24,
-                  bgcolor: "background.paper",
-                  color: "text.primary",
-                  textTransform: "capitalize",
-                }}
-              />
+        <Box sx={{ p: { xs: 3, md: 5 }, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1.5 }}>
+            <Box component="span" sx={{ px: 1.25, py: 0.4, borderRadius: "999px", bgcolor: BRAND, color: "#fff", fontSize: "0.75rem", fontWeight: 700 }}>Best Value</Box>
+            <Box component="span" sx={{ fontFamily: "monospace", fontSize: "0.85rem", fontWeight: 700, color: "text.secondary" }}>{specs.SKU}</Box>
+          </Box>
+          <Typography sx={{ fontSize: { xs: "1.4rem", md: "1.9rem" }, fontWeight: 800, color: "text.primary", lineHeight: 1.2 }}>{productName}</Typography>
+          <Box sx={{ mt: 2.5, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" }, border: "1px solid rgba(15,40,70,0.1)", borderRadius: "12px", overflow: "hidden" }}>
+            {specEntries(specs).slice(0, 3).map(([key, value], i) => (
+              <Box key={key} sx={{ p: 1.5, borderLeft: { sm: i ? "1px solid rgba(15,40,70,0.1)" : 0 }, borderTop: { xs: i ? "1px solid rgba(15,40,70,0.1)" : 0, sm: 0 } }}>
+                <Typography sx={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.08em", color: "text.secondary", textTransform: "uppercase !important" }}>{key}</Typography>
+                <Typography sx={{ mt: 0.25, fontWeight: 800, fontSize: "0.95rem" }}>{tidySpec(value)}</Typography>
+              </Box>
             ))}
           </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              flexWrap: "wrap",
-            }}
-          >
-            <Typography
-              sx={{ fontSize: "2rem", fontWeight: 800, color: BRAND_DARK }}
-            >
-              £{specs.Price}
-            </Typography>
-
+          <Box sx={{ mt: 3, display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
+            <Typography sx={{ fontSize: "2.2rem", fontWeight: 800, color: BRAND_DARK, lineHeight: 1 }}>{fmtPrice(specs.Price)}</Typography>
             {hasPrice && (
               <Button
                 variant="contained"
                 onClick={handleAddToCart}
                 startIcon={justAdded ? <CheckIcon /> : <ShoppingCartIcon />}
-                sx={{
-                  textTransform: "none",
-                  fontWeight: 700,
-                  borderRadius: "8px",
-                  bgcolor: justAdded ? "#2e7d32" : BRAND,
-                  boxShadow: "none",
-                  px: 3,
-                  py: 1,
-                  transition: "background-color 0.2s",
-                  "&:hover": {
-                    bgcolor: justAdded ? "#2e7d32" : "#005a94",
-                    boxShadow: "none",
-                  },
-                }}
+                sx={{ textTransform: "none", fontWeight: 700, borderRadius: "999px", bgcolor: justAdded ? "#2e7d32" : BRAND, boxShadow: "none", px: 3, py: 1.1, "&:hover": { bgcolor: justAdded ? "#2e7d32" : "#005a94", boxShadow: "none" } }}
               >
                 {justAdded ? "Added to cart" : "Add to cart"}
               </Button>
@@ -599,121 +454,46 @@ const FEATURED_PICK = ALL_VARIANTS.reduce((min, cur) =>
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
 
+const GROUPS = ["All", ...Array.from(new Set(FEATURED.map((p) => p.productName)))];
+
 export default function ShopLandingPage() {
+  const [group, setGroup] = useState("All");
+  const shelf = ALL_VARIANTS.filter((v) => v.variant.id !== FEATURED_PICK.variant.id && (group === "All" || v.productName === group));
+
   return (
-    <Box sx={{ bgcolor: PAGE_BG, minHeight: "100vh" }}>
-      {/* Welcome hero */}
-      <Box
-        sx={{
-          bgcolor: "#fff",
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
-          px: { xs: 3, md: 8 },
-          py: { xs: 5, md: 7 },
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "4px",
-            bgcolor: "primary.main",
-          }}
-        />
-        <Box sx={{ maxWidth: "1280px", mx: "auto", textAlign: "center" }}>
-          <PageBreadcrumbs tone="dark" align="center" items={[{ label: "Shop" }]} />
-          <Typography
-            sx={{
-              color: "primary.main",
-              letterSpacing: "0.2em",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              mb: 1.5,
-            }}
-          >
+    <Box sx={{ bgcolor: "#f3f6fa", minHeight: "100vh", "& .MuiTypography-root": { textTransform: "none" } }}>
+      {/* Hero */}
+      <Box component="section" sx={{ color: "#fff", background: BLUE_BG, py: { xs: 5, md: 7 } }}>
+        <Box sx={{ maxWidth: "1280px", mx: "auto", px: { xs: 2, md: 4 } }}>
+          <PageBreadcrumbs items={[{ label: "Shop" }]} />
+          <Typography sx={{ color: "rgba(255,255,255,0.75)", letterSpacing: "0.2em", fontSize: "0.74rem", fontWeight: 800, textTransform: "uppercase !important" }}>
             Hiflux
           </Typography>
-          <Typography
-            component="h1"
-            sx={{
-              color: "text.primary",
-              fontSize: { xs: "2rem", md: "2.8rem" },
-              fontWeight: 800,
-              lineHeight: 1.15,
-              letterSpacing: "-0.01em",
-              mb: 1.5,
-            }}
-          >
+          <Typography component="h1" sx={{ mt: 1.25, fontSize: { xs: "2.1rem", md: "3rem" }, fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
             Welcome to the Hiflux Shop
           </Typography>
-          <Typography
-            sx={{
-              color: "text.secondary",
-              fontSize: "1rem",
-              maxWidth: 560,
-              mx: "auto",
-              mb: 3,
-            }}
-          >
-            High pressure valves, fittings and accessories, engineered to spec —
-            browse our range below.
+          <Typography sx={{ mt: 1.75, color: "rgba(255,255,255,0.85)", fontSize: { xs: "1rem", md: "1.08rem" }, lineHeight: 1.7, maxWidth: 620 }}>
+            High pressure valves, fittings and accessories, engineered to spec — browse our range below.
           </Typography>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: { xs: 2, md: 4 },
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <InventoryOutlinedIcon sx={{ fontSize: 18, color: BRAND }} />
-              <Typography
-                sx={{
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  color: "text.primary",
-                }}
-              >
-                Lead times confirmed with your quote
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <LocalShippingOutlinedIcon sx={{ fontSize: 18, color: BRAND }} />
-              <Typography
-                sx={{
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  color: "text.primary",
-                }}
-              >
-                Fast dispatch on every order
-              </Typography>
-            </Box>
+          <Box sx={{ mt: 3, display: "flex", flexWrap: "wrap", gap: 1.25 }}>
+            {[
+              { Icon: InventoryOutlinedIcon, text: "Lead times confirmed with your quote" },
+              { Icon: LocalShippingOutlinedIcon, text: "Fast dispatch on every order" },
+            ].map(({ Icon, text }) => (
+              <Box key={text} sx={{ display: "inline-flex", alignItems: "center", gap: 1, px: 1.75, py: 0.85, borderRadius: "999px", bgcolor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <Icon sx={{ fontSize: 18 }} />
+                <Typography sx={{ fontSize: "0.88rem", fontWeight: 600 }}>{text}</Typography>
+              </Box>
+            ))}
           </Box>
         </Box>
       </Box>
 
-      {/* Content */}
-      <Box
-        sx={{
-          maxWidth: "1600px",
-          mx: "auto",
-          px: { xs: 2, md: 4 },
-          py: { xs: 5, md: 7 },
-        }}
-      >
+      <Box sx={{ maxWidth: "1280px", mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 5, md: 7 } }}>
         {/* Featured */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
-          <Box sx={{ width: 3, height: 20, bgcolor: BRAND }} />
-          <Typography sx={{ fontSize: "1.3rem", fontWeight: 800 }}>
-            Featured
-          </Typography>
-        </Box>
+        <Typography component="h2" sx={{ fontSize: { xs: "1.4rem", md: "1.7rem" }, fontWeight: 800, mb: 2.5 }}>
+          Featured
+        </Typography>
         <FeaturedCard
           variant={FEATURED_PICK.variant}
           productName={FEATURED_PICK.productName}
@@ -722,43 +502,43 @@ export default function ShopLandingPage() {
           productId={FEATURED_PICK.productId}
         />
 
-        {/* Rest of the shelf */}
-        <Box
-          sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3, mt: 5 }}
-        >
-          <Box sx={{ width: 3, height: 20, bgcolor: BRAND }} />
-          <Typography sx={{ fontSize: "1.3rem", fontWeight: 800 }}>
-            More Products
+        {/* Shelf with product-type tabs */}
+        <Box sx={{ mt: { xs: 6, md: 8 }, display: "flex", alignItems: { md: "center" }, justifyContent: "space-between", flexDirection: { xs: "column", md: "row" }, gap: 2, mb: 3 }}>
+          <Typography component="h2" sx={{ fontSize: { xs: "1.4rem", md: "1.7rem" }, fontWeight: 800 }}>
+            More products
           </Typography>
+          <Box role="tablist" aria-label="Product type" sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+            {GROUPS.map((g) => {
+              const active = g === group;
+              return (
+                <Box
+                  key={g}
+                  component="button"
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setGroup(g)}
+                  sx={{ cursor: "pointer", px: 1.75, py: 0.85, borderRadius: "999px", border: "1px solid", borderColor: active ? BRAND : "rgba(15,40,70,0.15)", bgcolor: active ? BRAND : "#fff", color: active ? "#fff" : "text.primary", fontFamily: "inherit", fontWeight: 700, fontSize: "0.85rem", "&:hover": { borderColor: BRAND } }}
+                >
+                  {g === "All" ? "All" : g.replace(/^High Pressure /, "").replace(/ - .*$/, "")}
+                </Box>
+              );
+            })}
+          </Box>
         </Box>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-            gap: 2,
-          }}
-        >
-          {ALL_VARIANTS.filter(
-            (v) => v.variant.id !== FEATURED_PICK.variant.id,
-          ).map(
-            ({
-              productName,
-              thumbnailImage,
-              variant,
-              categorySlug,
-              productId,
-            }) => (
-              <GridCard
-                key={variant.id}
-                variant={variant}
-                productName={productName}
-                thumbnailImage={thumbnailImage}
-                categorySlug={categorySlug}
-                productId={productId}
-              />
-            ),
-          )}
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }, gap: { xs: 2, md: 2.5 } }}>
+          {shelf.map(({ productName, thumbnailImage, variant, categorySlug, productId }) => (
+            <GridCard key={variant.id} variant={variant} productName={productName} thumbnailImage={thumbnailImage} categorySlug={categorySlug} productId={productId} />
+          ))}
         </Box>
+
+        <Link href="/products" style={{ textDecoration: "none", display: "inline-block", marginTop: 32 }}>
+          <Box component="span" sx={{ display: "inline-flex", alignItems: "center", px: 3, py: 1.2, borderRadius: "999px", border: "1.5px solid", borderColor: BRAND, color: BRAND, fontWeight: 700, fontSize: "0.95rem", "&:hover": { bgcolor: BRAND, color: "#fff" } }}>
+            Browse the full range →
+          </Box>
+        </Link>
+
+        <CtaBanner sx={{ mt: { xs: 5, md: 7 } }} />
       </Box>
     </Box>
   );

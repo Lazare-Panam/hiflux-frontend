@@ -131,7 +131,8 @@ export default function BlogPost({ blog }: { blog: BlogData }) {
               </Typography>
             </Box>
             <Box sx={{ borderRadius: '22px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,20,50,0.3)', bgcolor: '#fff', lineHeight: 0 }}>
-              <Box component="img" src={blog.heroImage} alt={blog.title} sx={{ width: '100%', height: { xs: 220, md: 320 }, objectFit: 'cover', display: 'block' }} />
+              {/* Show the whole image: some heroes are designed banners with text, which cropping cuts off. */}
+              <Box component="img" src={blog.heroImage} alt={blog.title} sx={{ width: '100%', height: 'auto', maxHeight: { xs: 260, md: 380 }, objectFit: 'contain', display: 'block', bgcolor: '#fff' }} />
             </Box>
           </Box>
         </Container>
