@@ -5,6 +5,7 @@ import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import CtaBanner from "@/app/Common/CtaBanner";
 import { getCatalog, type ProductItem } from "@/api/useProductCatalog";
 import { CATEGORIES } from "./data/categories";
+import { PRODUCT_STAGE } from "@/theme/brand";
 import { getSeriesSummaries, type SeriesSummary } from "./[id]/components/seriesSummary";
 
 const TITLE = "High-Pressure Valves, Fittings, Tubing & Regulators | Hiflux UK";
@@ -77,13 +78,13 @@ function SeriesItem({ product, categoryId, summary }: { product: ProductItem; ca
           {(summary?.models ?? 0) > 0 && <LinkRow href={`${href}/variants`} label="View models & prices" />}
         </Box>
       </Box>
-      <Link href={href} aria-label={product.name} style={{ display: "block" }}>
+      <Link href={href} aria-label={product.name} style={{ display: "block", borderRadius: 18, overflow: "hidden", background: PRODUCT_STAGE }}>
         <Box
           component="img"
           src={product.thumbnailImage}
           alt={product.name}
           loading="lazy"
-          sx={{ display: "block", width: "100%", aspectRatio: "1 / 1", objectFit: "contain", transition: "transform 0.35s ease", "&:hover": { transform: "scale(1.05)" } }}
+          sx={{ display: "block", width: "100%", aspectRatio: "1 / 1", objectFit: "contain", p: 2, mixBlendMode: "multiply", transition: "transform 0.35s ease", "&:hover": { transform: "scale(1.05)" } }}
         />
       </Link>
     </Box>

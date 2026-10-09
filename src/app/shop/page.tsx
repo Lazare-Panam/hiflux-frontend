@@ -10,7 +10,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useCartStore } from "@/store/useCartStore";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import CtaBanner from "@/app/Common/CtaBanner";
-import { BLUE_BG } from "@/theme/brand";
+import { BLUE_BG, PRODUCT_STAGE } from "@/theme/brand";
 
 const BRAND = "#0072BC";
 const BRAND_DARK = "#00539B";
@@ -105,8 +105,8 @@ function GridCard({
           "& .MuiTypography-root": { textTransform: "none" },
         }}
       >
-        <Box sx={{ position: "relative", aspectRatio: "4 / 3", bgcolor: "#fff", display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid rgba(15,40,70,0.06)" }}>
-          <Box component="img" className="shop-img" src={thumbnailImage} alt={`${productName} ${specs.SKU}`} sx={{ maxWidth: "72%", maxHeight: "78%", objectFit: "contain", transition: "transform 0.35s ease" }} />
+        <Box sx={{ position: "relative", aspectRatio: "4 / 3", background: PRODUCT_STAGE, display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid rgba(15,40,70,0.06)" }}>
+          <Box component="img" className="shop-img" src={thumbnailImage} alt={`${productName} ${specs.SKU}`} sx={{ maxWidth: "72%", maxHeight: "78%", objectFit: "contain", mixBlendMode: "multiply", transition: "transform 0.35s ease" }} />
           <Box component="span" sx={{ position: "absolute", top: 12, left: 12, px: 1, py: 0.35, borderRadius: "6px", bgcolor: "#f3f6fa", fontFamily: "monospace", fontSize: "0.75rem", fontWeight: 700, color: "text.primary" }}>
             {specs.SKU}
           </Box>
@@ -201,7 +201,7 @@ function FeaturedCard({
           "& .MuiTypography-root": { textTransform: "none" },
         }}
       >
-        <Box sx={{ minHeight: { xs: 220, md: 320 }, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(160deg, #f3f6fa 0%, #e4edf7 100%)" }}>
+        <Box sx={{ minHeight: { xs: 220, md: 320 }, display: "flex", alignItems: "center", justifyContent: "center", background: PRODUCT_STAGE }}>
           <Box component="img" src={thumbnailImage} alt={`${productName} ${specs.SKU}`} sx={{ maxWidth: "60%", maxHeight: 240, objectFit: "contain", mixBlendMode: "multiply" }} />
         </Box>
         <Box sx={{ p: { xs: 3, md: 5 }, display: "flex", flexDirection: "column", justifyContent: "center" }}>

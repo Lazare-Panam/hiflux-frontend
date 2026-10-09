@@ -2,6 +2,7 @@
 
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
+import { PRODUCT_STAGE } from '@/theme/brand';
 
 interface Props {
   image: string;
@@ -14,7 +15,7 @@ export default function ProductDetailImage({ image, name }: Props) {
       sx={{
         position: 'relative',
         pt: '100%',
-        bgcolor: '#fff',
+        background: PRODUCT_STAGE,
         borderRadius: '24px',
         border: '1px solid rgba(15,40,70,0.06)',
         overflow: 'hidden',
@@ -25,7 +26,7 @@ export default function ProductDetailImage({ image, name }: Props) {
           src={image}
           alt={name}
           fill
-          style={{ objectFit: 'contain', padding: '40px' }}
+          style={{ objectFit: 'contain', padding: '48px', mixBlendMode: 'multiply' }}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       ) : (

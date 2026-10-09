@@ -2,7 +2,7 @@ import { Box, Container, Grid, Typography, Divider } from "@mui/material";
 import Link from "next/link";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import { ProductCatalog, ProductItem } from "@/api/useProductCatalog";
-import { BLUE_BG } from "@/theme/brand";
+import { BLUE_BG, PRODUCT_STAGE } from "@/theme/brand";
 import { getCategoryEditorial } from "../../data/editorial";
 import { EditorialBlocks } from "../../components/ProductEditorial";
 import CtaBanner from "@/app/Common/CtaBanner";
@@ -315,7 +315,7 @@ function HeroTile({ product, href, big }: { product: ProductItem; href: string; 
     <Box
       sx={{
         height: "100%",
-        bgcolor: "#fff",
+        background: PRODUCT_STAGE,
         borderRadius: "16px",
         boxShadow: "0 18px 40px rgba(0,20,50,0.25)",
         display: "flex",
@@ -334,7 +334,7 @@ function HeroTile({ product, href, big }: { product: ProductItem; href: string; 
         component="img"
         src={product.thumbnailImage}
         alt={product.name}
-        sx={{ width: "100%", height: big ? 240 : 100, objectFit: "contain" }}
+        sx={{ width: "100%", height: big ? 240 : 100, objectFit: "contain", mixBlendMode: "multiply" }}
       />
       <Typography sx={{ color: "text.primary", fontWeight: 800, fontSize: big ? "1rem" : "0.88rem", textAlign: "center", lineHeight: 1.3, textTransform: "none" }}>
         {product.tag ?? product.name}
@@ -362,13 +362,13 @@ function SeriesCard({ product, summary, href }: { product: ProductItem; summary?
       }}
     >
       <Link href={href} aria-label={product.name} style={{ display: "block" }}>
-      <Box sx={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", height: 210, p: 3, bgcolor: "#fff" }}>
+      <Box sx={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", height: 210, p: 3, background: PRODUCT_STAGE }}>
         {product.tag && (
           <Box component="span" sx={{ position: "absolute", top: 14, left: 14, px: 1.25, py: 0.4, borderRadius: "999px", bgcolor: "primary.main", color: "#fff", fontSize: "0.72rem", fontWeight: 700 }}>
             {product.tag}
           </Box>
         )}
-        <Box component="img" className="series-img" src={product.thumbnailImage} alt={product.name} sx={{ maxWidth: "80%", height: 160, objectFit: "contain", transition: "transform 0.35s ease" }} />
+        <Box component="img" className="series-img" src={product.thumbnailImage} alt={product.name} sx={{ maxWidth: "80%", height: 160, objectFit: "contain", mixBlendMode: "multiply", transition: "transform 0.35s ease" }} />
       </Box>
       </Link>
 

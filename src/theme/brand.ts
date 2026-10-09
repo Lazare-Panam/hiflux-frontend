@@ -22,3 +22,7 @@ export const BLUE_BG_STRIP = [
   "radial-gradient(circle at 2% 140%, rgba(255,255,255,0.06) 0 70px, transparent 71px)",
   "linear-gradient(90deg, #0072BC 0%, #0066a8 100%)",
 ].join(", ");
+
+// Soft blue "stage" behind product photos. Most photos are on white, so pair
+// it with mixBlendMode: "multiply" on the image to drop the white box.
+export const PRODUCT_STAGE = "radial-gradient(circle at 50% 55%, #ffffff 0%, #e8f0f9 72%)";
