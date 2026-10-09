@@ -15,9 +15,8 @@ export default function ProductDetailImage({ image, name }: Props) {
         position: 'relative',
         pt: '100%',
         bgcolor: '#fff',
-        borderRadius: '16px',
-        border: '1px solid rgba(15,40,70,0.08)',
-        background: 'linear-gradient(180deg, #f6f9fc 0%, #ffffff 100%)',
+        borderRadius: '24px',
+        border: '1px solid rgba(15,40,70,0.06)',
         overflow: 'hidden',
       }}
     >

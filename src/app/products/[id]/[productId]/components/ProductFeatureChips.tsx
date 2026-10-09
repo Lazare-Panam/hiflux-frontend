@@ -17,12 +17,13 @@ export default function ProductFeatureChips({ features }: { features: string[] }
             label={f}
             size="small"
             sx={{
-              fontSize: '0.75rem',
-              height: 26,
+              fontSize: '0.8rem',
+              height: 30,
+              px: 0.5,
               bgcolor: 'rgba(0,114,188,0.08)',
               color: 'primary.main',
               fontWeight: 600,
-              borderRadius: '3px',
+              borderRadius: '999px',
             }}
           />
         ))}

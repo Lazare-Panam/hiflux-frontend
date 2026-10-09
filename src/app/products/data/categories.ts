@@ -1,6 +1,7 @@
 export const CATEGORIES = [
   {
     id: "high-pressure-valves",
+    facts: ["6 series", "Up to 150,000 psi"],
     label: "High Pressure Valves",
     description:
       "Needle, check, ball, air operated, safety, and special valves for industrial, hydrogen, and extreme service applications.",
@@ -10,6 +11,7 @@ export const CATEGORIES = [
   },
   {
     id: "high-pressure-fittings",
+    facts: ["5 series", "Up to 150,000 psi"],
     label: "High Pressure Fittings",
     description:
       "Fittings, accessories, manifold blocks, and tube caps for industrial and extreme service applications.",
@@ -18,6 +20,7 @@ export const CATEGORIES = [
   },
   {
     id: "high-pressure-tubing",
+    facts: ["4 series", "Up to 100,000 psi"],
     label: "High Pressure Tubing",
     description:
       "Tubing, nipples, tooling sets, and tube supports for industrial and extreme service applications.",
@@ -27,6 +30,7 @@ export const CATEGORIES = [
   },
   {
     id: "union-adapters",
+    facts: ["5 series", "Up to 60,000 psi"],
     label: "Union & Adapters",
     description:
       "Unions, adapters, and bulkhead fittings for pressure and size compatibility across industrial and extreme service applications.",
@@ -36,6 +40,7 @@ export const CATEGORIES = [
   },
   {
     id: "high-pressure-regulators",
+    facts: ["4 series", "Up to 20,000 psi"],
     label: "High Pressure Regulators",
     description:
       "General, high pressure, back pressure, and air operated regulators for precise pressure control in industrial and extreme service applications.",

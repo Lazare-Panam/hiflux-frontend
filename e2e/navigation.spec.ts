@@ -115,7 +115,7 @@ test.describe("Applications pages", () => {
 test.describe("Product category editorial (backend-fed)", () => {
   test("fittings: title + editorial + product grid", async ({ page }) => {
     await page.goto("/products/high-pressure-fittings");
-    await expect(page).toHaveTitle(/Cone & Thread to 150,000 psi/);
+    await expect(page).toHaveTitle(/High pressure fittings and manifold components/);
     await expect(
       page.getByRole("heading", { name: "Pressure ratings and tube sizes" }),
     ).toBeVisible();

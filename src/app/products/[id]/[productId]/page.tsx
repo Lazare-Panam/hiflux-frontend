@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Box, Grid, Typography, Divider, Button } from '@mui/material';
+import { Box, Typography, Divider } from '@mui/material';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
+import PageBreadcrumbs from '@/app/Common/PageBreadcrumbs';
+import { summarise } from '../components/seriesSummary';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
-import ProductDetailHero from './components/ProductDetailHero';
 import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
 import ProductFeatureChips from './components/ProductFeatureChips';
@@ -114,6 +118,18 @@ export default async function ProductDetailPage({ params }: Props) {
     ],
   };
 
+  const summary = await summarise({ id: productId }).catch(() => null);
+  // Key-spec strip under the title (pressure, tube size, connection, material).
+  const keySpecs = (summary?.rows ?? []).filter(([k]) => k !== 'Price').slice(0, 4);
+  const models = summary?.models ?? 0;
+  const variantsHref = `/products/${catalogId}/${productId}/variants`;
+  const guide = catalogId === 'high-pressure-fittings' || catalogId === 'high-pressure-tubing';
+
+  const eyebrow = { color: 'primary.main', fontWeight: 800, fontSize: '0.74rem', letterSpacing: '0.16em', textTransform: 'uppercase !important' } as const;
+  // On phones both columns flatten into one list ordered by `order`, so the
+  // title comes first; from md up they are two independent columns.
+  const column = { display: { xs: 'contents', md: 'flex' }, flexDirection: 'column', gap: 3, minWidth: 0 } as const;
+
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
       <script
@@ -125,46 +141,140 @@ export default async function ProductDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <ProductDetailHero
-        name={data.name}
-        category={category}
-        crumbs={[
-          { label: 'Products', href: '/products' },
-          { label: category, href: `/products/${catalogId}` },
-          { label: data.name },
-        ]}
-      />
-      <Box sx={{ maxWidth: '1280px', mx: 'auto', px: { xs: 3, md: 8 }, py: { xs: 6, md: 10 } }}>
-        <Grid container spacing={{ xs: 6, md: 10 }}>
-          <Grid size={{ xs: 12, md: 5 }}>
-            <ProductDetailImage image={data.image} name={data.name} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 7 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <Typography sx={{ fontSize: '1rem', color: 'text.secondary', lineHeight: 1.75 }}>
-                {data.description}
+      {/* Breadcrumb bar */}
+      <Box sx={{ borderBottom: '1px solid rgba(15,40,70,0.08)', bgcolor: '#fff' }}>
+        <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, py: 1.5, '& nav': { mb: 0 } }}>
+          <PageBreadcrumbs
+            schema={false}
+            tone="dark"
+            items={[
+              { label: 'Products', href: '/products' },
+              { label: category, href: `/products/${catalogId}` },
+              { label: data.name },
+            ]}
+          />
+        </Box>
+      </Box>
+
+      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, py: { xs: 4, md: 6 } }}>
+        <Box
+          sx={{
+            display: { xs: 'flex', md: 'grid' },
+            flexDirection: 'column',
+            gap: { xs: 3, md: 7 },
+            gridTemplateColumns: { md: '1fr 1.05fr' },
+            alignItems: { xs: 'stretch', md: 'start' },
+          }}
+        >
+          {/* LEFT: image, trust tiles, overview */}
+          <Box sx={column}>
+            <Box sx={{ order: 2 }}>
+              <ProductDetailImage image={data.image} name={data.name} />
+            </Box>
+
+            <Box sx={{ order: 4, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1.5 }}>
+              {[
+                { Icon: VerifiedOutlinedIcon, title: 'Genuine HIFLUX', text: 'Authorised UK & EU distributor' },
+                { Icon: DescriptionOutlinedIcon, title: 'Documented', text: 'Material certificates on request' },
+                { Icon: SupportAgentOutlinedIcon, title: 'UK Support', text: 'Help choosing a spec' },
+              ].map(({ Icon, title, text }) => (
+                <Box key={title} sx={{ bgcolor: '#f3f6fa', borderRadius: '14px', p: { xs: 1.5, md: 2 }, textAlign: 'center' }}>
+                  <Icon sx={{ color: 'primary.main', fontSize: 24 }} />
+                  <Typography sx={{ mt: 0.5, fontWeight: 800, fontSize: { xs: '0.8rem', md: '0.9rem' }, color: 'text.primary', textTransform: 'none' }}>{title}</Typography>
+                  <Typography sx={{ fontSize: { xs: '0.72rem', md: '0.8rem' }, color: 'text.secondary', lineHeight: 1.4, textTransform: 'none' }}>{text}</Typography>
+                </Box>
+              ))}
+            </Box>
+
+            {data.description && (
+              <Box sx={{ order: 6, mt: { md: 2 } }}>
+                <Typography component="h2" sx={{ fontWeight: 800, fontSize: '1.4rem', pl: 1.5, borderLeft: '4px solid', borderColor: 'primary.main', lineHeight: 1.2, mb: 2, textTransform: 'none' }}>
+                  Overview
+                </Typography>
+                <Typography sx={{ fontSize: '1rem', color: 'text.secondary', lineHeight: 1.85, textTransform: 'none' }}>
+                  {data.description}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+
+          {/* RIGHT: title, key specs, details, models box */}
+          <Box sx={column}>
+            <Box sx={{ order: 1 }}>
+              <Typography sx={eyebrow}>HIFLUX {category}</Typography>
+              <Typography
+                component="h1"
+                sx={{ mt: 1, fontWeight: 800, fontSize: { xs: '1.9rem', md: '2.5rem' }, lineHeight: 1.12, letterSpacing: '-0.02em', color: 'text.primary', textTransform: 'none' }}
+              >
+                {data.name}
               </Typography>
-              <Divider />
+              {data.features?.[0] && (
+                <Typography sx={{ mt: 1.25, color: 'text.secondary', fontSize: '1.05rem', textTransform: 'none' }}>{data.features[0]}</Typography>
+              )}
+
+              {keySpecs.length > 0 && (
+                <Box
+                  sx={{
+                    mt: 3,
+                    display: 'grid',
+                    gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: `repeat(${keySpecs.length}, 1fr)` },
+                    border: '1px solid rgba(15,40,70,0.1)',
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    bgcolor: '#fff',
+                  }}
+                >
+                  {keySpecs.map(([k, v], i) => (
+                    <Box
+                      key={k}
+                      sx={{
+                        p: 2,
+                        borderLeft: { sm: i === 0 ? 0 : '1px solid rgba(15,40,70,0.1)' },
+                        borderTop: { xs: i >= 2 ? '1px solid rgba(15,40,70,0.1)' : 0, sm: 0 },
+                        borderRight: { xs: i % 2 === 0 ? '1px solid rgba(15,40,70,0.1)' : 0, sm: 0 },
+                      }}
+                    >
+                      <Typography sx={{ ...eyebrow, color: 'text.secondary', fontSize: '0.68rem', letterSpacing: '0.12em' }}>{k}</Typography>
+                      <Typography sx={{ mt: 0.5, fontWeight: 800, fontSize: '0.98rem', lineHeight: 1.35, color: 'text.primary', textTransform: 'none' }}>{v}</Typography>
+                    </Box>
+                  ))}
+                </Box>
+              )}
+            </Box>
+
+            <Box sx={{ order: 3, display: 'flex', flexDirection: 'column', gap: 3.5, mt: { md: 1 } }}>
               <ProductSpecsTable specs={data.specs} />
               <ProductFeatureChips features={data.features} />
               <ProductApplicationsList applications={data.applications} />
-              <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
-                <Button
-                  href={`/products/${catalogId}/${productId}/variants`}
-                  variant="contained"
-                  sx={{ bgcolor: 'primary.main', color: '#fff', fontWeight: 700, borderRadius: "8px", textTransform: 'none', px: 3, py: 1.25, boxShadow: 'none', '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' } }}
-                >
-                  View All Models
-                </Button>
-                <Button
-                  href="/contact"
-                  variant="outlined"
-                  sx={{ fontWeight: 700, borderRadius: "8px", textTransform: 'none', px: 3, py: 1.25 }}
-                >
-                  Request a Quote
-                </Button>
+
+              {/* Models box */}
+              <Box sx={{ bgcolor: '#f3f6fa', borderRadius: '16px', p: { xs: 2.5, md: 3 } }}>
+                <Typography sx={{ ...eyebrow, fontSize: '0.7rem' }}>Models in this series</Typography>
+                <Typography sx={{ mt: 0.75, color: 'text.secondary', fontSize: '0.98rem', textTransform: 'none' }}>
+                  {models > 0 && (
+                    <Box component="span" sx={{ color: 'text.primary', fontWeight: 800, fontSize: '1.6rem', mr: 1 }}>
+                      {models}
+                    </Box>
+                  )}
+                  {models > 0 ? `models with full specifications${summary?.minPrice ? `, prices from £${summary.minPrice.toFixed(2)}` : ''}` : 'Ask us for the models and prices in this series.'}
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mt: 2.25 }}>
+                  <Link href="/contact" style={{ textDecoration: 'none', flex: '1 1 200px' }}>
+                    <Box component="span" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, py: 1.4, borderRadius: '999px', bgcolor: 'primary.main', color: '#fff', fontWeight: 700, fontSize: '0.95rem', '&:hover': { bgcolor: 'primary.dark' } }}>
+                      Request a Quote →
+                    </Box>
+                  </Link>
+                  {models > 0 && (
+                    <Link href={variantsHref} style={{ textDecoration: 'none', flex: '1 1 200px' }}>
+                      <Box component="span" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 1.4, borderRadius: '999px', bgcolor: '#fff', border: '1.5px solid rgba(15,40,70,0.15)', color: 'text.primary', fontWeight: 700, fontSize: '0.95rem', '&:hover': { borderColor: 'primary.main', color: 'primary.main' } }}>
+                        View all {models} models
+                      </Box>
+                    </Link>
+                  )}
+                </Box>
               </Box>
-              {catalogId === 'high-pressure-fittings' || catalogId === 'high-pressure-tubing' ? (
+
+              {guide && (
                 <Typography sx={{ fontSize: '0.9rem', color: 'text.secondary', textTransform: 'none' }}>
                   New to cone and thread?{' '}
                   <Link href="/news/high-pressure-cone-and-thread-fittings-guide" style={{ color: '#0072BC', fontWeight: 600 }}>
@@ -175,11 +285,12 @@ export default async function ProductDetailPage({ params }: Props) {
                     All {category.toLowerCase()}
                   </Link>
                 </Typography>
-              ) : null}
+              )}
             </Box>
-          </Grid>
-        </Grid>
-        <Box sx={{ mt: { xs: 8, md: 12 } }}>
+          </Box>
+        </Box>
+
+        <Box sx={{ mt: { xs: 8, md: 10 } }}>
           <Divider sx={{ mb: { xs: 6, md: 8 } }} />
           <RelatedProducts productIds={data.relatedProducts ?? []} />
         </Box>
