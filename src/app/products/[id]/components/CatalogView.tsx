@@ -34,15 +34,18 @@ export default async function CatalogView({
   };
 
   const summaries = await getSeriesSummaries(data.products);
-  const all = Object.values(summaries);
+  // Only series with a detail record: new categories (e.g. LOK) are filled in
+  // gradually and a series without one would link to a 404.
+  const products = data.products.filter((p) => summaries[p.id]?.hasDetail);
+  const all = products.map((p) => summaries[p.id]);
   const totalModels = all.reduce((n, s) => n + s.models, 0);
   const maxPsi = Math.max(0, ...all.map((s) => s.maxPsi ?? 0));
   const stats = [
-    { value: String(data.products.length), label: data.products.length === 1 ? "Series" : "Series" },
+    { value: String(products.length), label: "Series" },
     ...(maxPsi ? [{ value: `${maxPsi.toLocaleString("en-GB")} psi`, label: "Highest rating" }] : []),
     ...(totalModels ? [{ value: totalModels.toLocaleString("en-GB"), label: "Models" }] : []),
   ];
-  const tiles = data.products.slice(0, 3);
+  const tiles = products.slice(0, 3);
   const title = editorial?.bannerTitle ?? hero.title ?? data.bannerTitle;
 
   return (
@@ -218,7 +221,7 @@ export default async function CatalogView({
               gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
             }}
           >
-            {data.products.map((product) => (
+            {products.map((product) => (
               <SeriesCard key={product.id} product={product} summary={summaries[product.id]} href={`/products/${id}/${product.id}`} />
             ))}
           </Box>

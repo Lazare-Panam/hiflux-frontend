@@ -14,6 +14,8 @@ export type SeriesSummary = {
   models: number;
   maxPsi: number | null;
   minPrice?: number | null;
+  /** False when the series has no detail record yet (its page would 404). */
+  hasDetail: boolean;
 };
 
 const fmtPsi = (n: number) => `${n.toLocaleString("en-GB")} psi`;
@@ -40,6 +42,12 @@ const tidy = (s: string) =>
     .replace(/\s*~\s*/g, " – ")
     .replace(/\s*\(other materials[^)]*\)/i, "")
     .replace(/(\d)psi/gi, "$1 psi")
+    // Short card/strip form: first clause only, no asides. "Up to 6,000 psi
+    // (413 bar), series dependent" -> "Up to 6,000 psi". Full text stays in
+    // the specifications table.
+    .split(";")[0]
+    .replace(/\s*\([^)]*\)/g, "")
+    .replace(/,\s*series dependent$/i, "")
     .trim();
 
 const MATERIAL_KEYS = ["Body Material", "Material", "Construction"];
@@ -84,12 +92,12 @@ export async function summarise(product: Pick<ProductItem, "id">): Promise<Serie
   const prices = variants.map((v) => Number(v.specs["Price"])).filter((n) => Number.isFinite(n) && n > 0);
   if (prices.length) rows.push(["Price", `From £${Math.min(...prices).toFixed(2)}`]);
 
-  return { id: product.id, rows: rows.slice(0, 5), models: variants.length, maxPsi, minPrice: prices.length ? Math.min(...prices) : null };
+  return { id: product.id, rows: rows.slice(0, 5), models: variants.length, maxPsi, minPrice: prices.length ? Math.min(...prices) : null, hasDetail: !!detail };
 }
 
 /** Summaries for every series in a category, fetched in parallel. A failed
  *  fetch degrades to an empty summary rather than breaking the page. */
 export async function getSeriesSummaries(products: ProductItem[]): Promise<Record<string, SeriesSummary>> {
-  const all = await Promise.all(products.map((p) => summarise(p).catch(() => ({ id: p.id, rows: [], models: 0, maxPsi: null }))));
+  const all = await Promise.all(products.map((p) => summarise(p).catch(() => ({ id: p.id, rows: [], models: 0, maxPsi: null, hasDetail: false }))));
   return Object.fromEntries(all.map((s) => [s.id, s]));
 }

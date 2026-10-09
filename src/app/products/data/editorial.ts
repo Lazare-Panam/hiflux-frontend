@@ -59,6 +59,16 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
     canonical: "https://www.hiflux.uk.com/products/high-pressure-valves",
   },
 
+  "lok-fittings-valves": {
+    seo: {
+      title: "LOK Tube Fittings & Valves to 6,000 psi | Hiflux UK",
+      description:
+        "HIFLUX LOK double-ferrule tube fittings, needle, ball and check valves and instrumentation tubing for leak-tight connections up to 6,000 psi.",
+    },
+    bannerTitle: "LOK tube fittings and valves for instrumentation systems",
+    canonical: "https://www.hiflux.uk.com/products/lok-fittings-valves",
+  },
+
   "high-pressure-regulators": {
     seo: {
       title: "High Pressure Regulators – HPR & Back Pressure | Hiflux UK",

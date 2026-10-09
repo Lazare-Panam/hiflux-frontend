@@ -16,6 +16,7 @@ const CATALOGS: { id: string; label: string }[] = [
   { id: "high-pressure-tubing", label: "High-Pressure Tubing" },
   { id: "union-adapters", label: "Union Adapters" },
   { id: "high-pressure-regulators", label: "High-Pressure Regulators" },
+  { id: "lok-fittings-valves", label: "LOK Fittings & Valves" },
 ];
 
 export const metadata: Metadata = {
@@ -56,7 +57,8 @@ async function buildIndex(): Promise<IndexedCategory[]> {
             }
           }),
         );
-        return { ...cat, products };
+        // Series without models (e.g. new LOK series) would link to a 404.
+        return { ...cat, products: products.filter((p) => p.skus.length > 0) };
       } catch {
         return { ...cat, products: [] };
       }

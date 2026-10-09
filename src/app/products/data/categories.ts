@@ -48,4 +48,13 @@ export const CATEGORIES = [
       "https://pblol2.blob.core.windows.net/hiflux/regulators/bp-regulator.png",
     href: "/products/high-pressure-regulators",
   },
+  {
+    id: "lok-fittings-valves",
+    facts: ["Double ferrule", "Up to 6,000 psi"],
+    label: "LOK Fittings & Valves",
+    description:
+      "LOK double-ferrule tube fittings, needle, ball and check valves, and instrumentation tubing for leak-tight connections.",
+    image: "https://pblol2.blob.core.windows.net/hiflux/lok/lok-type-valve.png",
+    href: "/products/lok-fittings-valves",
+  },
 ];

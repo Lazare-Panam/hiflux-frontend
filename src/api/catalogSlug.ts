@@ -5,6 +5,8 @@
 // the canonical slug used across the site.
 const CATALOG_SLUG_ALIASES: Record<string, string> = {
   regulators: "high-pressure-regulators",
+  // lok-tube-fittings is stored with catalogId "lok-fittings" (Oct 2026 data).
+  "lok-fittings": "lok-fittings-valves",
 };
 
 /** Canonical URL category slug for a given API catalogId (or URL segment). */

@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import { getCatalog } from "@/api/useProductCatalog";
+import { getSeriesSummaries } from "@/app/products/[id]/components/seriesSummary";
 
 // Top-level categories, matching next-sitemap.config.js. Kept in sync manually
 // because they change rarely.
@@ -9,6 +10,7 @@ const CATALOGS: { id: string; label: string }[] = [
   { id: "high-pressure-tubing", label: "High-Pressure Tubing" },
   { id: "union-adapters", label: "Unions & Adapters" },
   { id: "high-pressure-regulators", label: "High-Pressure Regulators" },
+  { id: "lok-fittings-valves", label: "LOK Fittings & Valves" },
 ];
 
 
@@ -28,7 +30,10 @@ export default async function ProductIndexSection() {
     CATALOGS.map(async (cat) => {
       try {
         const catalog = await getCatalog(cat.id);
-        return { ...cat, products: catalog.products ?? [] };
+        const all = catalog.products ?? [];
+        // Each entry links to the models page, so only list series that have models.
+        const summaries = await getSeriesSummaries(all);
+        return { ...cat, products: all.filter((p) => (summaries[p.id]?.models ?? 0) > 0) };
       } catch {
         return { ...cat, products: [] as { id: string; name: string }[] };
       }

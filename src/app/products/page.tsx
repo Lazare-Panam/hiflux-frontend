@@ -5,6 +5,7 @@ import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import CtaBanner from "@/app/Common/CtaBanner";
 import { getCatalog, type ProductItem } from "@/api/useProductCatalog";
 import { CATEGORIES } from "./data/categories";
+import { getSeriesSummaries, type SeriesSummary } from "./[id]/components/seriesSummary";
 
 const TITLE = "High-Pressure Valves, Fittings, Tubing & Regulators | Hiflux UK";
 const DESCRIPTION =
@@ -56,7 +57,7 @@ function LinkRow({ href, label }: { href: string; label: string }) {
   );
 }
 
-function SeriesItem({ product, categoryId }: { product: ProductItem; categoryId: string }) {
+function SeriesItem({ product, categoryId, summary }: { product: ProductItem; categoryId: string; summary?: SeriesSummary }) {
   const href = `/products/${categoryId}/${product.id}`;
   return (
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr 110px", sm: "1fr 190px" }, gap: { xs: 2, sm: 3 }, alignItems: "center" }}>
@@ -73,7 +74,7 @@ function SeriesItem({ product, categoryId }: { product: ProductItem; categoryId:
         )}
         <Box sx={{ mt: 1.5 }}>
           <LinkRow href={href} label="View details" />
-          <LinkRow href={`${href}/variants`} label="View models & prices" />
+          {(summary?.models ?? 0) > 0 && <LinkRow href={`${href}/variants`} label="View models & prices" />}
         </Box>
       </Box>
       <Link href={href} aria-label={product.name} style={{ display: "block" }}>
@@ -93,7 +94,10 @@ export default async function ProductsPage() {
   const groups = await Promise.all(
     CATEGORIES.map(async (cat) => {
       const catalog = await getCatalog(cat.id).catch(() => null);
-      return { ...cat, products: catalog?.products ?? [] };
+      const all = catalog?.products ?? [];
+      // Hide series whose data isn't in the API yet (new categories fill in gradually).
+      const summaries = await getSeriesSummaries(all);
+      return { ...cat, products: all.filter((p) => summaries[p.id]?.hasDetail), models: summaries };
     }),
   );
 
@@ -193,7 +197,7 @@ export default async function ProductsPage() {
             {g.products.length > 0 ? (
               <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, columnGap: { md: 8 }, rowGap: { xs: 5, md: 7 }, pb: { xs: 5, md: 7 } }}>
                 {g.products.map((p) => (
-                  <SeriesItem key={p.id} product={p} categoryId={g.id} />
+                  <SeriesItem key={p.id} product={p} categoryId={g.id} summary={g.models[p.id]} />
                 ))}
               </Box>
             ) : (

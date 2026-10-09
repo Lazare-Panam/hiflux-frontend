@@ -10,6 +10,7 @@ const catalogIds = [
   "high-pressure-tubing",
   "union-adapters",
   "high-pressure-regulators",
+  "lok-fittings-valves",
 ];
 
 /** @type {import('next-sitemap').IConfig} */
@@ -31,15 +32,25 @@ module.exports = {
         // /variants and /variants/<SKU> pages are self-canonical, so they are
         // listed alongside their series page.
         for (const product of catalog.products) {
+          // Skip series whose detail isn't in the API yet (their page 404s).
+          try {
+            await axios.get(`${API_BASE}api/product/${product.id}/detail`);
+          } catch {
+            console.warn(`No detail for ${product.id}, skipping`);
+            continue;
+          }
           const base = `/products/${catalogId}/${product.id}`;
           result.push(await config.transform(config, base));
-          result.push(await config.transform(config, `${base}/variants`));
 
           try {
             const { data: variantData } = await axios.get(
               `${API_BASE}api/product/${product.id}/variants`,
             );
 
+            // The models page only exists once the series has models.
+            if (variantData.variants?.length) {
+              result.push(await config.transform(config, `${base}/variants`));
+            }
             for (const variant of variantData.variants) {
               const slug = variant.specs?.["SKU"] ?? variant.id; // matches VariantDetail's lookup logic
               result.push(

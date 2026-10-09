@@ -11,6 +11,7 @@ import { summarise } from '../components/seriesSummary';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
 import { getCatalog } from '@/api/useProductCatalog';
+import { CATEGORIES } from '../../data/categories';
 import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
 import ProductFeatureChips from './components/ProductFeatureChips';
@@ -91,7 +92,8 @@ export default async function ProductDetailPage({ params }: Props) {
   // Always use the product's real category for on-page links/breadcrumbs so a
   // visit via a wrong-category URL still emits correct, non-duplicating links.
   const catalogId = categorySlug(data.catalogId);
-  const category = humanizeCategory(catalogId);
+  // Proper category name where we have one ("LOK Fittings & Valves", not "Lok Fittings Valves").
+  const category = CATEGORIES.find((c) => c.id === catalogId)?.label ?? humanizeCategory(catalogId);
 
   const productSchema = {
     '@context': 'https://schema.org',
