@@ -38,9 +38,16 @@ export const metadata: Metadata = {
   // Absolute icon URL: crawlers that start on the bare hiflux.uk.com domain
   // (which only forwards the homepage) resolve a relative "/favicon.ico"
   // against that domain and get a 404 ("Favicon missing" in SE Ranking).
+  // Square "H" icon set. Google shows the favicon in results and needs a
+  // square image at a multiple of 48px; the old icon was the wide wordmark.
   icons: {
-    icon: [{ url: "https://www.hiflux.uk.com/favicon.ico", sizes: "any" }],
+    icon: [
+      { url: "https://www.hiflux.uk.com/favicon.ico", sizes: "any" },
+      { url: "https://www.hiflux.uk.com/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "https://www.hiflux.uk.com/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
     shortcut: "https://www.hiflux.uk.com/favicon.ico",
+    apple: [{ url: "https://www.hiflux.uk.com/apple-touch-icon.png", sizes: "180x180" }],
   },
   // Site-wide Open Graph + X (Twitter) Card defaults. Pages that export their
   // own `openGraph`/`twitter` override these; pages that don't (e.g. /shop)
