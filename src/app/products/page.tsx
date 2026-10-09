@@ -138,7 +138,8 @@ export default async function ProductsPage() {
         </Box>
       </Box>
 
-      <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 3 }, py: { xs: 4, md: 6 } }}>
+
+      <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 3 }, pt: { xs: 4, md: 5 }, pb: { xs: 1, md: 2 } }}>
         <Typography sx={{ color: "text.secondary", fontSize: "0.98rem", lineHeight: 1.75, maxWidth: 820, mb: { xs: 2, md: 3 }, textTransform: "none" }}>
           Looking for a specific part number? Use the{" "}
           <Link href="/product-index" style={{ color: "#0072BC", fontWeight: 600 }}>
@@ -150,16 +151,20 @@ export default async function ProductsPage() {
           </Link>
           .
         </Typography>
+      </Box>
 
-        {groups.map((g) => (
+      {/* Category sections on alternating white / light-blue bands */}
+      {groups.map((g, gi) => (
+        <Box key={g.id} sx={{ bgcolor: gi % 2 ? "#f3f6fa" : "#fff", "& img": { mixBlendMode: "multiply" } }}>
           <Box
-            key={g.id}
             id={g.id}
             component="details"
             open
             sx={{
+              maxWidth: 1200,
+              mx: "auto",
+              px: { xs: 2, md: 3 },
               scrollMarginTop: 110,
-              borderBottom: "1px solid rgba(15,40,70,0.1)",
               "&[open] .chev": { transform: "rotate(180deg)" },
               "& > summary::-webkit-details-marker": { display: "none" },
             }}
@@ -199,9 +204,11 @@ export default async function ProductsPage() {
               </Typography>
             )}
           </Box>
-        ))}
+        </Box>
+      ))}
 
-        <CtaBanner sx={{ mt: { xs: 6, md: 8 } }} />
+      <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 3 }, py: { xs: 5, md: 7 } }}>
+        <CtaBanner />
       </Box>
     </Box>
   );

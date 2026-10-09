@@ -2,9 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import {
   Box,
-  Chip,
   Container,
-  Divider,
   Typography,
   Accordion,
   AccordionSummary,
@@ -12,6 +10,7 @@ import {
 } from '@mui/material';
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import CtaBanner from "@/app/Common/CtaBanner";
+import { BLUE_BG } from "@/theme/brand";
 
 interface BlogSection {
   heading: string | null;
@@ -104,135 +103,131 @@ function renderBody(body: string) {
   });
 }
 
-export default function BlogPost({ blog }: { blog: BlogData }) {
-  return (
-    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+const slugify = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-      {/* Hero */}
-      <Box
-        sx={{
-          position: 'relative',
-          height: { xs: 340, md: 500 },
-          overflow: 'hidden',
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-        }}
-      >
-        <Box
-          component="img"
-          src={blog.heroImage}
-          alt={blog.title}
-          sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-        />
-        <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,45,84,0.88) 0%, rgba(0,83,155,0.4) 60%, rgba(0,114,188,0.1) 100%)' }} />
-        <Box
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            px: { xs: 3, md: 8 },
-            pb: { xs: 4, md: 6 },
-            maxWidth: 900,
-            mx: 'auto',
-          }}
-        >
-          <PageBreadcrumbs items={[{ label: "News", href: "/news" }, { label: blog.title }]} />
-          <Chip
-            label={blog.category}
-            size="small"
-            sx={{ mb: 2, fontWeight: 600, borderRadius: "8px", width: 'fit-content', bgcolor: 'primary.main', color: 'white' }}
-          />
-          <Typography variant="h2" component="h1" sx={{ fontWeight: 700, color: 'white', lineHeight: 1.15, mb: 1.5, fontSize: { xs: '1.8rem', md: '2.8rem' } }}>
-            {blog.title}
-          </Typography>
-          <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
-            {blog.date}
-          </Typography>
-        </Box>
+export default function BlogPost({ blog }: { blog: BlogData }) {
+  const toc = blog.sections.filter((sec) => sec.heading).map((sec) => ({ id: slugify(sec.heading!), label: sec.heading! }));
+  if (blog.faq?.length) toc.push({ id: 'faq', label: 'Frequently asked questions' });
+
+  return (
+    <Box sx={{ bgcolor: '#f3f6fa', minHeight: '100vh', '& .MuiTypography-root': { textTransform: 'none' } }}>
+      {/* Hero: title left, article image right */}
+      <Box component="section" sx={{ color: '#fff', background: BLUE_BG, py: { xs: 5, md: 7 } }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1.2fr 1fr' }, gap: { xs: 4, md: 7 }, alignItems: 'center' }}>
+            <Box sx={{ minWidth: 0 }}>
+              <PageBreadcrumbs items={[{ label: 'News', href: '/news' }, { label: blog.title }]} />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                <Box component="span" sx={{ px: 1.25, py: 0.4, borderRadius: '999px', bgcolor: 'rgba(255,255,255,0.16)', fontSize: '0.78rem', fontWeight: 700 }}>
+                  {blog.category}
+                </Box>
+                <Typography sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.88rem' }}>{blog.date}</Typography>
+              </Box>
+              <Typography component="h1" sx={{ mt: 1.75, fontWeight: 800, lineHeight: 1.12, letterSpacing: '-0.02em', fontSize: { xs: '1.9rem', md: '2.6rem' } }}>
+                {blog.title}
+              </Typography>
+              <Typography sx={{ mt: 2, color: 'rgba(255,255,255,0.85)', fontSize: { xs: '1rem', md: '1.08rem' }, lineHeight: 1.75 }}>
+                {blog.excerpt}
+              </Typography>
+            </Box>
+            <Box sx={{ borderRadius: '22px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,20,50,0.3)', bgcolor: '#fff', lineHeight: 0 }}>
+              <Box component="img" src={blog.heroImage} alt={blog.title} sx={{ width: '100%', height: { xs: 220, md: 320 }, objectFit: 'cover', display: 'block' }} />
+            </Box>
+          </Box>
+        </Container>
       </Box>
 
-      {/* Content */}
-      <Container maxWidth="md" sx={{ py: { xs: 6, md: 10 } }}>
-
-        {/* Excerpt */}
-        <Typography
-          variant="h6"
-          sx={{ fontWeight: 400, color: 'text.primary', lineHeight: 1.75, mb: 5, fontSize: '1.15rem', borderLeft: '3px solid', borderColor: 'primary.main', pl: 3 }}
-        >
-          {blog.excerpt}
-        </Typography>
-
-        <Divider sx={{ mb: 5 }} />
-
-        {/* Sections */}
-        {blog.sections.map((section, i) => (
-          <Box key={i} sx={{ mb: 5 }}>
-            {section.heading && (
-              <Typography variant="h4" sx={{ fontWeight: 700, color: 'text.primary', mb: 2.5, fontSize: { xs: '1.3rem', md: '1.6rem' } }}>
-                {section.heading}
-              </Typography>
-            )}
-            {renderBody(section.body)}
-          </Box>
-        ))}
-
-        {/* FAQ */}
-        {blog.faq && blog.faq.length > 0 && (
-          <Box sx={{ mt: 6, mb: 6 }}>
-            <Typography variant="h4" sx={{ fontWeight: 700, color: 'text.primary', mb: 3, fontSize: { xs: '1.3rem', md: '1.6rem' } }}>
-              Frequently Asked Questions
-            </Typography>
-            {blog.faq.map((item, i) => (
-              <Accordion
-                key={i}
-                elevation={0}
-                sx={{
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  borderRadius: '10px !important',
-                  mb: 1.5,
-                  '&:before': { display: 'none' },
-                }}
-              >
-                <AccordionSummary expandIcon={<ChevronIcon />}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '0.95rem', color: 'text.primary' }}>
-                    {item.q}
+      {/* Article + sidebar */}
+      <Container maxWidth="lg" sx={{ py: { xs: 5, md: 8 } }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 280px' }, gap: { xs: 4, md: 7 }, alignItems: 'start' }}>
+          <Box component="article" sx={{ minWidth: 0, bgcolor: '#fff', borderRadius: '20px', border: '1px solid rgba(15,40,70,0.08)', p: { xs: 3, md: 6 } }}>
+            {blog.sections.map((section, i) => (
+              <Box key={i} id={section.heading ? slugify(section.heading) : undefined} sx={{ mb: 5, scrollMarginTop: 120, '&:last-of-type': { mb: 0 } }}>
+                {section.heading && (
+                  <Typography component="h2" sx={{ fontWeight: 800, color: 'text.primary', mb: 2, fontSize: { xs: '1.35rem', md: '1.6rem' }, lineHeight: 1.25 }}>
+                    {section.heading}
                   </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.75 }}>
-                    {item.a}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
+                )}
+                {renderBody(section.body)}
+              </Box>
             ))}
-          </Box>
-        )}
 
-        {/* Tags */}
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 6 }}>
-          {blog.tags.map((t) => (
-            <Chip key={t} label={t} size="small" variant="outlined" sx={{ borderRadius: "8px", fontSize: '0.75rem' }} />
-          ))}
+            {blog.faq && blog.faq.length > 0 && (
+              <Box id="faq" sx={{ mt: 6, scrollMarginTop: 120 }}>
+                <Typography component="h2" sx={{ fontWeight: 800, color: 'text.primary', mb: 2.5, fontSize: { xs: '1.35rem', md: '1.6rem' } }}>
+                  Frequently asked questions
+                </Typography>
+                {blog.faq.map((item, i) => (
+                  <Accordion
+                    key={i}
+                    elevation={0}
+                    sx={{ border: '1px solid rgba(15,40,70,0.1)', borderRadius: '12px !important', mb: 1.25, '&:before': { display: 'none' }, '&.Mui-expanded': { borderColor: 'rgba(0,114,188,0.35)' } }}
+                  >
+                    <AccordionSummary expandIcon={<ChevronIcon />}>
+                      <Typography sx={{ fontWeight: 700, fontSize: '0.98rem', color: 'text.primary' }}>{item.q}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '0.95rem' }}>{item.a}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
+              </Box>
+            )}
+
+            {blog.tags.length > 0 && (
+              <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid rgba(15,40,70,0.08)' }}>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.85rem', lineHeight: 1.7 }}>
+                  <Box component="span" sx={{ fontWeight: 700, color: 'text.primary' }}>Topics: </Box>
+                  {blog.tags.join(' · ')}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+
+          <Box component="aside" sx={{ position: { md: 'sticky' }, top: { md: 120 }, display: 'grid', gap: 2 }}>
+            {toc.length > 1 && (
+              <Box sx={{ display: { xs: 'none', md: 'block' }, p: 2.5, bgcolor: '#fff', borderRadius: '16px', border: '1px solid rgba(15,40,70,0.08)' }}>
+                <Typography sx={{ color: 'text.secondary', fontWeight: 800, fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase !important', mb: 1 }}>
+                  In this article
+                </Typography>
+                {toc.map((t, i) => (
+                  <Box key={t.id} component="a" href={`#${t.id}`} sx={{ display: 'block', py: 0.85, color: 'text.primary', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600, lineHeight: 1.4, borderTop: i ? '1px solid rgba(15,40,70,0.06)' : 0, '&:hover': { color: 'primary.main' } }}>
+                    {t.label}
+                  </Box>
+                ))}
+              </Box>
+            )}
+            <Box sx={{ p: 2.5, borderRadius: '16px', background: BLUE_BG, color: '#fff' }}>
+              <Typography sx={{ fontWeight: 800, fontSize: '1.05rem' }}>Need a part number?</Typography>
+              <Typography sx={{ mt: 0.75, color: 'rgba(255,255,255,0.8)', fontSize: '0.88rem', lineHeight: 1.6 }}>
+                Send your pressure, tube size and media. We reply within one working day.
+              </Typography>
+              <Link href="/contact" style={{ textDecoration: 'none' }}>
+                <Box component="span" sx={{ mt: 2, display: 'flex', justifyContent: 'center', py: 1.1, borderRadius: '999px', bgcolor: '#fff', color: '#00539B', fontWeight: 700, fontSize: '0.9rem' }}>
+                  Request a Quote
+                </Box>
+              </Link>
+            </Box>
+            <Link href="/news" style={{ textDecoration: 'none' }}>
+              <Box component="span" sx={{ display: 'block', textAlign: 'center', color: 'primary.main', fontWeight: 700, fontSize: '0.9rem', '&:hover': { textDecoration: 'underline' } }}>
+                ← All articles
+              </Box>
+            </Link>
+          </Box>
         </Box>
 
-        <Divider sx={{ mb: 6 }} />
-
-        {/* CTA */}
         {blog.cta && (
-          <CtaBanner
-            heading={blog.cta.heading}
-            body={blog.cta.body}
-            buttons={[
-              { label: `Email ${blog.cta.email}`, href: `mailto:${blog.cta.email}` },
-              { label: `Call ${blog.cta.phone}`, href: `tel:${blog.cta.phone.replace(/\s/g, '')}` },
-            ]}
-          />
+          <Box sx={{ mt: { xs: 5, md: 7 } }}>
+            <CtaBanner
+              heading={blog.cta.heading}
+              body={blog.cta.body}
+              buttons={[
+                { label: `Email ${blog.cta.email}`, href: `mailto:${blog.cta.email}` },
+                { label: `Call ${blog.cta.phone}`, href: `tel:${blog.cta.phone.replace(/\s/g, '')}` },
+              ]}
+            />
+          </Box>
         )}
-
       </Container>
     </Box>
   );

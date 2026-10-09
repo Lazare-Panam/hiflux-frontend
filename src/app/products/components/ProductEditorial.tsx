@@ -10,6 +10,7 @@ import {
   TableCell,
 } from "@mui/material";
 import type { CategoryEditorial, CTA, EditorialBlock } from "../data/editorial";
+import CtaBanner from "@/app/Common/CtaBanner";
 
 // Server components (no client handlers). Links use MUI Button/anchor `href`,
 // matching CatalogView — no `component={Link}`, which would break prerender in
@@ -239,28 +240,8 @@ function BlockView({ block }: { block: EditorialBlock }) {
       );
 
     case "cta":
-      return (
-        <Box sx={{ textAlign: "center", py: 4 }}>
-          <Typography
-            variant="h3"
-            sx={{ fontSize: { xs: 24, md: 32 }, fontWeight: 800, mb: 2 }}
-          >
-            {block.heading}
-          </Typography>
-          <Typography
-            sx={{
-              color: "text.secondary",
-              lineHeight: 1.8,
-              mb: 4,
-              maxWidth: 560,
-              mx: "auto",
-            }}
-          >
-            {block.body}
-          </Typography>
-          <ButtonRow ctas={block.buttons} align="center" />
-        </Box>
-      );
+      // Same blue banner as every other page; copy and buttons unchanged.
+      return <CtaBanner heading={block.heading} body={block.body} buttons={block.buttons} />;
   }
 }
 

@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Box, Typography, Divider } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import PageBreadcrumbs from '@/app/Common/PageBreadcrumbs';
+import { BLUE_BG } from '@/theme/brand';
 import { summarise } from '../components/seriesSummary';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
 import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
 import ProductFeatureChips from './components/ProductFeatureChips';
-import ProductApplicationsList from './components/ProductApplicationsList';
 import RelatedProducts from './components/RelatedProducts';
 
 // Cache the rendered page (ISR): built on the first visit, then served from
@@ -245,7 +245,6 @@ export default async function ProductDetailPage({ params }: Props) {
             <Box sx={{ order: 3, display: 'flex', flexDirection: 'column', gap: 3.5, mt: { md: 1 } }}>
               <ProductSpecsTable specs={data.specs} />
               <ProductFeatureChips features={data.features} />
-              <ProductApplicationsList applications={data.applications} />
 
               {/* Models box */}
               <Box sx={{ bgcolor: '#f3f6fa', borderRadius: '16px', p: { xs: 2.5, md: 3 } }}>
@@ -290,8 +289,42 @@ export default async function ProductDetailPage({ params }: Props) {
           </Box>
         </Box>
 
-        <Box sx={{ mt: { xs: 8, md: 10 } }}>
-          <Divider sx={{ mb: { xs: 6, md: 8 } }} />
+      </Box>
+
+      {/* Applications on a deep-blue band */}
+      {(data.applications?.length > 0 || data.temperature) && (
+        <Box component="section" sx={{ background: BLUE_BG, color: '#fff', py: { xs: 6, md: 8 }, '& .MuiTypography-root': { textTransform: 'none' } }}>
+          <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, display: 'grid', gridTemplateColumns: { xs: '1fr', md: '0.8fr 1.2fr' }, gap: { xs: 3, md: 7 }, alignItems: 'center' }}>
+            <Box>
+              <Typography sx={{ color: 'rgba(255,255,255,0.75)', fontWeight: 800, fontSize: '0.74rem', letterSpacing: '0.16em', textTransform: 'uppercase !important' }}>
+                Applications
+              </Typography>
+              <Typography component="h2" sx={{ mt: 1, fontWeight: 800, fontSize: { xs: '1.6rem', md: '2.1rem' }, lineHeight: 1.15 }}>
+                Where this series is used
+              </Typography>
+              {data.temperature && (
+                <Typography sx={{ mt: 1.5, color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem' }}>
+                  Operating temperature: <Box component="span" sx={{ color: '#fff', fontWeight: 700 }}>{data.temperature}</Box>
+                </Typography>
+              )}
+            </Box>
+            {data.applications?.length > 0 && (
+              <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0, display: 'grid', gap: 1.25, gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' } }}>
+                {data.applications.map((app) => (
+                  <Box key={app} component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, py: 1.5, borderRadius: '12px', bgcolor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.16)', fontWeight: 600, fontSize: '0.95rem' }}>
+                    <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#7cc4f2', flexShrink: 0 }} />
+                    {app}
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
+        </Box>
+      )}
+
+      {/* Related products on light blue */}
+      <Box sx={{ bgcolor: '#f3f6fa' }}>
+        <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, py: { xs: 6, md: 8 } }}>
           <RelatedProducts productIds={data.relatedProducts ?? []} />
         </Box>
       </Box>

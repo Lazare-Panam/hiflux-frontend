@@ -6,7 +6,6 @@ import CategoryGrid from "./Landing/CategoryGrid";
 import HeaMembership from "./Landing/HeaMembership";
 import HifluxSection from "./Landing/HifluxSection";
 import TrustBar from "./Landing/TrustBar";
-import ProductRange from "./Landing/ProductRange";
 import Certification from "./Landing/Certification";
 import IndustriesSection from "./Landing/IndustryApplications";
 
@@ -42,7 +41,6 @@ export default function Home() {
       <CategoryGrid />
       <TrustBar />
       <HifluxSection />
-      <ProductRange />
       <FeaturedProducts />
       <IndustriesSection />
       <Certification />

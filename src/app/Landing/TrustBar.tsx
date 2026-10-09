@@ -13,7 +13,11 @@ const ITEMS = [
   { value: "−252°C to 649°C", label: "Operating temperature" },
 ];
 
-export default function TrustBar() {
+export type StatItem = { value: string; label: string };
+
+/** Deep-blue figures strip. Used on the homepage (default figures) and on
+ *  inner pages with their own figures, to break up long white pages. */
+export default function TrustBar({ items = ITEMS }: { items?: StatItem[] }) {
   return (
     <Box
       component="section"
@@ -27,10 +31,10 @@ export default function TrustBar() {
           mx: "auto",
           px: { xs: 3, md: 8 },
           display: "grid",
-          gridTemplateColumns: { xs: "1fr 1fr", md: "repeat(4, 1fr)" },
+          gridTemplateColumns: { xs: "1fr 1fr", md: `repeat(${items.length}, 1fr)` },
         }}
       >
-        {ITEMS.map((item, i) => (
+        {items.map((item, i) => (
           <Box
             key={item.label}
             sx={{

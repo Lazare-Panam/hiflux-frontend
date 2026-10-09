@@ -5,6 +5,7 @@ import { ProductCatalog, ProductItem } from "@/api/useProductCatalog";
 import { BLUE_BG } from "@/theme/brand";
 import { getCategoryEditorial } from "../../data/editorial";
 import { EditorialBlocks } from "../../components/ProductEditorial";
+import CtaBanner from "@/app/Common/CtaBanner";
 import { getSeriesSummaries, type SeriesSummary } from "./seriesSummary";
 
 /**
@@ -223,13 +224,13 @@ export default async function CatalogView({
           </Box>
         </Box>
 
+      </Container>
+
+      {/* Reference sections + closing banner on a light-blue band */}
+      <Box sx={{ bgcolor: "#f3f6fa", "& .MuiTypography-root": { textTransform: "none" } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 9 } }}>
         {/* EDITORIAL SECTIONS (frontend overlay, below the grid) */}
-        {editorial?.below && (
-          <>
-            <Divider sx={{ mb: { xs: 6, md: 8 } }} />
-            <EditorialBlocks blocks={editorial.below} />
-          </>
-        )}
+        {editorial?.below && <EditorialBlocks blocks={editorial.below} />}
 
         {/* KEY FEATURES */}
         {data.keyFeatures && (
@@ -293,7 +294,14 @@ export default async function CatalogView({
           </>
         )}
 
+        {/* Every category ends on the blue banner; fittings/tubing bring their own. */}
+        {!editorial?.below?.some((b) => b.type === "cta") && (
+          <Box sx={{ mt: editorial?.below || data.keyFeatures ? { xs: 6, md: 8 } : 0 }}>
+            <CtaBanner />
+          </Box>
+        )}
       </Container>
+      </Box>
     </Box>
   );
 }

@@ -162,7 +162,8 @@ test.describe("Cart checkout (quote handoff)", () => {
     });
     await page.goto("/cart");
 
-    const quote = page.getByRole("link", { name: "Request a Quote" });
+    // The navbar also has a "Request a Quote" link; the cart's one is the mailto.
+    const quote = page.locator('a[href^="mailto:"]', { hasText: "Request a Quote" });
     await expect(quote).toBeVisible();
     const href = await quote.getAttribute("href");
     expect(href).toContain("mailto:sales@hiflux.uk.com");

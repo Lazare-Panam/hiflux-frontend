@@ -4,6 +4,8 @@ import { getProductVariants } from "@/api/useProductVariants";
 import { blogs } from "../news/data/blogs";
 import styles from "./product-index.module.css";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import { Box, Container, Typography } from "@mui/material";
+import { BLUE_BG } from "@/theme/brand";
 
 const PAGE_URL = "https://www.hiflux.uk.com/product-index";
 
@@ -66,14 +68,21 @@ export default async function ProductIndexPage() {
   const categories = await buildIndex();
 
   return (
+    <>
+    <Box component="section" sx={{ color: "#fff", background: BLUE_BG, py: { xs: 5, md: 7 } }}>
+      <Container maxWidth="lg">
+        <PageBreadcrumbs items={[{ label: "Product Index" }]} />
+        <Typography component="h1" sx={{ fontSize: { xs: "2.1rem", md: "2.8rem" }, fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+          Product Index
+        </Typography>
+        <Typography sx={{ mt: 1.5, color: "rgba(255,255,255,0.85)", fontSize: { xs: "1rem", md: "1.08rem" }, lineHeight: 1.75, maxWidth: 680, textTransform: "none" }}>
+          Every Hiflux high-pressure product we supply in the UK — browse by
+          category and series, or jump straight to the specifications for an
+          individual model.
+        </Typography>
+      </Container>
+    </Box>
     <div className={styles.wrap}>
-      <PageBreadcrumbs tone="dark" items={[{ label: "Product Index" }]} />
-      <h1 className={styles.h1}>Product Index</h1>
-      <p className={styles.intro}>
-        Every Hiflux high-pressure product we supply in the UK — browse by
-        category and series, or jump straight to the specifications for an
-        individual model.
-      </p>
 
       {categories.map((cat) =>
         cat.products.length === 0 ? null : (
@@ -131,5 +140,6 @@ export default async function ProductIndexPage() {
         </section>
       )}
     </div>
+    </>
   );
 }

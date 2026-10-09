@@ -68,7 +68,8 @@ export default function CartPage() {
           <ShoppingBagOutlinedIcon
             sx={{ fontSize: 56, color: alpha(INK, 0.2), mb: 2 }}
           />
-          <Typography sx={{ fontWeight: 700, fontSize: "1.1rem", mb: 1 }}>
+          {/* The empty cart is what crawlers see, so it needs the page's H1. */}
+          <Typography component="h1" sx={{ fontWeight: 700, fontSize: "1.1rem", mb: 1 }}>
             Your cart is empty
           </Typography>
           <Typography sx={{ color: RUST, fontSize: "0.9rem", mb: 3 }}>

@@ -4,7 +4,7 @@ export const CATEGORIES = [
     facts: ["6 series", "Up to 150,000 psi"],
     label: "High Pressure Valves",
     description:
-      "Needle, check, ball, air operated, safety, and special valves for industrial, hydrogen, and extreme service applications.",
+      "Needle, check, ball, air operated, safety and special valves for industrial, hydrogen and extreme service.",
     image:
       "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png",
     href: "/products/high-pressure-valves",
@@ -14,7 +14,7 @@ export const CATEGORIES = [
     facts: ["5 series", "Up to 150,000 psi"],
     label: "High Pressure Fittings",
     description:
-      "Fittings, accessories, manifold blocks, and tube caps for industrial and extreme service applications.",
+      "Elbow, tee and cross bodies with glands, collars, sleeves and accessories, plus manifold blocks and tube caps, 10,000 to 150,000 psi.",
     image: "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
     href: "/products/high-pressure-fittings",
   },
@@ -23,7 +23,7 @@ export const CATEGORIES = [
     facts: ["4 series", "Up to 100,000 psi"],
     label: "High Pressure Tubing",
     description:
-      "Tubing, nipples, tooling sets, and tube supports for industrial and extreme service applications.",
+      "Tube, nipples, tooling sets and tube support for cone and thread systems.",
     image:
       "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/tube.png",
     href: "/products/high-pressure-tubing",
@@ -33,7 +33,7 @@ export const CATEGORIES = [
     facts: ["5 series", "Up to 60,000 psi"],
     label: "Union & Adapters",
     description:
-      "Unions, adapters, and bulkhead fittings for pressure and size compatibility across industrial and extreme service applications.",
+      "Unions, male-to-male, male-to-female, bulkhead and Lok-to-female adapters for pressure and size compatibility.",
     image:
       "https://pblol2.blob.core.windows.net/hiflux/union-adapters/f-f-u.png",
     href: "/products/union-adapters",
@@ -43,7 +43,7 @@ export const CATEGORIES = [
     facts: ["4 series", "Up to 20,000 psi"],
     label: "High Pressure Regulators",
     description:
-      "General, high pressure, back pressure, and air operated regulators for precise pressure control in industrial and extreme service applications.",
+      "General, high-pressure, back pressure and air-operated back pressure regulators for precise pressure control.",
     image:
       "https://pblol2.blob.core.windows.net/hiflux/regulators/bp-regulator.png",
     href: "/products/high-pressure-regulators",

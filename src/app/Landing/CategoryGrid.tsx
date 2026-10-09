@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Link from "next/link";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ProductCategoryCard from "../products/components/ProductCategoryCard";
+import { CategoryBento } from "../products/components/ProductCategoryCard";
 import { CATEGORIES } from "../products/data/categories";
 
 // Category cards directly under the hero — the same cards as /products.
@@ -40,6 +40,14 @@ export default function CategoryGrid() {
             >
               High-pressure products by category
             </Typography>
+            {/* Merged from the former "The range" section so its copy stays on the page. */}
+            <Typography sx={{ mt: 1.25, color: "text.secondary", fontSize: "1rem", lineHeight: 1.7, maxWidth: 720, textTransform: "none" }}>
+              <Box component="span" sx={{ fontWeight: 700, color: "text.primary" }}>
+                Five categories, one connection system.
+              </Box>{" "}
+              All in cold-formed stainless steel 316 as standard, with Hastelloy, Inconel 600/625/825, Nickel 200 and
+              Titanium available where the service requires them.
+            </Typography>
           </Box>
           <Box
             component={Link}
@@ -63,13 +71,7 @@ export default function CategoryGrid() {
           </Box>
         </Box>
 
-        <Grid container spacing={3}>
-          {CATEGORIES.map((cat) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={cat.id}>
-              <ProductCategoryCard {...cat} />
-            </Grid>
-          ))}
-        </Grid>
+        <CategoryBento categories={CATEGORIES} />
       </Box>
     </Box>
   );

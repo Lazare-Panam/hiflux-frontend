@@ -103,6 +103,20 @@ export default function RootLayout({
       `,
           }}
         /> 
+        {/* WebSite name: Google uses this (not the domain) as the site name in
+            results. Without it, hiflux.uk.com was shown as "UK.COM". */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Hiflux UK",
+              alternateName: ["Hiflux", "HiFlux UK", "hiflux.uk.com"],
+              url: "https://www.hiflux.uk.com/",
+            }),
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

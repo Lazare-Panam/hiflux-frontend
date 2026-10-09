@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Box, Chip, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { blogs } from "./data/blogs";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
@@ -26,123 +25,29 @@ export default function NewsPage() {
   const rest = blogs.slice(1);
 
   return (
-    <Box sx={{ bgcolor: "background.paper", minHeight: "100vh" }}>
+    <Box sx={{ bgcolor: "#f3f6fa", minHeight: "100vh", "& .MuiTypography-root": { textTransform: "none" } }}>
       {/* Hero */}
       <Box
+        component="section"
         sx={{
-          position: "relative",
-          height: { xs: 320, md: 440 },
-          overflow: "hidden",
-          borderBottom: "1px solid",
-          borderColor: "divider",
+          color: "#fff",
+          py: { xs: 7, md: 10 },
+          // Original hero photo, kept by request.
+          background: `linear-gradient(to right, rgba(0,58,110,0.88) 0%, rgba(0,83,155,0.55) 60%, rgba(0,114,188,0.25) 100%), url("https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=90") center / cover`,
         }}
       >
-        <Box
-          component="img"
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=90"
-          alt="News hero"
-          sx={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to right, rgba(0,58,110,0.85) 0%, rgba(0,83,155,0.45) 60%, rgba(0,114,188,0.15) 100%)",
-          }}
-        />
-
-        {/* Back to Home button */}
-        <Box
-          component="a"
-          href="/"
-          sx={{
-            position: "absolute",
-            top: { xs: 16, md: 24 },
-            left: { xs: 16, md: 24 },
-            zIndex: 2,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 0.75,
-            px: 2,
-            py: 0.75,
-            borderRadius: "999px",
-            textDecoration: "none",
-            bgcolor: "rgba(0,0,0,0.35)",
-            border: "1px solid rgba(255,255,255,0.35)",
-            backdropFilter: "blur(4px)",
-            color: "#fff",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            transition: "background-color 0.2s ease, border-color 0.2s ease",
-            "&:hover": {
-              bgcolor: "rgba(0,0,0,0.55)",
-              borderColor: "rgba(255,255,255,0.6)",
-            },
-          }}
-        >
-          <ArrowBackIcon sx={{ fontSize: "1rem" }} />
-          Back to Home
-        </Box>
-
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 1,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            px: { xs: 3, md: 8 },
-            pb: { xs: 4, md: 6 },
-            maxWidth: 1100,
-            mx: "auto",
-          }}
-        >
+        <Container maxWidth="lg">
           <PageBreadcrumbs items={[{ label: "News" }]} />
-          <Typography
-            variant="overline"
-            sx={{
-              color: "rgba(255,255,255,0.8)",
-              letterSpacing: 6,
-              fontSize: "0.7rem",
-              display: "block",
-              mb: 2,
-            }}
-          >
-            Latest News
+          <Typography sx={{ color: "rgba(255,255,255,0.75)", letterSpacing: "0.2em", fontSize: "0.74rem", fontWeight: 800, textTransform: "uppercase !important" }}>
+            News & technical guides
           </Typography>
-          <Typography
-            variant="h2"
-            component="h1"
-            sx={{
-              fontWeight: 700,
-              color: "#fff",
-              lineHeight: 1.1,
-              maxWidth: 560,
-            }}
-          >
-            Insights, Stories & Updates
+          <Typography component="h1" sx={{ mt: 1.25, fontSize: { xs: "2.1rem", md: "3rem" }, fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: 720 }}>
+            Insights, guides and updates
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: "rgba(255,255,255,0.7)",
-              mt: 2,
-              maxWidth: 440,
-              lineHeight: 1.75,
-            }}
-          >
-            News, updates and insights from our team.
+          <Typography sx={{ mt: 2, color: "rgba(255,255,255,0.85)", fontSize: { xs: "1rem", md: "1.08rem" }, lineHeight: 1.75, maxWidth: 620 }}>
+            Selection guides for high-pressure valves, fittings and regulators, plus Hiflux UK company news.
           </Typography>
-        </Box>
+        </Container>
       </Box>
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
@@ -170,7 +75,9 @@ export default function NewsPage() {
             alt={featured.title}
             sx={{
               width: "100%",
-              height: "auto",
+              height: "100%",
+              minHeight: { xs: 220, md: 340 },
+              objectFit: "cover",
               display: "block",
             }}
           />
@@ -180,7 +87,7 @@ export default function NewsPage() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              bgcolor: "background.default",
+              bgcolor: "#fff",
             }}
           >
             <Chip
@@ -194,9 +101,13 @@ export default function NewsPage() {
                 mb: 2,
               }}
             />
+            <Typography sx={{ color: "primary.main", fontWeight: 800, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase !important", mb: 1 }}>
+              Latest · {featured.date}
+            </Typography>
             <Typography
               variant="h4"
-              sx={{ fontWeight: 700, color: "text.primary", lineHeight: 1.2 }}
+              component="h2"
+              sx={{ fontWeight: 800, color: "text.primary", lineHeight: 1.2, mb: 1.5, fontSize: { xs: "1.5rem", md: "2rem" } }}
             >
               {featured.title}
             </Typography>

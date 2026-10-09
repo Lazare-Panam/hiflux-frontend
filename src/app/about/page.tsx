@@ -50,12 +50,12 @@ export async function generateMetadata(): Promise<Metadata> {
 type Item = { term: string; desc: string; icon?: ReactNode };
 
 const ROLE_IN_UK: Item[] = [
-  { icon: <SupportAgentOutlinedIcon />, term: "Product enquiries", desc: "A UK contact who answers the technical question rather than routing it offshore." },
+  { icon: <SupportAgentOutlinedIcon />, term: "Product enquiries", desc: "A UK contact who answers the technical question rather than routing it offshore, in UK working hours with no time-zone gap in the middle of a technical conversation." },
   { icon: <TuneOutlinedIcon />, term: "Product selection", desc: "Matching an application to a catalogue number: pressure rating, orifice, stem type, port type, material." },
-  { icon: <DescriptionOutlinedIcon />, term: "Document access", desc: "Catalogues, dimensional data and port-type information on request." },
-  { icon: <FactCheckOutlinedIcon />, term: "Specification and BOM review", desc: "We check part numbers, flag mismatches, and identify where another configuration suits the duty better." },
+  { icon: <DescriptionOutlinedIcon />, term: "Document access", desc: "Catalogues, dimensional data, port types and material specifications on request." },
+  { icon: <FactCheckOutlinedIcon />, term: "Specification and BOM review", desc: "A second pair of eyes before the order goes in: we check part numbers, flag mismatches, and identify where another configuration suits the duty better." },
   { icon: <RequestQuoteOutlinedIcon />, term: "Formal quotations", desc: "Written and itemised, against your specification." },
-  { icon: <LocalShippingOutlinedIcon />, term: "Order coordination and after-sales", desc: "Placing and tracking the order, and a named UK contact after delivery." },
+  { icon: <LocalShippingOutlinedIcon />, term: "Order coordination and after-sales", desc: "Placing and tracking the order, with one named UK contact from enquiry to delivery and afterwards." },
 ];
 
 const VALUES: Item[] = [
@@ -83,15 +83,6 @@ const INDUSTRIES: Item[] = [
   { icon: <ScienceOutlinedIcon />, term: "Research and test facilities", desc: "Tubing and fittings across the full pressure range." },
   { icon: <WaterDropOutlinedIcon />, term: "Waterjet cutting", desc: "The manufacturer supplies overseas waterjet equipment makers on an OEM basis." },
   { icon: <BoltOutlinedIcon />, term: "Hydrogen", desc: "Valves and fittings developed for refuelling stations, including H70 applications." },
-];
-
-const WHY_US: Item[] = [
-  { term: "A UK point of contact", desc: "Enquiries answered in UK working hours, with no time-zone gap in the middle of a technical conversation." },
-  { term: "Product information on request", desc: "Catalogues, dimensional data, port types and material specifications." },
-  { term: "Technical enquiry support", desc: "Help translating an application into a valid part number." },
-  { term: "Specification and BOM review", desc: "A second pair of eyes before the order goes in." },
-  { term: "Formal quotations", desc: "Written and itemised." },
-  { term: "One contact throughout", desc: "From enquiry to delivery and afterwards." },
 ];
 
 // Facts stated on this page and the homepage (HIFLUX Co., Ltd. history).
@@ -128,26 +119,29 @@ function Section({
   title,
   intro,
   tint,
+  dark,
   children,
 }: {
   eyebrow?: string;
   title: string;
   intro?: ReactNode;
   tint?: boolean;
+  /** Deep-blue band (white text) to break up the long white page. */
+  dark?: boolean;
   children?: ReactNode;
 }) {
   return (
-    <Box component="section" sx={{ bgcolor: tint ? TINT : "#fff", py: { xs: 7, md: 10 } }}>
+    <Box component="section" sx={{ bgcolor: tint ? TINT : "#fff", ...(dark ? { background: BLUE_BG, color: "#fff" } : {}), py: { xs: 7, md: 10 } }}>
       <Container maxWidth="lg">
         {eyebrow && (
-          <Typography sx={{ color: "primary.main", letterSpacing: "0.2em", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase !important", mb: 1 }}>
+          <Typography sx={{ color: dark ? "rgba(255,255,255,0.75)" : "primary.main", letterSpacing: "0.2em", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase !important", mb: 1 }}>
             {eyebrow}
           </Typography>
         )}
-        <Typography component="h2" sx={{ fontSize: { xs: "1.7rem", md: "2.2rem" }, fontWeight: 800, color: "text.primary", lineHeight: 1.2, maxWidth: 760 }}>
+        <Typography component="h2" sx={{ fontSize: { xs: "1.7rem", md: "2.2rem" }, fontWeight: 800, color: dark ? "#fff" : "text.primary", lineHeight: 1.2, maxWidth: 760 }}>
           {title}
         </Typography>
-        {intro && <Typography sx={{ ...bodySx, mt: 2, maxWidth: 760 }}>{intro}</Typography>}
+        {intro && <Typography sx={{ ...bodySx, ...(dark ? { color: "rgba(255,255,255,0.85)" } : {}), mt: 2, maxWidth: 760 }}>{intro}</Typography>}
         {children && <Box sx={{ mt: { xs: 4, md: 5 } }}>{children}</Box>}
       </Container>
     </Box>
@@ -295,7 +289,7 @@ export default async function AboutPage() {
       {/* Our role in the UK */}
       <Section
         tint
-        eyebrow="What we do"
+        eyebrow="Why work with Hiflux UK"
         title="Our role in the UK"
         intro="Most of the work happens before the order. Engineers come to us with a pressure, a medium and a port type; buyers come to us with a part number that needs pricing, or a bill of materials that needs checking."
       >
@@ -381,28 +375,11 @@ export default async function AboutPage() {
         <IconCards items={INDUSTRIES} columns={5} />
       </Section>
 
-      {/* Why work with us */}
-      <Section tint eyebrow="Why Hiflux UK" title="Why work with Hiflux UK?">
-        <Box sx={{ display: "grid", gap: 2.5, gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" } }}>
-          {WHY_US.map((w, i) => (
-            <Box key={w.term} sx={{ ...cardSx, p: 3, display: "flex", gap: 2 }}>
-              <Typography sx={{ fontSize: "1.6rem", fontWeight: 800, color: "rgba(0,114,188,0.35)", lineHeight: 1, minWidth: 34 }}>
-                {String(i + 1).padStart(2, "0")}
-              </Typography>
-              <Box>
-                <Typography component="h3" sx={{ fontWeight: 800, fontSize: "1.02rem", color: "text.primary", mb: 0.5 }}>
-                  {w.term}
-                </Typography>
-                <Typography sx={{ color: "text.secondary", fontSize: "0.93rem", lineHeight: 1.6 }}>{w.desc}</Typography>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      </Section>
 
       {/* Quality and documentation */}
       <Box id="certifications" sx={{ scrollMarginTop: 100 }}>
         <Section
+          dark
           eyebrow="Quality"
           title="Quality and documentation"
           intro="Product quality, testing and manufacturing certification are the responsibility of HIFLUX Co., Ltd. and do not transfer automatically to Hiflux UK. Our role is to obtain the documentation UK customers need for design files, supplier approvals and site records. Each certificate covers only the scope written on it."
@@ -437,7 +414,7 @@ export default async function AboutPage() {
                     transition: "transform 0.25s ease, box-shadow 0.25s ease",
                   }}
                 />
-                <Typography sx={{ mt: 1, textAlign: "center", fontWeight: 800, fontSize: "0.78rem", color: "primary.main", textTransform: "none" }}>
+                <Typography sx={{ mt: 1, textAlign: "center", fontWeight: 800, fontSize: "0.78rem", color: "#fff", textTransform: "none" }}>
                   {c.badge}
                 </Typography>
               </Box>
@@ -453,13 +430,13 @@ export default async function AboutPage() {
               gap: 0.75,
               px: 2.5,
               py: 1.1,
-              borderRadius: "8px",
-              bgcolor: "primary.main",
-              color: "#fff",
+              borderRadius: "999px",
+              bgcolor: "#fff",
+              color: "#00539B",
               fontWeight: 700,
               fontSize: "0.92rem",
               textDecoration: "none",
-              "&:hover": { bgcolor: "primary.dark" },
+              "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
             }}
           >
             View all certificates →
