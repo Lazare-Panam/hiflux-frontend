@@ -87,15 +87,14 @@ export default function HeaMembership() {
         </Box>
 
         {/* Certificate photo: full column width, rounded, soft shadow */}
-        <Box sx={{ borderRadius: "22px", overflow: "hidden", boxShadow: "0 24px 50px rgba(0,30,70,0.14)", lineHeight: 0, background: "linear-gradient(135deg, #dce9f6 0%, #c9dcf0 100%)" }}>
+        <Box sx={{ borderRadius: "22px", overflow: "hidden", boxShadow: "0 24px 50px rgba(0,30,70,0.14)", lineHeight: 0 }}>
           <Image
             src={HEA_CERT}
             alt="Hiflux UK Hydrogen Energy Association membership certificate"
             width={640}
             height={416}
             sizes="(max-width: 900px) 90vw, 620px"
-            // Multiply tints the photo's grey wall blue; the white certificate stays light.
-            style={{ width: "100%", height: "auto", display: "block", mixBlendMode: "multiply", filter: "brightness(1.12) contrast(1.05)" }}
+            style={{ width: "100%", height: "auto", display: "block" }}
           />
         </Box>
       </Box>
