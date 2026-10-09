@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import CtaBanner from "@/app/Common/CtaBanner";
 import { PRODUCT_STAGE } from "@/theme/brand";
 import Link from "next/link";
 import {
@@ -17,9 +18,11 @@ import {
 import { alpha } from "@mui/material/styles";
 import { getProductVariants } from "@/api/useProductVariants";
 import { categorySlug } from "@/api/catalogSlug";
+import { CATEGORIES } from "@/app/products/data/categories";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 
 // "high-pressure-valves" -> "High Pressure Valves"
+const categoryLabel = (slug: string) => CATEGORIES.find((c) => c.id === slug)?.label ?? humanizeCategory(slug);
 const humanizeCategory = (slug: string) =>
   slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 import AddToCartButton from "./components/AddToCartButton";
@@ -89,10 +92,14 @@ export default async function VariantDetail({ params }: Props) {
   const tube = variant.specs["Tube Size"];
   const score = (v: typeof variant) =>
     (rating && v.specs["Pressure Rating"] === rating ? 2 : 0) + (tube && v.specs["Tube Size"] === tube ? 1 : 0);
-  const related = data.variants
+  const sameClass = data.variants
     .filter((v) => v.id !== variant.id && score(v) >= 2)
     .sort((a, b) => score(b) - score(a))
     .slice(0, 4);
+  // Series with no shared class/size (e.g. LOK tube, where each size has its
+  // own rating) show other models from the series instead of nothing.
+  const related = sameClass.length ? sameClass : data.variants.filter((v) => v.id !== variant.id).slice(0, 4);
+  const relatedHeading = sameClass.length ? "Same pressure class and size" : `Other ${data.name} models`;
 
   // A fitting body needs a matched accessory set of the same class and size
   // (gland + sleeve below 20,000 psi, gland + collar above).
@@ -143,7 +150,7 @@ export default async function VariantDetail({ params }: Props) {
             tone="dark"
             items={[
               { label: "Products", href: "/products" },
-              { label: humanizeCategory(categorySlug(id)), href: `/products/${categorySlug(id)}` },
+              { label: categoryLabel(categorySlug(id)), href: `/products/${categorySlug(id)}` },
               { label: data.name, href: `/products/${categorySlug(id)}/${productId}` },
               { label: "All Models", href: `/products/${categorySlug(id)}/${productId}/variants` },
               { label: sku },
@@ -370,7 +377,7 @@ export default async function VariantDetail({ params }: Props) {
           <Box sx={{ mt: 8 }}>
             <Divider sx={{ mb: 4 }} />
             <Typography sx={{ fontSize: "1.15rem", fontWeight: 800, mb: 3 }}>
-              Same pressure class and size
+              {relatedHeading}
             </Typography>
             <Grid container spacing={2.5}>
               {related.map((item) => {
@@ -431,6 +438,13 @@ export default async function VariantDetail({ params }: Props) {
             </Grid>
           </Box>
         )}
+
+        <Box sx={{ mt: 8 }}>
+          <CtaBanner
+            heading={`Need ${sku} or a different size?`}
+            body="Send us the part number, quantity and delivery location and we'll come back with a price and the documentation."
+          />
+        </Box>
       </Box>
     </Box>
   );

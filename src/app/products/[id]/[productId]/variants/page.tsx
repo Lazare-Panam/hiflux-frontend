@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductVariants } from "@/api/useProductVariants";
 import { categorySlug } from "@/api/catalogSlug";
+import { CATEGORIES } from "@/app/products/data/categories";
 import Link from "next/link";
 import { Box, Typography } from "@mui/material";
 import { getProductDetail } from "@/api/useProductDetail";
@@ -21,6 +22,7 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ id: string; productId: string }> };
 
+const categoryLabel = (slug: string) => CATEGORIES.find((c) => c.id === slug)?.label ?? humanizeCategory(slug);
 function humanizeCategory(slug: string): string {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -50,7 +52,7 @@ export default async function ProductVariantsPage({ params }: Props) {
   const { id, productId } = await params;
 
   const data = await getProductVariants(productId).catch(() => null);
-  if (data) return <VariantsBrowser data={data} category={humanizeCategory(id)} />;
+  if (data) return <VariantsBrowser data={data} category={categoryLabel(categorySlug(id))} />;
 
   // No models in the API yet. If the series itself exists, show a holding
   // page (noindex) instead of a 404; it fills in once the models are added.
