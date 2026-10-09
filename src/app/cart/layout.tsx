@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     "Review the high-pressure valves, fittings and tubing in your Hiflux UK cart, then request a quote or check out.",
   // The cart is per-visitor state with no search value; it was being indexed
   // (Sept 2026 SEO audit). Keep links followable, just drop it from the index.
-  robots: { index: false, follow: true },
 };
 
 export default function CartLayout({

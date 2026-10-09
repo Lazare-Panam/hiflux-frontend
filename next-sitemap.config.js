@@ -17,7 +17,6 @@ module.exports = {
   siteUrl: "https://www.hiflux.uk.com/",
   generateRobotsTxt: true,
   // noindex pages must not be advertised in the sitemap.
-  exclude: ["/cart"],
   additionalPaths: async (config) => {
     const result = [];
 
