@@ -31,33 +31,5 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
-  e2e:
-    name: E2E (Playwright)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
-
-      # CI=true (set by GitHub) makes Playwright start its own dev server
-      # (no reuse), use 2 workers, and retry once. The suite hits the live
-      # backend API, so this job needs outbound network.
-      - name: Run E2E tests
-        run: npm run test:e2e
-
-      - name: Upload Playwright report
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
+  # The Playwright E2E job was removed: it hit the live API and broke on
+  # every content change. Run it locally when needed: npm run test:e2e
