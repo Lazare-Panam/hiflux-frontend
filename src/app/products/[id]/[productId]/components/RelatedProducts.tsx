@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
 
-async function RelatedProductCard({ productId }: { productId: string }) {
-  const data = await getProductDetail(productId).catch(() => null);
-  if (!data) return null;
+type Detail = NonNullable<Awaited<ReturnType<typeof getProductDetail>>>;
 
+function RelatedProductCard({ productId, data }: { productId: string; data: Detail }) {
   return (
     <Link
       // Link using the related product's OWN category (data.catalogId), not the
@@ -63,26 +62,36 @@ async function RelatedProductCard({ productId }: { productId: string }) {
 
 interface Props {
   productIds: string[];
+  /** Used when none of productIds exist: other series in the same category. */
+  fallbackIds?: string[];
 }
 
-export default function RelatedProducts({ productIds }: Props) {
-  if (!productIds?.length) return null;
+// Product data can list related IDs that no longer exist (e.g. spc-ctrl-75k),
+// so fetch first and hide the whole section, band included, when none load.
+const load = async (ids: string[]) =>
+  (await Promise.all(ids.map(async (pid) => ({ pid, data: await getProductDetail(pid).catch(() => null) })))).filter(
+    (r): r is { pid: string; data: Detail } => !!r.data,
+  );
+
+export default async function RelatedProducts({ productIds, fallbackIds = [] }: Props) {
+  let found = await load(productIds ?? []);
+  if (!found.length && fallbackIds.length) found = await load(fallbackIds.slice(0, 3));
+  if (!found.length) return null;
 
   return (
-    <Box>
-      <Typography
-        sx={{ fontWeight: 800, fontSize: { xs: '1.4rem', md: '1.8rem' }, color: 'text.primary', mb: 4 }}
-      >
-        Related Products
-      </Typography>
-      <Grid container spacing={3}>
-        {productIds.map((pid) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={pid}>
-            {/* async Server Component — fetched and rendered on the server */}
-            <RelatedProductCard productId={pid} />
-          </Grid>
-        ))}
-      </Grid>
+    <Box sx={{ bgcolor: '#f3f6fa' }}>
+      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, py: { xs: 6, md: 8 } }}>
+        <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.4rem', md: '1.8rem' }, color: 'text.primary', mb: 4, textTransform: 'none' }}>
+          Related Products
+        </Typography>
+        <Grid container spacing={3}>
+          {found.map(({ pid, data }) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={pid}>
+              <RelatedProductCard productId={pid} data={data} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Box>
   );
 }

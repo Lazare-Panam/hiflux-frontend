@@ -10,6 +10,7 @@ import { BLUE_BG } from '@/theme/brand';
 import { summarise } from '../components/seriesSummary';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
+import { getCatalog } from '@/api/useProductCatalog';
 import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
 import ProductFeatureChips from './components/ProductFeatureChips';
@@ -119,6 +120,9 @@ export default async function ProductDetailPage({ params }: Props) {
   };
 
   const summary = await summarise({ id: productId }).catch(() => null);
+  // Other series in this category: Related products falls back to these when
+  // the product data's related IDs don't exist.
+  const siblings = ((await getCatalog(catalogId).catch(() => null))?.products ?? []).map((p) => p.id).filter((id) => id !== productId);
   // Key-spec strip under the title (pressure, tube size, connection, material).
   const keySpecs = (summary?.rows ?? []).filter(([k]) => k !== 'Price').slice(0, 4);
   const models = summary?.models ?? 0;
@@ -322,12 +326,8 @@ export default async function ProductDetailPage({ params }: Props) {
         </Box>
       )}
 
-      {/* Related products on light blue */}
-      <Box sx={{ bgcolor: '#f3f6fa' }}>
-        <Box sx={{ maxWidth: '1200px', mx: 'auto', px: { xs: 2, md: 3 }, py: { xs: 6, md: 8 } }}>
-          <RelatedProducts productIds={data.relatedProducts ?? []} />
-        </Box>
-      </Box>
+      {/* Related products (renders its own light-blue band, or nothing) */}
+      <RelatedProducts productIds={data.relatedProducts ?? []} fallbackIds={siblings} />
     </Box>
   );
 }
