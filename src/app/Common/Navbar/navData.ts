@@ -214,7 +214,6 @@ export const LEFT_NAV: NavItem[] = [
         ],
       },
       {
-        // LOK Tube is added here once its product data is in the API.
         heading: "LOK Fittings & Valves",
         href: "/products/lok-fittings-valves",
         applications: [APP.chemical, APP.research],
@@ -223,6 +222,7 @@ export const LEFT_NAV: NavItem[] = [
           CATALOGUE,
         ],
         items: [
+          { label: "LOK Tube", href: "/products/lok-fittings-valves/lok-tube" },
           { label: "LOK Tube Fittings", href: "/products/lok-fittings-valves/lok-tube-fittings" },
           { label: "LOK Valves", href: "/products/lok-fittings-valves/lok-valves" },
         ],

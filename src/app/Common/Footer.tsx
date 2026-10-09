@@ -112,6 +112,7 @@ const FOOTER_COLUMNS = [
   {
     heading: "LOK Fittings & Valves",
     links: [
+      { label: "LOK Tube", href: "/products/lok-fittings-valves/lok-tube" },
       { label: "LOK Tube Fittings", href: "/products/lok-fittings-valves/lok-tube-fittings" },
       { label: "LOK Valves", href: "/products/lok-fittings-valves/lok-valves" },
     ],

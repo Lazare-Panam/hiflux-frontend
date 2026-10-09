@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { PRODUCT_STAGE } from "@/theme/brand";
 import Link from "next/link";
 import {
   Box,
@@ -163,8 +164,8 @@ export default async function VariantDetail({ params }: Props) {
                 overflow: "hidden",
               }}
             >
-              <Box sx={{ position: "relative", aspectRatio: "1/1", bgcolor: alpha(BRAND, 0.03) }}>
-                <Image src={data.thumbnailImage} alt={sku} fill style={{ objectFit: "contain", padding: 40 }} />
+              <Box sx={{ position: "relative", aspectRatio: "1/1", background: PRODUCT_STAGE }}>
+                <Image src={data.thumbnailImage} alt={sku} fill style={{ objectFit: "contain", padding: 48, mixBlendMode: "multiply" }} />
               </Box>
             </Box>
           </Grid>
@@ -398,7 +399,7 @@ export default async function VariantDetail({ params }: Props) {
                           sx={{
                             position: "relative",
                             aspectRatio: "1/1",
-                            bgcolor: alpha(BRAND, 0.03),
+                            background: PRODUCT_STAGE,
                             borderRadius: "6px",
                           }}
                         >
@@ -406,7 +407,7 @@ export default async function VariantDetail({ params }: Props) {
                             src={data.thumbnailImage}
                             alt={itemSku}
                             fill
-                            style={{ objectFit: "contain", padding: 16 }}
+                            style={{ objectFit: "contain", padding: 16, mixBlendMode: "multiply" }}
                           />
                         </Box>
                         <Typography

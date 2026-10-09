@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { PRODUCT_STAGE } from "@/theme/brand";
 import {
   Box,
   Typography,
@@ -26,7 +27,6 @@ export default function CartPage() {
   const ACCENT = theme.palette.primary.main;
   const INK = theme.palette.text.primary;
   const RUST = theme.palette.text.secondary;
-  const PAPER = theme.palette.background.paper;
 
   const items = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
@@ -164,7 +164,7 @@ export default function CartPage() {
                     width: 84,
                     height: 84,
                     flexShrink: 0,
-                    bgcolor: PAPER,
+                    background: PRODUCT_STAGE,
                     borderRadius: "8px",
                     overflow: "hidden",
                   }}
@@ -173,7 +173,7 @@ export default function CartPage() {
                     src={item.thumbnailImage}
                     alt={item.name}
                     fill
-                    style={{ objectFit: "contain", padding: 10 }}
+                    style={{ objectFit: "contain", padding: 10, mixBlendMode: "multiply" }}
                   />
                 </Box>
 
