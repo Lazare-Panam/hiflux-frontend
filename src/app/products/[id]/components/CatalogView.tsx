@@ -57,9 +57,10 @@ export default async function CatalogView({
           color: "#fff",
           py: { xs: 5, md: 7 },
           // Category banner photo under a blue tint (as before the redesign).
-          background: hero.bannerImage
-            ? `linear-gradient(rgba(0,58,110,0.78), rgba(0,45,84,0.88)), url("${hero.bannerImage}") center / cover`
-            : BLUE_BG,
+          // HIFLUX valves-and-fittings rig (hiflux.net's product banner), sharp at
+          // full width. The category bannerImage is a small product cut-out that
+          // blurred when stretched across the hero.
+          background: `linear-gradient(rgba(0,58,110,0.72), rgba(0,45,84,0.86)), url("/products-hero.jpg") center / cover, ${BLUE_BG}`,
         }}
       >
         <Container maxWidth="lg">
@@ -398,16 +399,44 @@ function SeriesCard({ product, summary, href }: { product: ProductItem; summary?
           )
         )}
 
-        <Box sx={{ mt: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap" }}>
-          <Link href={href} style={{ textDecoration: "none" }}>
-            <Box component="span" sx={{ color: "primary.main", fontWeight: 700, fontSize: "0.92rem", "&:hover": { textDecoration: "underline" } }}>
-              View details →
+        {/* Models: a few part numbers, each a link to its model page */}
+        {summary && summary.models > 0 && summary.sampleModels && (
+          <Box sx={{ mb: 2.25 }}>
+            <Typography sx={{ color: "text.secondary", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase !important", mb: 1 }}>
+              Models
+            </Typography>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+              {summary.sampleModels.map((m) => (
+                <Link key={m.id} href={`${href}/variants/${encodeURIComponent(m.id)}`} style={{ textDecoration: "none" }}>
+                  <Box
+                    component="span"
+                    sx={{ display: "inline-block", px: 1, py: 0.4, borderRadius: "6px", bgcolor: "#f3f6fa", border: "1px solid rgba(15,40,70,0.08)", fontFamily: "monospace", fontSize: "0.78rem", fontWeight: 700, color: "text.primary", "&:hover": { borderColor: "primary.main", color: "primary.main" } }}
+                  >
+                    {m.sku}
+                  </Box>
+                </Link>
+              ))}
+              {summary.models > summary.sampleModels.length && (
+                <Link href={`${href}/variants`} style={{ textDecoration: "none" }}>
+                  <Box component="span" sx={{ display: "inline-block", px: 1, py: 0.4, fontSize: "0.78rem", fontWeight: 700, color: "primary.main", "&:hover": { textDecoration: "underline" } }}>
+                    +{summary.models - summary.sampleModels.length} more
+                  </Box>
+                </Link>
+              )}
+            </Box>
+          </Box>
+        )}
+
+        <Box sx={{ mt: "auto", display: "flex", gap: 1, flexWrap: "wrap" }}>
+          <Link href={href} style={{ textDecoration: "none", flex: "1 1 120px" }}>
+            <Box component="span" sx={{ display: "flex", justifyContent: "center", py: 1.1, borderRadius: "999px", border: "1.5px solid rgba(15,40,70,0.15)", color: "text.primary", fontWeight: 700, fontSize: "0.88rem", "&:hover": { borderColor: "primary.main", color: "primary.main" } }}>
+              View details
             </Box>
           </Link>
-          {summary && summary.models > 1 && (
-            <Link href={`${href}/variants`} style={{ textDecoration: "none" }}>
-              <Box component="span" sx={{ color: "text.secondary", fontWeight: 600, fontSize: "0.84rem", "&:hover": { color: "primary.main" } }}>
-                {summary.models} models
+          {summary && summary.models > 0 && (
+            <Link href={`${href}/variants`} style={{ textDecoration: "none", flex: "1 1 150px" }}>
+              <Box component="span" sx={{ display: "flex", justifyContent: "center", py: 1.1, borderRadius: "999px", bgcolor: "primary.main", color: "#fff", fontWeight: 700, fontSize: "0.88rem", "&:hover": { bgcolor: "primary.dark" } }}>
+                View all {summary.models} models
               </Box>
             </Link>
           )}

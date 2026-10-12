@@ -53,3 +53,44 @@ export const APP_VISUALS: Record<string, AppVisual> = {
     ],
   },
 };
+
+// Industry photos for the applications overview, self-hosted in
+// /public/applications. All from Wikimedia Commons; licence checked per file:
+// CC0 / public domain need no credit, CC BY 4.0 needs the credit shown on the
+// page. Replace with HIFLUX or customer photos when available.
+export type AppPhoto = { src: string; alt: string; license: string; source: string; credit?: string; creditUrl?: string };
+
+export const APP_PHOTOS: Record<string, AppPhoto> = {
+  "hydrogen-refuelling": {
+    src: "/applications/hydrogen-refuelling.jpg",
+    alt: "Hydrogen refuelling station dispenser",
+    license: "CC BY 4.0",
+    source: "https://commons.wikimedia.org/wiki/File:Hydrogen_station_in_Jyv%C3%A4skyl%C3%A4.jpg",
+    credit: "Hydrogen station in Jyväskylä, Tiia Monto, CC BY 4.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Hydrogen_station_in_Jyv%C3%A4skyl%C3%A4.jpg",
+  },
+  "wellhead-pressure-control": {
+    src: "/applications/wellhead-pressure-control.jpg",
+    alt: "Wellheads and pipework at an oil storage site",
+    license: "Public domain (U.S. Department of Energy)",
+    source: "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_031.jpg",
+  },
+  "research-and-testing": {
+    src: "/applications/research-and-testing.jpg",
+    alt: "Technicians operating a hydraulic test stand",
+    license: "Public domain (U.S. Department of Defense)",
+    source: "https://commons.wikimedia.org/wiki/File:U.S._Air_Force_Hydraulic_Test_Stand_inspection.jpg",
+  },
+  "chemical-processing": {
+    src: "/applications/chemical-processing.jpg",
+    alt: "Petrochemical plant process columns",
+    license: "CC0",
+    source: "https://commons.wikimedia.org/wiki/File:Petrochemical_Plant_Near_Mulhurst_Bay_Alberta_Canada_03A.jpg",
+  },
+  "power-generation": {
+    src: "/applications/power-generation.jpg",
+    alt: "Power station steam turbine rotor",
+    license: "CC0",
+    source: "https://commons.wikimedia.org/wiki/File:Philippsburg_Nuclear_Power_Plant_condensation_turbine_pic2.jpg",
+  },
+};
