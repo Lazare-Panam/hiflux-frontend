@@ -117,6 +117,14 @@ const FOOTER_COLUMNS = [
       { label: "LOK Valves", href: "/products/lok-fittings-valves/lok-valves" },
     ],
   },
+  {
+    heading: "Pressure, Temp & Flow",
+    links: [
+      { label: "Pressure Gauge", href: "/products/pressure-temp-flow/pressure-gauge" },
+      { label: "Thermocouple", href: "/products/pressure-temp-flow/thermocouple" },
+      { label: "Pump", href: "/products/pressure-temp-flow/pump" },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -142,7 +150,7 @@ export default function Footer() {
             xs: "1fr",
             sm: "1fr 1fr",
             md: "1.6fr repeat(3, 1fr)",
-            lg: "1.6fr repeat(6, 1fr)",
+            lg: "1.4fr repeat(7, 1fr)",
           },
           gap: { xs: 5, md: 4, lg: 3 },
         }}

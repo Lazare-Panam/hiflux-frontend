@@ -33,7 +33,7 @@ export default function CategoryGrid() {
             {/* Copy carried over from the former "The range" section. */}
             <Typography sx={{ mt: 1.75, color: "text.secondary", fontSize: { xs: "1rem", md: "1.05rem" }, lineHeight: 1.75, maxWidth: 720 }}>
               <Box component="span" sx={{ fontWeight: 700, color: "text.primary" }}>
-                Six categories, from 150,000 psi cone and thread to LOK double-ferrule fittings.
+                Seven categories, from 150,000 psi cone and thread to LOK fittings, gauges and thermocouples.
               </Box>{" "}
               All in cold-formed stainless steel 316 as standard, with Hastelloy, Inconel 600/625/825, Nickel 200 and
               Titanium available where the service requires them.
@@ -66,12 +66,16 @@ export default function CategoryGrid() {
 
         {/* 3 x 2 grid */}
         <Box sx={{ display: "grid", gap: { xs: 2.5, md: 3 }, gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" } }}>
-          {CATEGORIES.map((cat) => (
-            <Link key={cat.id} href={cat.href} style={{ textDecoration: "none", display: "block" }}>
+          {CATEGORIES.map((cat, i) => {
+            // A lone last card (7 categories in rows of 3) spans the full row as a wide card.
+            const wide = i === CATEGORIES.length - 1 && CATEGORIES.length % 3 === 1;
+            return (
+            <Link key={cat.id} href={cat.href} style={{ textDecoration: "none", display: "block", gridColumn: wide ? "1 / -1" : undefined }}>
               <Box
                 sx={{
                   height: "100%",
-                  display: "flex",
+                  display: wide ? { xs: "flex", md: "grid" } : "flex",
+                  gridTemplateColumns: wide ? { md: "1fr 2fr" } : undefined,
                   flexDirection: "column",
                   borderRadius: "22px",
                   bgcolor: "#fff",
@@ -89,7 +93,8 @@ export default function CategoryGrid() {
                   className="cat-stage"
                   sx={{
                     position: "relative",
-                    height: { xs: 210, md: 230 },
+                    height: { xs: 210, md: wide ? "100%" : 230 },
+                    minHeight: wide ? { md: 230 } : undefined,
                     background: PRODUCT_STAGE,
                     transition: "background 0.3s ease",
                   }}
@@ -133,7 +138,8 @@ export default function CategoryGrid() {
                 </Box>
               </Box>
             </Link>
-          ))}
+            );
+          })}
         </Box>
       </Box>
     </Box>

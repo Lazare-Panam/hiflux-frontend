@@ -227,6 +227,21 @@ export const LEFT_NAV: NavItem[] = [
           { label: "LOK Valves", href: "/products/lok-fittings-valves/lok-valves" },
         ],
       },
+      {
+        heading: "Pressure, Temperature & Flow",
+        href: "/products/pressure-temp-flow",
+        applications: [APP.research, APP.chemical],
+        resources: [
+          { heading: "View All", links: [{ label: "View All Pressure, Temperature & Flow", href: "/products/pressure-temp-flow" }] },
+          CATALOGUE,
+        ],
+        // Same three tabs, in the same order, as hiflux.net > Pressure/Tempe/Flow.
+        items: [
+          { label: "Pressure Gauge", href: "/products/pressure-temp-flow/pressure-gauge" },
+          { label: "Thermocouple", href: "/products/pressure-temp-flow/thermocouple" },
+          { label: "Pump", href: "/products/pressure-temp-flow/pump" },
+        ],
+      },
     ],
   },
   {

@@ -57,4 +57,13 @@ export const CATEGORIES = [
     image: "https://pblol2.blob.core.windows.net/hiflux/lok/lok-type-valve.png",
     href: "/products/lok-fittings-valves",
   },
+  {
+    id: "pressure-temp-flow",
+    facts: ["3 series", "Up to 60,000 psi"],
+    label: "Pressure, Temperature & Flow",
+    description:
+      "Stainless steel pressure gauges, 60,000 psi thermocouples and compact air diaphragm pumps for measuring and moving fluid.",
+    image: "https://pblol2.blob.core.windows.net/hiflux/Pressure-Temp-Flow-images/pressure-gauge.jpg",
+    href: "/products/pressure-temp-flow",
+  },
 ];

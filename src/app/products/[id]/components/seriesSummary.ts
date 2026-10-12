@@ -51,7 +51,7 @@ const tidy = (s: string) =>
     .trim();
 
 const MATERIAL_KEYS = ["Body Material", "Material", "Construction"];
-const SKIP_EXTRA = new Set(["Pressure Rating", "Connection Type", ...MATERIAL_KEYS, "Sizes Available", "OD Range", "Compatible OD Range"]);
+const SKIP_EXTRA = new Set(["Pressure Rating", "Max Pressure", "Inlet Pressure Options", "Connection Type", ...MATERIAL_KEYS, "Sizes Available", "OD Range", "Compatible OD Range"]);
 
 export async function summarise(product: Pick<ProductItem, "id">): Promise<SeriesSummary> {
   const [detail, series] = await Promise.all([
