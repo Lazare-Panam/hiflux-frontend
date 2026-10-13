@@ -6,7 +6,7 @@ export const CATEGORIES = [
     description:
       "Needle, check, ball, air operated, safety and special valves for industrial, hydrogen and extreme service.",
     image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png",
     href: "/products/high-pressure-valves",
   },
   {
@@ -15,7 +15,7 @@ export const CATEGORIES = [
     label: "High Pressure Fittings",
     description:
       "Elbow, tee and cross bodies with glands, collars, sleeves and accessories, plus manifold blocks and tube caps, 10,000 to 150,000 psi.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/rf.jpeg",
     href: "/products/high-pressure-fittings",
   },
   {
@@ -35,7 +35,7 @@ export const CATEGORIES = [
     description:
       "Unions, male-to-male, male-to-female, bulkhead and Lok-to-female adapters for pressure and size compatibility.",
     image:
-      "https://pblol2.blob.core.windows.net/hiflux/union-adapters/f-f-u.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/union-adapters/f-f-u.png",
     href: "/products/union-adapters",
   },
   {
@@ -45,7 +45,7 @@ export const CATEGORIES = [
     description:
       "General, high-pressure, back pressure and air-operated back pressure regulators for precise pressure control.",
     image:
-      "https://pblol2.blob.core.windows.net/hiflux/regulators/bp-regulator.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/regulators/bp-regulator.png",
     href: "/products/high-pressure-regulators",
   },
   {
@@ -54,7 +54,7 @@ export const CATEGORIES = [
     label: "LOK Fittings & Valves",
     description:
       "LOK double-ferrule tube fittings, needle, ball and check valves, and instrumentation tubing for leak-tight connections.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/lok/lok-type-valve.png",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/lok/lok-type-valve.png",
     href: "/products/lok-fittings-valves",
   },
   {
@@ -63,7 +63,7 @@ export const CATEGORIES = [
     label: "Pressure, Temperature & Flow",
     description:
       "Stainless steel pressure gauges, 60,000 psi thermocouples and compact air diaphragm pumps for measuring and moving fluid.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/Pressure-Temp-Flow-images/pressure-gauge.jpg",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/Pressure-Temp-Flow-images/pressure-gauge.jpg",
     href: "/products/pressure-temp-flow",
   },
 ];

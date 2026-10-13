@@ -8,7 +8,7 @@ export type AppVisual = { image: string; imageAlt: string; facts: { value: strin
 
 export const APP_VISUALS: Record<string, AppVisual> = {
   "hydrogen-refuelling": {
-    image: `${IMG}needle-valve.png`,
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png",
     imageAlt: "HIFLUX high-pressure needle valve for hydrogen refuelling",
     facts: [
       { value: "700 bar", label: "Dispensing pressure" },

@@ -25,7 +25,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     description:
       "Extreme duty needle valve for research and test applications.",
     image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png",
   },
   {
     code: "fit-ultra-150k",
@@ -34,7 +34,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     pressureLabel: "Up to 150,000 psi",
     connectionType: "UNF",
     description: "Rated for the most extreme high pressure applications.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/rf.jpeg",
   },
   {
     code: "ndl-ultra-100k",
@@ -44,7 +44,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     connectionType: "UNF",
     description: "Ultra high pressure needle valve for extreme environments.",
     image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png",
   },
   {
     code: "chk-ultra-100k",
@@ -63,7 +63,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     pressureLabel: "Up to 100,000 psi",
     connectionType: "UNF",
     description: "Ultra high pressure fitting for extreme applications.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/images/rf.jpeg",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/rf.jpeg",
   },
   {
     code: "acc-ultra-150k",
@@ -72,7 +72,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     pressureLabel: "Up to 150,000 psi",
     connectionType: "UNF",
     description: "Accessory rated to 150,000 psi.",
-    image: "https://pblol2.blob.core.windows.net/hiflux/images/nb.jpeg",
+    image: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/nb.jpeg",
   },
   {
     code: "ndl-3way-60k",
@@ -82,7 +82,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
     connectionType: "UNF",
     description: "Multi-port flow control at 60,000 psi.",
     image:
-      "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png",
+      "https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png",
   },
   {
     code: "saf-rupt-60k",
