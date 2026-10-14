@@ -22,8 +22,17 @@ export default function ProductSpecsTable({ specs }: { specs: Record<string, str
   );
 }
 
-// The API writes maximum ratings as "~150,000 psi". A tilde reads as
-// "approximately", which is wrong for a rating, so show "Up to 150,000 psi".
+// Cosmetic-only tidy-up of the raw spec string the API returns. Changes how a
+// value reads, never what it means:
+//  - "~150,000 psi" -> "Up to 150,000 psi" (a tilde reads as "approximately",
+//    which is wrong for a rating).
+//  - "NPT -> 60,000psi" -> "NPT → 60,000 psi": the ASCII "->" becomes a proper
+//    arrow and a missing space before "psi" is restored, so adapter/union
+//    "end-to-end" values render cleanly.
 function formatSpec(value: string): string {
-  return typeof value === 'string' ? value.replace(/^~\s*/, 'Up to ') : value;
+  if (typeof value !== 'string') return value;
+  return value
+    .replace(/^~\s*/, 'Up to ')
+    .replace(/\s*->\s*/g, ' → ')
+    .replace(/(\d)psi/gi, '$1 psi');
 }
