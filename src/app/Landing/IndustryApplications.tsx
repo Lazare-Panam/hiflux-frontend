@@ -3,53 +3,30 @@
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { APP_PHOTOS } from "@/app/applications/visuals";
 
 type Application = {
+  slug: string;
   label: string;
-  href: string;
-  image: string;
   large?: boolean;
 };
 
+// Photos are the licensed industry shots used on /applications (see
+// APP_PHOTOS for sources and licences).
 const APPLICATIONS: Application[] = [
-  {
-    label: "Wellhead & Pressure Control",
-    href: "/applications/wellhead-pressure-control",
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?fm=jpg&q=80&w=1600&auto=format&fit=crop",
-    large: true,
-  },
-  {
-    label: "Hydrogen Refuelling",
-    href: "/applications/hydrogen-refuelling",
-    image:
-      "https://pblol2.blob.core.windows.net/spac-images/website-media/umberto-jXd2FSvcRr8-unsplash.jpg",
-  },
-  {
-    label: "Research & Testing",
-    href: "/applications/research-and-testing",
-    image:
-      "https://pblol2.blob.core.windows.net/spac-images/website-media/umberto-jXd2FSvcRr8-unsplash.jpg",
-  },
-  {
-    label: "Chemical Processing",
-    href: "/applications/chemical-processing",
-    image:
-      "https://images.unsplash.com/photo-1726731782158-fcf6822b6ca4?fm=jpg&q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    label: "Power Generation",
-    href: "/applications/power-generation",
-    image:
-      "https://images.unsplash.com/photo-1716191299980-a6e8827ba10b?fm=jpg&q=80&w=1200&auto=format&fit=crop",
-  },
+  { slug: "wellhead-pressure-control", label: "Wellhead & Pressure Control", large: true },
+  { slug: "hydrogen-refuelling", label: "Hydrogen Refuelling" },
+  { slug: "research-and-testing", label: "Research & Testing" },
+  { slug: "chemical-processing", label: "Chemical Processing" },
+  { slug: "power-generation", label: "Power Generation" },
 ];
 
 function ApplicationTile({ app }: { app: Application }) {
+  const photo = APP_PHOTOS[app.slug];
   return (
     <Box
       component={Link}
-      href={app.href}
+      href={`/applications/${app.slug}`}
       sx={{
         position: "relative",
         height: "100%",
@@ -64,8 +41,8 @@ function ApplicationTile({ app }: { app: Application }) {
       }}
     >
       <Image
-        src={app.image}
-        alt={app.label}
+        src={photo.src}
+        alt={photo.alt}
         fill
         style={{ objectFit: "cover", transition: "transform 0.4s ease" }}
         sizes="(max-width: 768px) 50vw, 25vw"
@@ -93,6 +70,14 @@ function ApplicationTile({ app }: { app: Application }) {
       >
         {app.label}
       </Typography>
+      {photo.credit && (
+        <Typography
+          component="span"
+          sx={{ position: "absolute", top: 6, right: 8, zIndex: 1, fontSize: "0.6rem", color: "rgba(255,255,255,0.85)", textShadow: "0 1px 2px rgba(0,0,0,0.6)", textTransform: "none" }}
+        >
+          Photo: {photo.credit.split(", ").slice(1).join(", ")}
+        </Typography>
+      )}
     </Box>
   );
 }

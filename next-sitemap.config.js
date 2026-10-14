@@ -11,6 +11,7 @@ const catalogIds = [
   "union-adapters",
   "high-pressure-regulators",
   "lok-fittings-valves",
+  "pressure-temp-flow",
 ];
 
 /** @type {import('next-sitemap').IConfig} */

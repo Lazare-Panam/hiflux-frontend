@@ -46,7 +46,8 @@ const cardSx = {
   boxShadow: "0 1px 2px rgba(15,40,70,0.04)",
 } as const;
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ part?: string | string[] }> }) {
+  const { part } = await searchParams;
   return (
     <Box sx={{ bgcolor: "background.default" }}>
       {/* ContactPage structured data — page-type signal for search engines */}
@@ -145,7 +146,7 @@ export default function ContactPage() {
             </Box>
           </Box>
 
-          <ContactForm />
+          <ContactForm initialPart={typeof part === "string" ? part : undefined} />
 
           {/* Contact details live in the form's side panel; this row is only next steps. */}
           <Box sx={cardSx}>

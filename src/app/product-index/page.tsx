@@ -17,6 +17,7 @@ const CATALOGS: { id: string; label: string }[] = [
   { id: "union-adapters", label: "Union Adapters" },
   { id: "high-pressure-regulators", label: "High-Pressure Regulators" },
   { id: "lok-fittings-valves", label: "LOK Fittings & Valves" },
+  { id: "pressure-temp-flow", label: "Pressure, Temperature & Flow" },
 ];
 
 export const metadata: Metadata = {

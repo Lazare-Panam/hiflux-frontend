@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getProductDetail } from '@/api/useProductDetail';
 import { categorySlug } from '@/api/catalogSlug';
+import { PRODUCT_STAGE } from '@/theme/brand';
 
 type Detail = NonNullable<Awaited<ReturnType<typeof getProductDetail>>>;
 
@@ -32,13 +33,13 @@ function RelatedProductCard({ productId, data }: { productId: string; data: Deta
           '& .MuiTypography-root': { textTransform: 'none' },
         }}
       >
-        <Box sx={{ position: 'relative', pt: '65%', background: 'linear-gradient(180deg, #f6f9fc 0%, #ffffff 100%)' }}>
+        <Box sx={{ position: 'relative', pt: '65%', background: PRODUCT_STAGE }}>
           {data.image ? (
             <Image
               src={data.image}
               alt={data.name}
               fill
-              style={{ objectFit: 'contain', padding: '28px' }}
+              style={{ objectFit: 'contain', padding: '28px', mixBlendMode: 'multiply' }}
               sizes="(max-width: 768px) 100vw, 33vw"
             />
           ) : (

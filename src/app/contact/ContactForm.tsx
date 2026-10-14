@@ -84,8 +84,9 @@ function describeError(
   return `The server responded with ${res.status}.`;
 }
 
-export default function ContactForm() {
-  const [fields, setFields] = useState<Fields>(EMPTY);
+export default function ContactForm({ initialPart }: { initialPart?: string }) {
+  // "Request quote" in the shop links here as /contact?part=XYZ: prefilled.
+  const [fields, setFields] = useState<Fields>({ ...EMPTY, productOrPartNumber: (initialPart ?? "").slice(0, 150) });
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   // Honeypot: real visitors never see or fill this; bots usually do.
   const [website, setWebsite] = useState("");

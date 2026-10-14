@@ -9,7 +9,7 @@ export const post: BlogData = {
     "How to choose high pressure regulators: GPR, HPR, BPR and air operated BPR compared by function, pressure range, control method and application.",
   date: "October 2, 2026",
   category: "Regulators",
-  heroImage: "https://pblol2.blob.core.windows.net/hiflux/regulators/hpr.png",
+  heroImage: "https://pblol2.blob.core.windows.net/hiflux/updated%20images/regulators/hpr.png",
   excerpt:
     "High pressure regulators fall into two families: pressure-reducing regulators that hold the outlet steady, and back pressure regulators that hold the inlet steady. This guide compares the HIFLUX GPR, HPR, BPR and air operated BPR so you can match the regulator to the job before you request a quote.",
   tags: [

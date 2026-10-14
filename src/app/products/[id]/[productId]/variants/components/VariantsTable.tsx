@@ -22,6 +22,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CheckIcon from "@mui/icons-material/Check";
 import Image from "next/image";
+import { PRODUCT_STAGE } from "@/theme/brand";
 import Link from "next/link";
 import { ProductVariant } from "@/api/useProductVariants";
 import { useCartStore } from "@/store/useCartStore";
@@ -189,7 +190,7 @@ function VariantRow({
             sx={{
               width: 58,
               height: 58,
-              background: "linear-gradient(180deg, #fff 0%, #f3f6f9 100%)",
+              background: PRODUCT_STAGE,
               border: "1px solid rgba(15,40,70,0.08)",
               borderRadius: "8px",
               display: "flex",
@@ -198,7 +199,7 @@ function VariantRow({
             }}
           >
             {thumbnailImage && (
-              <Image src={thumbnailImage} alt={`${productName} ${sku}`.trim()} width={46} height={46} style={{ objectFit: "contain" }} />
+              <Image src={thumbnailImage} alt={`${productName} ${sku}`.trim()} width={46} height={46} style={{ objectFit: "contain", mixBlendMode: "multiply" }} />
             )}
           </Box>
         </TableCell>
@@ -289,13 +290,13 @@ function VariantRow({
                     flexShrink: 0,
                     border: "1px solid rgba(0,0,0,0.1)",
                     borderRadius: "8px",
-                    bgcolor: "#fff",
+                    background: PRODUCT_STAGE,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Image src={thumbnailImage} alt={sku} width={110} height={110} style={{ objectFit: "contain" }} />
+                  <Image src={thumbnailImage} alt={sku} width={110} height={110} style={{ objectFit: "contain", mixBlendMode: "multiply" }} />
                 </Box>
               )}
               <Box sx={{ flex: 1, minWidth: 0 }}>

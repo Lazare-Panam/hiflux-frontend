@@ -69,6 +69,16 @@ export const CATEGORY_EDITORIAL: Record<string, CategoryEditorial> = {
     canonical: "https://www.hiflux.uk.com/products/lok-fittings-valves",
   },
 
+  "pressure-temp-flow": {
+    seo: {
+      title: "Pressure Gauges, Thermocouples & Pumps | Hiflux UK",
+      description:
+        "HIFLUX stainless steel pressure gauges, K-type thermocouples rated to 60,000 psi and compact air diaphragm pumps for high pressure systems. UK supply.",
+    },
+    bannerTitle: "Pressure, temperature and flow for high pressure systems",
+    canonical: "https://www.hiflux.uk.com/products/pressure-temp-flow",
+  },
+
   "high-pressure-regulators": {
     seo: {
       title: "High Pressure Regulators – HPR & Back Pressure | Hiflux UK",

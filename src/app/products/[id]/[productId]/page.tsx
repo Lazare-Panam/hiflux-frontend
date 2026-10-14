@@ -269,13 +269,13 @@ export default async function ProductDetailPage({ params }: Props) {
                       Request a Quote →
                     </Box>
                   </Link>
-                  {models > 0 && (
-                    <Link href={variantsHref} style={{ textDecoration: 'none', flex: '1 1 200px' }}>
-                      <Box component="span" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 1.4, borderRadius: '999px', bgcolor: '#fff', border: '1.5px solid rgba(15,40,70,0.15)', color: 'text.primary', fontWeight: 700, fontSize: '0.95rem', '&:hover': { borderColor: 'primary.main', color: 'primary.main' } }}>
-                        View all {models} models
-                      </Box>
-                    </Link>
-                  )}
+                  {/* Always shown: series without models yet (e.g. new LOK data)
+                      get a "being added" models page instead of a 404. */}
+                  <Link href={variantsHref} style={{ textDecoration: 'none', flex: '1 1 200px' }}>
+                    <Box component="span" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 1.4, borderRadius: '999px', bgcolor: '#fff', border: '1.5px solid rgba(15,40,70,0.15)', color: 'text.primary', fontWeight: 700, fontSize: '0.95rem', '&:hover': { borderColor: 'primary.main', color: 'primary.main' } }}>
+                      {models > 0 ? `View all ${models} models` : 'View all models'}
+                    </Box>
+                  </Link>
                 </Box>
               </Box>
 

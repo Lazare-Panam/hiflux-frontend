@@ -124,7 +124,7 @@ export default function HifluxSection() {
           <Box sx={{ position: "relative", borderRadius: "28px", background: BLUE_BG, p: { xs: 3, md: 5 }, minHeight: { md: 520 }, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Box sx={{ position: "relative", width: "100%", maxWidth: 380, aspectRatio: "1 / 1", bgcolor: "#fff", borderRadius: "22px", boxShadow: "0 30px 60px rgba(0,25,60,0.35)" }}>
               <Image
-                src="https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/needle-valve.png"
+                src="https://pblol2.blob.core.windows.net/hiflux/updated%20images/images/needle%20valve.png"
                 alt="Hiflux high pressure needle valve"
                 fill
                 style={{ objectFit: "contain", padding: "36px" }}
