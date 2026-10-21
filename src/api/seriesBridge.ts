@@ -13,4 +13,5 @@ export interface SeriesBridge {
 export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "ndl-ultra-100k": { categoryId: 1, catalog: "high-pressure-valves" },
   "chk-ultra-100k": { categoryId: 2, catalog: "high-pressure-valves" },
+  "ball-med-20k": { categoryId: 3, catalog: "high-pressure-valves" },
 };

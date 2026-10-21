@@ -32,7 +32,7 @@ const FOOTER_COLUMNS = [
       },
       {
         label: "Ball Valve",
-        href: "/products/high-pressure-valves/ball-med-20k",
+        href: "/series/ball-med-20k",
       },
       {
         label: "Air Operated Valve",
