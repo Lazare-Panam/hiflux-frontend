@@ -87,11 +87,11 @@ export const LEFT_NAV: NavItem[] = [
           },
           {
             label: "Safety Valve",
-            href: "/products/high-pressure-valves/saf-rel-factory-60k",
+            href: "/series/saf-rel-factory-60k",
           },
           {
             label: "Special Valve",
-            href: "/products/high-pressure-valves/spc-ctrl-75k",
+            href: "/series/spc-ctrl-75k",
           },
         ],
       },

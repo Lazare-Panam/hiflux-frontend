@@ -40,7 +40,7 @@ const FOOTER_COLUMNS = [
       },
       {
         label: "Safety Valve",
-        href: "/products/high-pressure-valves/saf-rel-factory-60k",
+        href: "/series/saf-rel-factory-60k",
       },
     ],
   },
