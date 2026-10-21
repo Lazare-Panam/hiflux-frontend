@@ -83,7 +83,7 @@ export const LEFT_NAV: NavItem[] = [
           },
           {
             label: "Air Operated Valve",
-            href: "/products/high-pressure-valves/aov-nc-60k",
+            href: "/series/aov-nc-60k",
           },
           {
             label: "Safety Valve",
