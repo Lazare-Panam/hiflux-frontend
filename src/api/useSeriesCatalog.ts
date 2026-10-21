@@ -67,14 +67,16 @@ export const fetchSeriesCategories = async (): Promise<SeriesCategory[]> => {
   return data;
 };
 
-export const useSeriesCategory = (categoryId: string) =>
+// Resolve a series by its stable Category.Name (the id is whatever the DB
+// assigned). Returns null if that name isn't seeded yet.
+export const useSeriesCategoryByName = (name: string) =>
   useQuery({
-    queryKey: ["series-category", categoryId],
+    queryKey: ["series-category-by-name", name],
     queryFn: async () => {
       const cats = await fetchSeriesCategories();
-      return cats.find((c) => String(c.categoryId) === categoryId) ?? null;
+      return cats.find((c) => c.name === name) ?? null;
     },
-    enabled: !!categoryId,
+    enabled: !!name,
   });
 
 // --- Server-side configurator (no full product download) ---

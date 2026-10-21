@@ -25,7 +25,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import NextLink from "next/link";
 import Image from "next/image";
 import {
-  useSeriesCategory,
+  useSeriesCategoryByName,
   useSeriesConfigurator,
   SERIES_BRIDGE,
   type ConfiguratorValue,
@@ -178,16 +178,19 @@ export default function SeriesConfiguratorPage({
 }) {
   const { seriesId } = use(params);
   const bridge = SERIES_BRIDGE[seriesId];
-  const categoryId = bridge ? String(bridge.categoryId) : "";
 
-  const { data: category } = useSeriesCategory(categoryId);
+  // Resolve the SQL category by its stable name; its id is whatever the DB assigned.
+  const { data: category, isLoading: catLoading } = useSeriesCategoryByName(
+    bridge?.name ?? "",
+  );
+  const categoryId = category ? String(category.categoryId) : "";
   const addItem = useCartStore((s) => s.addItem);
 
   const [selection, setSelection] = useState<Record<string, string>>({});
   const [zoomOpen, setZoomOpen] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
 
-  const { data: config, isLoading, isError, isFetching } = useSeriesConfigurator(
+  const { data: config, isLoading: cfgLoading, isError, isFetching } = useSeriesConfigurator(
     categoryId,
     selection,
   );
@@ -199,29 +202,16 @@ export default function SeriesConfiguratorPage({
         : { ...prev, [filterName]: value },
     );
 
-  if (!bridge) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
-        <Typography sx={{ color: "text.secondary" }}>Series not found.</Typography>
-      </Box>
-    );
-  }
+  const centered = (msg: React.ReactNode) => (
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
+      {msg}
+    </Box>
+  );
 
-  if (isLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
-        <CircularProgress sx={{ color: BRAND }} />
-      </Box>
-    );
-  }
-
-  if (isError || !config) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
-        <Typography sx={{ color: "text.secondary" }}>Failed to load this series.</Typography>
-      </Box>
-    );
-  }
+  if (!bridge) return centered(<Typography sx={{ color: "text.secondary" }}>Series not found.</Typography>);
+  if (catLoading || cfgLoading) return centered(<CircularProgress sx={{ color: BRAND }} />);
+  if (!category) return centered(<Typography sx={{ color: "text.secondary" }}>This series isn’t available yet.</Typography>);
+  if (isError || !config) return centered(<Typography sx={{ color: "text.secondary" }}>Failed to load this series.</Typography>);
 
   const name = category?.name ?? `Series ${seriesId}`;
   const options = config.options;
