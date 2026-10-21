@@ -24,11 +24,11 @@ const FOOTER_COLUMNS = [
     links: [
       {
         label: "Needle Valve",
-        href: "/products/high-pressure-valves/ndl-ultra-100k",
+        href: "/series/ndl-ultra-100k",
       },
       {
         label: "Check Valve",
-        href: "/products/high-pressure-valves/chk-ultra-100k",
+        href: "/series/chk-ultra-100k",
       },
       {
         label: "Ball Valve",

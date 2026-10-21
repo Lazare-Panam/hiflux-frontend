@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { SERIES_BRIDGE } from '@/api/seriesBridge';
 import Link from 'next/link';
 import { Box, Typography } from '@mui/material';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
@@ -85,6 +86,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { productId } = await params;
+
+  // Series migrated to the SQL-backed configurator at /series/<id> send any
+  // link to the old product-detail page there (catalog cards, direct URLs, etc.).
+  if (productId in SERIES_BRIDGE) redirect(`/series/${productId}`);
 
   const data = await getProductDetail(productId).catch(() => null);
   if (!data) notFound();
