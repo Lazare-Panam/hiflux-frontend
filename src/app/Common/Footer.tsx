@@ -49,11 +49,11 @@ const FOOTER_COLUMNS = [
     links: [
       {
         label: "Fitting",
-        href: "/products/high-pressure-fittings/fit-ultra-150k",
+        href: "/series/fit-ultra-150k",
       },
       {
         label: "Fitting Accessory",
-        href: "/products/high-pressure-fittings/acc-ultra-150k",
+        href: "/series/acc-ultra-150k",
       },
       {
         label: "Manifold Block",

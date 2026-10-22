@@ -18,4 +18,6 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "aov-nc-60k": { name: "Air Operated Valve - Normal Close", catalog: "high-pressure-valves" },
   "saf-rel-factory-60k": { name: "High Pressure Relief Valve - Factory Set", catalog: "high-pressure-valves" },
   "spc-ctrl-75k": { name: "High Pressure Special Valves", catalog: "high-pressure-valves" },
+  "fit-ultra-150k": { name: "High Pressure Fitting - Ultra High Pressure", catalog: "high-pressure-fittings" },
+  "acc-ultra-150k": { name: "High Pressure Fitting Accessory - Ultra High Pressure", catalog: "high-pressure-fittings" },
 };
