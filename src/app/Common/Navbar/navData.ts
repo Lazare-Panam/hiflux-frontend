@@ -115,11 +115,11 @@ export const LEFT_NAV: NavItem[] = [
           },
           {
             label: "Manifold Block",
-            href: "/products/high-pressure-fittings/mfb-high-60k",
+            href: "/series/mfb-high-60k",
           },
           {
             label: "Tube Cap",
-            href: "/products/high-pressure-fittings/cap-high-60k",
+            href: "/series/cap-high-60k",
           },
           {
             label: "Thread Lubricant",

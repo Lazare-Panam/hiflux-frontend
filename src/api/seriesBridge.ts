@@ -20,4 +20,6 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "spc-ctrl-75k": { name: "High Pressure Special Valves", catalog: "high-pressure-valves" },
   "fit-ultra-150k": { name: "High Pressure Fitting - Ultra High Pressure", catalog: "high-pressure-fittings" },
   "acc-ultra-150k": { name: "High Pressure Fitting Accessory - Ultra High Pressure", catalog: "high-pressure-fittings" },
+  "mfb-high-60k": { name: "High Pressure Manifold Block - High Pressure", catalog: "high-pressure-fittings" },
+  "cap-high-60k": { name: "High Pressure Tube Cap - High Pressure", catalog: "high-pressure-fittings" },
 };

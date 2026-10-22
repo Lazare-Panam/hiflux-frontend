@@ -57,7 +57,7 @@ const FOOTER_COLUMNS = [
       },
       {
         label: "Manifold Block",
-        href: "/products/high-pressure-fittings/mfb-high-60k",
+        href: "/series/mfb-high-60k",
       },
       { label: "Tube", href: "/products/high-pressure-tubing/tube-ultra-100k" },
       {
