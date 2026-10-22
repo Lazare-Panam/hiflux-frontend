@@ -22,4 +22,7 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "acc-ultra-150k": { name: "High Pressure Fitting Accessory - Ultra High Pressure", catalog: "high-pressure-fittings" },
   "mfb-high-60k": { name: "High Pressure Manifold Block - High Pressure", catalog: "high-pressure-fittings" },
   "cap-high-60k": { name: "High Pressure Tube Cap - High Pressure", catalog: "high-pressure-fittings" },
+  "tube-ultra-100k": { name: "High Pressure Tube - Ultra Pressure", catalog: "high-pressure-tubing" },
+  "nip-ultra-100k": { name: "High Pressure Nipple - Ultra High Pressure", catalog: "high-pressure-tubing" },
+  "tool-coning": { name: "High Pressure Tooling Set - Coning Tool", catalog: "high-pressure-tubing" },
 };

@@ -240,6 +240,40 @@ const Navbar: React.FC = () => {
                 </Box>
               </Box>
 
+              {/* Hydrogen Scotland membership badges */}
+              <Box
+                component="a"
+                href="https://www.hydrogenscotland.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Hydrogen Scotland Member 2026-2027"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 1,
+                  pl: { lg: 2, xl: 2.5 },
+                  borderLeft: `1px solid ${LINE}`,
+                  "@media (max-width: 1279px)": { pl: 1.25 },
+                  // Supplementary badges: keep the compact bar uncluttered.
+                  [`@media (max-width: ${COMPACT_BELOW}px)`]: { display: "none" },
+                }}
+              >
+                <Image
+                  src="https://pblol2.blob.core.windows.net/hiflux/hy-sc.png"
+                  alt="Hydrogen Scotland Member 2026-2027"
+                  width={60}
+                  height={60}
+                  style={{ objectFit: "contain", height: 60, width: "auto" }}
+                />
+                <Image
+                  src="https://pblol2.blob.core.windows.net/hiflux/hy-sc-2.png"
+                  alt="Hiflux — Hydrogen Scotland Member"
+                  width={60}
+                  height={60}
+                  style={{ objectFit: "contain", height: 60, width: "auto" }}
+                />
+              </Box>
+
               {/* Cart icon */}
               <Box
                 component={Link}

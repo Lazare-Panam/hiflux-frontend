@@ -139,15 +139,15 @@ export const LEFT_NAV: NavItem[] = [
         items: [
           {
             label: "Tube",
-            href: "/products/high-pressure-tubing/tube-ultra-100k",
+            href: "/series/tube-ultra-100k",
           },
           {
             label: "Nipple",
-            href: "/products/high-pressure-tubing/nip-ultra-100k",
+            href: "/series/nip-ultra-100k",
           },
           {
             label: "Tooling Set",
-            href: "/products/high-pressure-tubing/tool-coning",
+            href: "/series/tool-coning",
           },
           {
             label: "Tube Support",

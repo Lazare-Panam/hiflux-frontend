@@ -59,10 +59,10 @@ const FOOTER_COLUMNS = [
         label: "Manifold Block",
         href: "/series/mfb-high-60k",
       },
-      { label: "Tube", href: "/products/high-pressure-tubing/tube-ultra-100k" },
+      { label: "Tube", href: "/series/tube-ultra-100k" },
       {
         label: "Nipple",
-        href: "/products/high-pressure-tubing/nip-ultra-100k",
+        href: "/series/nip-ultra-100k",
       },
     ],
   },
