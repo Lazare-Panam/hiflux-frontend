@@ -127,6 +127,13 @@ const FOOTER_COLUMNS = [
   },
 ];
 
+const LEGAL_LINKS = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-and-conditions" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Delivery & Returns", href: "/returns-policy" },
+];
+
 export default function Footer() {
   const theme = useTheme();
 
@@ -270,6 +277,39 @@ export default function Footer() {
 
       {/* bottom bar */}
       <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        {/* legal links */}
+        <Box
+          component="nav"
+          aria-label="Legal"
+          sx={{
+            maxWidth: "1280px",
+            mx: "auto",
+            px: { xs: 3, md: 8 },
+            pt: 3,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: { xs: 1.5, sm: 3 },
+            justifyContent: { xs: "center", sm: "flex-start" },
+          }}
+        >
+          {LEGAL_LINKS.map((link) => (
+            <Typography
+              key={link.label}
+              component={Link}
+              href={link.href}
+              sx={{
+                fontSize: "0.78rem",
+                color: "rgba(255,255,255,0.6)",
+                textDecoration: "none",
+                textTransform: "none",
+                "&:hover": { color: "primary.light" },
+              }}
+            >
+              {link.label}
+            </Typography>
+          ))}
+        </Box>
+
         <Box
           sx={{
             maxWidth: "1280px",

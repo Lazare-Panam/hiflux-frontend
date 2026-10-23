@@ -18,7 +18,7 @@ interface FeaturedValve {
 const FEATURED_VALVES: FeaturedValve[] = [
   {
     code: "ndl-ultra-150k",
-    name: "Ultra High Pressure Needle Valve",
+    name: "Ultra High Pressure Needle Valve — 150,000 psi",
     type: "Needle Valve",
     pressureLabel: "Up to 150,000 psi",
     connectionType: "UNF",
@@ -29,7 +29,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
   },
   {
     code: "fit-ultra-150k",
-    name: "Ultra High Pressure Fitting",
+    name: "Ultra High Pressure Fitting — 150,000 psi",
     type: "Fitting",
     pressureLabel: "Up to 150,000 psi",
     connectionType: "UNF",
@@ -38,7 +38,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
   },
   {
     code: "ndl-ultra-100k",
-    name: "Ultra High Pressure Needle Valve",
+    name: "Ultra High Pressure Needle Valve — 100,000 psi",
     type: "Needle Valve",
     pressureLabel: "Up to 100,000 psi",
     connectionType: "UNF",
@@ -58,7 +58,7 @@ const FEATURED_VALVES: FeaturedValve[] = [
   },
   {
     code: "fit-ultra-100k",
-    name: "Ultra High Pressure Fitting",
+    name: "Ultra High Pressure Fitting — 100,000 psi",
     type: "Fitting",
     pressureLabel: "Up to 100,000 psi",
     connectionType: "UNF",
@@ -101,9 +101,19 @@ const scroll = keyframes`
   to { transform: translateX(-50%); }
 `;
 
-function FeaturedCard({ valve }: { valve: FeaturedValve }) {
+function FeaturedCard({
+  valve,
+  decorative = false,
+}: {
+  valve: FeaturedValve;
+  // The marquee renders the list twice for a seamless loop. The second copy is
+  // a visual duplicate, so it's hidden from assistive tech + crawlers to avoid
+  // duplicate content / repeated alt text.
+  decorative?: boolean;
+}) {
   return (
     <Box
+      aria-hidden={decorative || undefined}
       sx={{
         width: 290,
         flexShrink: 0,
@@ -123,7 +133,7 @@ function FeaturedCard({ valve }: { valve: FeaturedValve }) {
         <Image
           className="feat-img"
           src={valve.image}
-          alt={valve.name}
+          alt={decorative ? "" : valve.name}
           fill
           style={{ objectFit: "contain", padding: "34px 40px 24px", mixBlendMode: "multiply", transition: "transform 0.45s ease" }}
           sizes="290px"
@@ -202,7 +212,11 @@ export default function FeaturedProducts() {
           }}
         >
           {track.map((valve, i) => (
-            <FeaturedCard key={`${valve.code}-${i}`} valve={valve} />
+            <FeaturedCard
+              key={`${valve.code}-${i}`}
+              valve={valve}
+              decorative={i >= FEATURED_VALVES.length}
+            />
           ))}
         </Box>
       </Box>
