@@ -6,6 +6,7 @@ import Navbar from "./Common/Navbar/Navbar";
 import Script from "next/script";
 import Footer from "./Common/Footer";
 import RevealOnScroll from "./Common/RevealOnScroll";
+import WhatsAppButton from "./Common/WhatsAppButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -171,6 +172,7 @@ export default function RootLayout({
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-VES6DYGCYH');`}
             </Script>
             <Footer />
+            <WhatsAppButton />
           </ThemeRegistry>
         </QueryProvider>
       </body>

@@ -259,18 +259,11 @@ const Navbar: React.FC = () => {
                 }}
               >
                 <Image
-                  src="https://pblol2.blob.core.windows.net/hiflux/hy-sc.png"
-                  alt="Hydrogen Scotland Member 2026-2027"
-                  width={60}
-                  height={60}
-                  style={{ objectFit: "contain", height: 60, width: "auto" }}
-                />
-                <Image
-                  src="https://pblol2.blob.core.windows.net/hiflux/hy-sc-2.png"
-                  alt="Hiflux — Hydrogen Scotland Member"
-                  width={60}
-                  height={60}
-                  style={{ objectFit: "contain", height: 60, width: "auto" }}
+                  src="/hydrogen-scotland.png"
+                  alt="Hiflux — Hydrogen Scotland Member 2026-2027"
+                  width={140}
+                  height={70}
+                  style={{ objectFit: "contain", height: 70, width: "auto" }}
                 />
               </Box>
 
