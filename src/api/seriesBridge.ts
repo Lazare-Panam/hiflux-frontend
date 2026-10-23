@@ -25,4 +25,10 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "tube-ultra-100k": { name: "High Pressure Tube - Ultra Pressure", catalog: "high-pressure-tubing" },
   "nip-ultra-100k": { name: "High Pressure Nipple - Ultra High Pressure", catalog: "high-pressure-tubing" },
   "tool-coning": { name: "High Pressure Tooling Set - Coning Tool", catalog: "high-pressure-tubing" },
+  "sup-3line": { name: "High Pressure Tube Support - 3 Line", catalog: "high-pressure-tubing" },
+  "unn-ff-60k": { name: "High Pressure Union - Female to Female", catalog: "union-adapters" },
+  "adp-mm-60k": { name: "High Pressure Adapter - Male to Male", catalog: "union-adapters" },
+  "adp-mf-60k": { name: "High Pressure Adapter - Male to Female", catalog: "union-adapters" },
+  "adp-bulkhead-60k": { name: "High Pressure Adapter - Bulkhead Union", catalog: "union-adapters" },
+  "adp-lokf-f-20k": { name: "High Pressure Adapter - LOK(Female) to Female", catalog: "union-adapters" },
 };

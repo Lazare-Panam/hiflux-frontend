@@ -69,22 +69,22 @@ const FOOTER_COLUMNS = [
   {
     heading: "Union & Adapters",
     links: [
-      { label: "Union", href: "/products/union-adapters/unn-ff-60k" },
+      { label: "Union", href: "/series/unn-ff-60k" },
       {
         label: "Adapter - Male to Male",
-        href: "/products/union-adapters/adp-mm-60k",
+        href: "/series/adp-mm-60k",
       },
       {
         label: "Adapter - Male to Female",
-        href: "/products/union-adapters/adp-mf-60k",
+        href: "/series/adp-mf-60k",
       },
       {
         label: "Bulkhead Union",
-        href: "/products/union-adapters/adp-bulkhead-60k",
+        href: "/series/adp-bulkhead-60k",
       },
       {
         label: "Adapter - LOK to Female",
-        href: "/products/union-adapters/adp-lokf-f-20k",
+        href: "/series/adp-lokf-f-20k",
       },
     ],
   },
