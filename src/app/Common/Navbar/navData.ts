@@ -201,11 +201,11 @@ export const LEFT_NAV: NavItem[] = [
           },
           {
             label: "High Pressure Regulator",
-            href: "/products/high-pressure-regulators/hpr-10000",
+            href: "/series/hpr-10000",
           },
           {
             label: "Back Pressure Regulator",
-            href: "/products/high-pressure-regulators/bpr-15000",
+            href: "/series/bpr-15000",
           },
           {
             label: "Air Operated Back Pressure Regulator",

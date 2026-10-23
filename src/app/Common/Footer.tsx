@@ -97,30 +97,30 @@ const FOOTER_COLUMNS = [
       },
       {
         label: "High Pressure Regulator",
-        href: "/products/high-pressure-regulators/hpr-10000",
+        href: "/series/hpr-10000",
       },
       {
         label: "Back Pressure Regulator",
-        href: "/products/high-pressure-regulators/bpr-15000",
+        href: "/series/bpr-15000",
       },
       {
         label: "Air Operated Back Pressure Regulator",
-        href: "/products/high-pressure-regulators/abpr-10000",
+        href: "/series/abpr-10000",
       },
     ],
   },
   {
     heading: "LOK Fittings & Valves",
     links: [
-      { label: "LOK Tube", href: "/products/lok-fittings-valves/lok-tube" },
-      { label: "LOK Tube Fittings", href: "/products/lok-fittings-valves/lok-tube-fittings" },
-      { label: "LOK Valves", href: "/products/lok-fittings-valves/lok-valves" },
+      { label: "LOK Tube", href: "/series/lok-tube" },
+      { label: "LOK Tube Fittings", href: "/series/lok-tube-fittings" },
+      { label: "LOK Valves", href: "/series/lok-valves" },
     ],
   },
   {
     heading: "Pressure, Temp & Flow",
     links: [
-      { label: "Pressure Gauge", href: "/products/pressure-temp-flow/pressure-gauge" },
+      { label: "Pressure Gauge", href: "/series/pressure-gauge" },
       { label: "Thermocouple", href: "/products/pressure-temp-flow/thermocouple" },
       { label: "Pump", href: "/products/pressure-temp-flow/pump" },
     ],
