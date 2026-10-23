@@ -251,7 +251,7 @@ export const LEFT_NAV: NavItem[] = [
       {
         heading: "Applications",
         href: "/applications",
-        resources: [
+        resources: [//
           { heading: "View All", links: [{ label: "View All Applications", href: "/applications" }] },
           CATALOGUE,
         ],
