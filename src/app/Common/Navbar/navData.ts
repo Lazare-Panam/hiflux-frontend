@@ -209,7 +209,7 @@ export const LEFT_NAV: NavItem[] = [
           },
           {
             label: "Air Operated Back Pressure Regulator",
-            href: "/products/high-pressure-regulators/abpr-10000",
+            href: "/series/abpr-10000",
           },
         ],
       },
