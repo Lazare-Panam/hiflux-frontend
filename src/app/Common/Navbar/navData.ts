@@ -222,8 +222,8 @@ export const LEFT_NAV: NavItem[] = [
           CATALOGUE,
         ],
         items: [
-          { label: "LOK Tube", href: "/products/lok-fittings-valves/lok-tube" },
-          { label: "LOK Tube Fittings", href: "/products/lok-fittings-valves/lok-tube-fittings" },
+          { label: "LOK Tube", href: "/series/lok-tube" },
+          { label: "LOK Tube Fittings", href: "/series/lok-tube-fittings" },
           { label: "LOK Valves", href: "/series/lok-valves" },
         ],
       },

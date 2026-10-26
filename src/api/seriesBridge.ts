@@ -35,7 +35,7 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "hpr-10000": { name: "HPR (High Pressure Regulator)", catalog: "high-pressure-regulators" },
   "abpr-10000": { name: "ABPR (Air Operating Back Pressure Regulator)", catalog: "high-pressure-regulators" },
   "lok-valves": { name: "Lok Valves", catalog: "lok-fittings-valves" },
-  // "lok-tube": { name: "LOK Tube", catalog: "lok-fittings-valves" },
-  // "lok-tube-fittings": { name: "Lok Tube Fittings", catalog: "lok-fittings-valves" },
+  "lok-tube": { name: "LOK Tube", catalog: "lok-fittings-valves" },
+  "lok-tube-fittings": { name: "Lok Tube Fittings", catalog: "lok-fittings-valves" },
   // "pressure-gauge": { name: "Pressure Gauge", catalog: "pressure-temp-flow" },
 };
