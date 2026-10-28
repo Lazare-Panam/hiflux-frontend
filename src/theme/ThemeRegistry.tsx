@@ -37,6 +37,18 @@ const theme = createTheme({
     borderRadius: 8,
   },
   components: {
+    // Global rule: capitalize the first letter of every word across the whole
+    // site, visually. A plain `body { capitalize }` loses to nested per-section
+    // rules like `.mui-xxx .MuiTypography-root { text-transform: none }` (higher
+    // specificity), so we force it with !important on every element. Form fields
+    // (input/textarea/select) are excluded so typed-in text isn't transformed.
+    MuiCssBaseline: {
+      styleOverrides: {
+        'body, body *:not(input):not(textarea):not(select)': {
+          textTransform: 'capitalize !important',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
