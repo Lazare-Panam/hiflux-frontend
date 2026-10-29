@@ -1,10 +1,11 @@
 import { BlogData } from "../components/BlogPost";
 import { post as coneThread } from "./posts/high-pressure-cone-and-thread-fittings-guide";
 import { post as regulators } from "./posts/high-pressure-regulators-gpr-hpr-bpr-selection-guide";
+import { post as highViscosityFiltration } from "./posts/industrial-filtration-high-viscosity-fluids";
 
 export const blogs: BlogData[] = [
   // October 2026 SEO content programme (targets from the Sept 2026 audit)
-  coneThread, regulators,
+  highViscosityFiltration, coneThread, regulators,
   {
     slug: "hiflux-joins-hydrogen-energy-association-distributors",
     title:

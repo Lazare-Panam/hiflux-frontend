@@ -120,8 +120,14 @@ const FOOTER_COLUMNS = [
   {
     heading: "Pressure, Temp & Flow",
     links: [
-      { label: "Pressure Gauge", href: "/series/pressure-gauge" },
-      { label: "Thermocouple", href: "/products/pressure-temp-flow/thermocouple" },
+      {
+        label: "Pressure Gauge",
+        href: "/products/pressure-temp-flow/pressure-gauge",
+      },
+      {
+        label: "Thermocouple",
+        href: "/products/pressure-temp-flow/thermocouple",
+      },
       { label: "Pump", href: "/products/pressure-temp-flow/pump" },
     ],
   },
@@ -324,15 +330,27 @@ export default function Footer() {
           }}
         >
           <Typography
-            sx={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", textTransform: "none" }}
+            sx={{
+              fontSize: "0.8rem",
+              color: "rgba(255,255,255,0.5)",
+              textTransform: "none",
+            }}
           >
-            © {new Date().getFullYear()} {COMPANY.legalName}. All rights reserved.
+            © {new Date().getFullYear()} {COMPANY.legalName}. All rights
+            reserved.
           </Typography>
           <Typography
-            sx={{ fontSize: "0.75rem", lineHeight: 1.6, color: "rgba(255,255,255,0.5)", textTransform: "none", textAlign: { xs: "center", sm: "right" } }}
+            sx={{
+              fontSize: "0.75rem",
+              lineHeight: 1.6,
+              color: "rgba(255,255,255,0.5)",
+              textTransform: "none",
+              textAlign: { xs: "center", sm: "right" },
+            }}
           >
-            Registered in England and Wales, company no. {COMPANY.companyNumber}. Registered office:{" "}
-            {COMPANY.registeredOffice}. VAT no. {COMPANY.vatDisplay}.
+            Registered in England and Wales, company no. {COMPANY.companyNumber}
+            . Registered office: {COMPANY.registeredOffice}. VAT no.{" "}
+            {COMPANY.vatDisplay}.
           </Typography>
         </Box>
       </Box>
