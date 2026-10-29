@@ -50,14 +50,86 @@ type Props = {
   params: Promise<{ id: string; productId: string; sku: string }>;
 };
 
+// Spec-driven SEO strings, shared by generateMetadata (title/description) and the
+// on-page H1 so they stay in lockstep. Title is one shared pattern for every
+// series; a few series need bespoke H1/description copy (per the SEO briefs), so
+// those branch below. Everything is derived from real variant specs — nothing is
+// asserted that the data can't back, except where a brief has been confirmed
+// (ball valves: "Trunnion" type and Finish "180" = 180°C high-temp PEEK-seat).
+function buildVariantSeo(
+  productId: string,
+  sku: string,
+  seriesName: string,
+  specs: Record<string, string>,
+) {
+  // "High Pressure Needle Valve - Ultra High Pressure" -> "High Pressure Needle Valve".
+  // Only a trailing "... - <x> Pressure" class qualifier is stripped, so names like
+  // "BPR - Back Pressure Regulator" are left intact.
+  const productType =
+    seriesName.replace(/\s*-\s*[\w\s]*pressure$/i, "").trim() || seriesName;
+  const size = specs["Tube Size"] || specs["Size"] || "";
+  const pressure = specs["Pressure Rating"] || "";
+  const priceStr = specs["Price"] || "";
+
+  // Shared title: "{SKU} {Type}, {size}, {pressure}" (+ " | Hiflux" only when <=60).
+  const titleBase = [`${sku} ${productType}`, size, pressure]
+    .filter(Boolean)
+    .join(", ");
+  const title =
+    (titleBase + " | Hiflux").length <= 60 ? `${titleBase} | Hiflux` : titleBase;
+
+  // Ball valves (ball-med-20k): trunnion type, orifice + finish-version copy.
+  // Finish "180" confirmed as the 180°C high-temp (PEEK seat) version.
+  if (productId === "ball-med-20k") {
+    const orifice = specs["Orifice Size"] || "";
+    const finish = specs["Finish"] || "";
+    const versionH1 =
+      finish === "180" ? "180°C Version" : finish === "Standard" ? "Standard" : finish;
+    const versionDesc =
+      finish === "180"
+        ? "180°C high-temp version"
+        : finish === "Standard"
+          ? "standard version"
+          : finish && `${finish} version`;
+
+    const h1 = [`${sku} High Pressure Trunnion Ball Valve`, size, pressure, versionH1]
+      .filter(Boolean)
+      .join(", ");
+
+    let description = `${sku} trunnion high pressure ball valve`;
+    if (size) description += `, ${size} tube`;
+    if (orifice) description += `, ${orifice} orifice`;
+    if (pressure) description += `, rated ${pressure}`;
+    if (versionDesc) description += `, ${versionDesc}`;
+    description += priceStr
+      ? `. £${priceStr}, order online or request a quote.`
+      : `. Order online or request a quote.`;
+
+    return { productType, title, h1, description };
+  }
+
+  // Generic: covers check valves (via "Sealing Type") and every other series.
+  const seal = specs["Sealing Type"] || "";
+  const h1 = [titleBase, seal && `${seal} Seal`].filter(Boolean).join(", ");
+
+  let description = `${sku} ${productType.toLowerCase()}`;
+  if (size) description += `, ${size} tube`;
+  if (pressure) description += `, rated ${pressure}`;
+  if (seal) description += `, ${seal.toLowerCase()} seal`;
+  description += priceStr
+    ? `. £${priceStr} per unit, order online or request a UK quote.`
+    : `. Order online or request a UK quote.`;
+
+  return { productType, title, h1, description };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, productId, sku } = await params;
   const data = await getProductVariants(productId).catch(() => null);
   const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
   if (!data || !variant) return { title: "Model Not Found | Hiflux UK" };
 
-  const title = `${sku} — ${data.name}`;
-  const description = `${sku}: ${data.name} — specifications, pressure rating and materials from Hiflux UK.`;
+  const { title, description } = buildVariantSeo(productId, sku, data.name, variant.specs);
   const url = `https://www.hiflux.uk.com/products/${categorySlug(id)}/${productId}/variants/${sku}`;
   // Self-canonical. The site-wide seoplatform injector (layout.tsx) also adds a
   // self-referencing canonical to SKU pages; pointing this one at the parent
@@ -79,6 +151,8 @@ export default async function VariantDetail({ params }: Props) {
   const data = await getProductVariants(productId).catch(() => null);
   const variant = data?.variants.find((v) => (v.specs["SKU"] ?? v.id) === sku);
   if (!data || !variant) notFound();
+
+  const seo = buildVariantSeo(productId, sku, data.name, variant.specs);
 
   const price = variant.specs["Price"];
   const parsedPrice = price ? parseFloat(price) : NaN;
@@ -187,7 +261,7 @@ export default async function VariantDetail({ params }: Props) {
               component="h1"
               sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 800, lineHeight: 1.15 }}
             >
-              {sku}
+              {seo.h1}
             </Typography>
 
             {hasPrice && (
