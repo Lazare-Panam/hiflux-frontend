@@ -20,6 +20,8 @@ import { getProductVariants } from "@/api/useProductVariants";
 import { categorySlug } from "@/api/catalogSlug";
 import { CATEGORIES } from "@/app/products/data/categories";
 import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
+import JsonLd from "@/app/seo/JsonLd";
+import { SITE_URL, variantProductLd } from "@/app/seo/schema";
 
 // "high-pressure-valves" -> "High Pressure Valves"
 const categoryLabel = (slug: string) => CATEGORIES.find((c) => c.id === slug)?.label ?? humanizeCategory(slug);
@@ -113,37 +115,26 @@ export default async function VariantDetail({ params }: Props) {
         )
       : [];
 
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+  // URLs use the product's true category slug so schema always agrees with the
+  // page's rel=canonical (the old Offer.url used the raw `id`, which could
+  // differ from the canonical category and point at a non-canonical URL).
+  const seriesUrl = `${SITE_URL}/products/${categorySlug(id)}/${productId}`;
+  const skuUrl = `${seriesUrl}/variants/${sku}`;
+  const productSchema = variantProductLd({
     name: `${data.name} ${sku}`,
     sku,
-    image: data.thumbnailImage ? [data.thumbnailImage] : undefined,
-    brand: { "@type": "Brand", name: "Hiflux" },
-    additionalProperty: displaySpecs.map(([name, value]) => ({
-      "@type": "PropertyValue",
-      name,
-      value,
-    })),
-    ...(hasPrice
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: parsedPrice,
-            priceCurrency: "GBP",
-            availability: "https://schema.org/InStock",
-            url: `https://www.hiflux.uk.com/products/${id}/${productId}/variants/${sku}`,
-          },
-        }
-      : {}),
-  };
+    image: data.thumbnailImage,
+    specs: displaySpecs,
+    skuUrl,
+    seriesUrl,
+    seriesId: productId,
+    seriesName: data.name,
+    price: hasPrice ? parsedPrice : null,
+  });
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
+      <JsonLd data={productSchema} />
       <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 4 }, py: { xs: 4, md: 6 } }}>
         <Box sx={{ mb: 2 }}>
           <PageBreadcrumbs

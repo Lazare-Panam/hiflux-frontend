@@ -2,6 +2,8 @@ import { blogs } from "../data/blogs";
 import BlogPost from "../components/BlogPost";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import JsonLd from "@/app/seo/JsonLd";
+import { SITE_URL, articleLd } from "@/app/seo/schema";
 
 export async function generateMetadata({
   params,
@@ -41,38 +43,17 @@ export default async function BlogPage({
     ? undefined
     : parsedDate.toISOString();
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
+  const articleSchema = articleLd({
     headline: blog.title,
     description: blog.excerpt,
     image: blog.heroImage,
-    ...(datePublished ? { datePublished } : {}),
-    author: {
-      "@type": "Organization",
-      name: "Hiflux UK",
-      url: "https://www.hiflux.uk.com",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Hiflux UK",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://www.hiflux.uk.com/news/${blog.slug}`,
-    },
-  };
+    url: `${SITE_URL}/news/${blog.slug}`,
+    datePublished,
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
+      <JsonLd data={articleSchema} />
       <BlogPost blog={blog} />
     </>
   );

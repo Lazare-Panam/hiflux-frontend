@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import JsonLd from "@/app/seo/JsonLd";
+import { SITE_URL, breadcrumbLd } from "@/app/seo/schema";
 import {
   Box,
   Container,
@@ -242,16 +244,12 @@ export default async function ApplicationPage({ params }: Props) {
   }
   const toc = sections.filter((s) => s.heading);
 
-  const url = `https://www.hiflux.uk.com/applications/${app.slug}`;
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.hiflux.uk.com" },
-      { "@type": "ListItem", position: 2, name: "Applications", item: "https://www.hiflux.uk.com/applications" },
-      { "@type": "ListItem", position: 3, name: app.h1, item: url },
-    ],
-  };
+  const url = `${SITE_URL}/applications/${app.slug}`;
+  const breadcrumbSchema = breadcrumbLd([
+    { name: "Home", url: SITE_URL },
+    { name: "Applications", url: `${SITE_URL}/applications` },
+    { name: app.h1, url },
+  ]);
 
   const pill = (primary: boolean) => ({
     display: "inline-flex",
@@ -269,7 +267,7 @@ export default async function ApplicationPage({ params }: Props) {
 
   return (
     <Box sx={{ bgcolor: "#f3f6fa", "& .MuiTypography-root": { textTransform: "none" } }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <JsonLd data={breadcrumbSchema} />
 
       {/* Hero: copy left, product + facts right */}
       <Box component="section" sx={{ color: "#fff", background: BLUE_BG, py: { xs: 5, md: 8 } }}>

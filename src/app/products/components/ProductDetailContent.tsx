@@ -7,6 +7,9 @@ import ProductSpecsTable from "../[id]/[productId]/components/ProductSpecsTable"
 import ProductFeatureChips from "../[id]/[productId]/components/ProductFeatureChips";
 import ProductApplicationsList from "../[id]/[productId]/components/ProductApplicationsList";
 import RelatedProducts from "../[id]/[productId]/components/RelatedProducts";
+import { summarise } from "../[id]/components/seriesSummary";
+import JsonLd from "@/app/seo/JsonLd";
+import { SITE_URL, seriesProductGroupLd } from "@/app/seo/schema";
 
 interface Props {
   id: string;
@@ -21,26 +24,26 @@ export default async function ProductDetailContent({ id }: Props) {
   const data = await getProductDetail(id).catch(() => null);
   if (!data) notFound();
 
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+  // This Grid-type catalog id is itself a single product; its canonical is
+  // /products/<id>. Emit it as a ProductGroup with an AggregateOffer (so it is
+  // eligible for merchant rich results instead of being flagged "missing
+  // offers"). summarise is request-memoised, so this does not add a round-trip.
+  const summary = await summarise({ id }).catch(() => null);
+  const productSchema = seriesProductGroupLd({
     name: data.name,
     description: data.description,
-    image: data.image ? [data.image] : undefined,
-    brand: { "@type": "Brand", name: "Hiflux" },
-    additionalProperty: Object.entries(data.specs ?? {}).map(([name, value]) => ({
-      "@type": "PropertyValue",
-      name,
-      value,
-    })),
-  };
+    image: data.image,
+    specs: data.specs,
+    seriesUrl: `${SITE_URL}/products/${id}`,
+    seriesId: id,
+    minPrice: summary?.minPrice,
+    maxPrice: summary?.maxPrice,
+    models: summary?.models,
+  });
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
+      <JsonLd data={productSchema} />
 
       <ProductDetailHero name={data.name} />
       <Box

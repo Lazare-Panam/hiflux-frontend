@@ -7,6 +7,8 @@ import Script from "next/script";
 import Footer from "./Common/Footer";
 import RevealOnScroll from "./Common/RevealOnScroll";
 import WhatsAppButton from "./Common/WhatsAppButton";
+import JsonLd from "./seo/JsonLd";
+import { siteGraph } from "./seo/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -104,58 +106,13 @@ export default function RootLayout({
       `,
           }}
         /> 
-        {/* WebSite name: Google uses this (not the domain) as the site name in
-            results. Without it, hiflux.uk.com was shown as "UK.COM". */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Hiflux UK",
-              alternateName: ["Hiflux", "HiFlux UK", "hiflux.uk.com"],
-              url: "https://www.hiflux.uk.com/",
-            }),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Hiflux UK",
-              legalName: "Hiflux Hydrogen Ltd",
-              vatID: "GB452408800",
-              identifier: { "@type": "PropertyValue", propertyID: "UK Companies House number", value: "14976525" },
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "St. Edburgs Hall, Priory Rd",
-                addressLocality: "Bicester",
-                postalCode: "OX26 6BL",
-                addressCountry: "GB",
-              },
-              // Searchers also type "hi flux" / "HiFlux" (Sept 2026 GSC).
-              alternateName: ["Hi Flux UK", "HiFlux UK", "Hiflux"],
-              url: "https://www.hiflux.uk.com",
-              logo: "https://pblol2.blob.core.windows.net/valvenok-images/products/hiflux/logo.png",
-              description:
-                "Hiflux UK is an authorised UK & EU distributor of high-pressure valves, fittings, tubing and hydrogen-ready flow-control components rated up to 150,000 psi for industrial, energy and research applications.",
-              email: "sales@hiflux.uk.com",
-              telephone: "+44 7369 243459",
-              memberOf: {
-                "@type": "Organization",
-                name: "Hydrogen Energy Association",
-                url: "https://ukhea.co.uk/",
-              },
-              parentOrganization: {
-                "@type": "Organization",
-                name: "Hiflux Co., Ltd",
-                url: "https://hiflux.com",
-              },
-            }),
-          }}
-        />
+        {/* Site-wide entity graph: one Organization + WebSite node with stable
+            @ids. Every other page references this Organization by @id (as
+            brand seller / article publisher), so search engines consolidate the
+            site into a single recognised entity. WebSite.name is what Google
+            shows as the site name in results (without it, hiflux.uk.com was
+            shown as "UK.COM"). */}
+        <JsonLd data={siteGraph()} />
       </head>
       <body>
         <QueryProvider>

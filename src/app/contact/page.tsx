@@ -4,9 +4,8 @@ import PageBreadcrumbs from "@/app/Common/PageBreadcrumbs";
 import ContactForm from "./ContactForm";
 import ResourceTiles from "./ResourceTiles";
 import { BLUE_BG } from "@/theme/brand";
-
-const EMAIL = "sales@hiflux.uk.com";
-const PHONE_DISPLAY = "+44 7369 243459";
+import JsonLd from "@/app/seo/JsonLd";
+import { contactPageLd } from "@/app/seo/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = "Contact Hiflux UK | High-Pressure Valve Quotes & Help";
@@ -50,32 +49,13 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   const { part } = await searchParams;
   return (
     <Box sx={{ bgcolor: "background.default" }}>
-      {/* ContactPage structured data — page-type signal for search engines */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ContactPage",
-            name: "Contact Hiflux UK",
-            url: "https://www.hiflux.uk.com/contact",
-            mainEntity: {
-              "@type": "Organization",
-              name: "Hiflux UK",
-              url: "https://www.hiflux.uk.com",
-              email: EMAIL,
-              telephone: PHONE_DISPLAY,
-              contactPoint: {
-                "@type": "ContactPoint",
-                contactType: "sales",
-                email: EMAIL,
-                telephone: PHONE_DISPLAY,
-                areaServed: ["GB", "EU"],
-                availableLanguage: "English",
-              },
-            },
-          }),
-        }}
+      {/* ContactPage structured data — page-type signal for search engines.
+          mainEntity references the shared Organization node (@id) from layout. */}
+      <JsonLd
+        data={contactPageLd({
+          name: "Contact Hiflux UK",
+          url: "https://www.hiflux.uk.com/contact",
+        })}
       />
 
       {/* Hero: same banner as the product pages (width, sizes, gradient) */}

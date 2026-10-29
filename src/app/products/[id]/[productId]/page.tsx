@@ -17,6 +17,8 @@ import ProductDetailImage from './components/ProductDetailImage';
 import ProductSpecsTable from './components/ProductSpecsTable';
 import ProductFeatureChips from './components/ProductFeatureChips';
 import RelatedProducts from './components/RelatedProducts';
+import JsonLd from '@/app/seo/JsonLd';
+import { SITE_URL, seriesProductGroupLd, breadcrumbLd } from '@/app/seo/schema';
 
 // Cache the rendered page (ISR): built on the first visit, then served from
 // cache and regenerated in the background at most once an hour. Without this
@@ -100,32 +102,6 @@ export default async function ProductDetailPage({ params }: Props) {
   // Proper category name where we have one ("LOK Fittings & Valves", not "Lok Fittings Valves").
   const category = CATEGORIES.find((c) => c.id === catalogId)?.label ?? humanizeCategory(catalogId);
 
-  const productSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: data.name,
-    description: data.description,
-    image: data.image ? [data.image] : undefined,
-    category,
-    brand: { '@type': 'Brand', name: 'Hiflux' },
-    additionalProperty: Object.entries(data.specs ?? {}).map(([name, value]) => ({
-      '@type': 'PropertyValue',
-      name,
-      value,
-    })),
-  };
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hiflux.uk.com' },
-      { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://www.hiflux.uk.com/products' },
-      { '@type': 'ListItem', position: 3, name: category, item: `https://www.hiflux.uk.com/products/${catalogId}` },
-      { '@type': 'ListItem', position: 4, name: data.name, item: `https://www.hiflux.uk.com/products/${catalogId}/${productId}` },
-    ],
-  };
-
   const summary = await summarise({ id: productId }).catch(() => null);
   // Other series in this category: Related products falls back to these when
   // the product data's related IDs don't exist.
@@ -136,6 +112,27 @@ export default async function ProductDetailPage({ params }: Props) {
   const variantsHref = `/products/${catalogId}/${productId}/variants`;
   const guide = catalogId === 'high-pressure-fittings' || catalogId === 'high-pressure-tubing';
 
+  // Series hub = ProductGroup; its SKU pages declare isVariantOf this @id.
+  const seriesUrl = `${SITE_URL}/products/${catalogId}/${productId}`;
+  const productSchema = seriesProductGroupLd({
+    name: data.name,
+    description: data.description,
+    image: data.image,
+    category,
+    specs: data.specs,
+    seriesUrl,
+    seriesId: productId,
+    minPrice: summary?.minPrice,
+    maxPrice: summary?.maxPrice,
+    models,
+  });
+  const breadcrumbSchema = breadcrumbLd([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Products', url: `${SITE_URL}/products` },
+    { name: category, url: `${SITE_URL}/products/${catalogId}` },
+    { name: data.name, url: seriesUrl },
+  ]);
+
   const eyebrow = { color: 'primary.main', fontWeight: 800, fontSize: '0.74rem', letterSpacing: '0.16em', textTransform: 'uppercase !important' } as const;
   // On phones both columns flatten into one list ordered by `order`, so the
   // title comes first; from md up they are two independent columns.
@@ -143,14 +140,8 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd data={productSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       {/* Breadcrumb bar */}
       <Box sx={{ borderBottom: '1px solid rgba(15,40,70,0.08)', bgcolor: '#fff' }}>

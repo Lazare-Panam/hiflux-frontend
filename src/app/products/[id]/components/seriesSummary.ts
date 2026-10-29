@@ -14,6 +14,7 @@ export type SeriesSummary = {
   models: number;
   maxPsi: number | null;
   minPrice?: number | null;
+  maxPrice?: number | null;
   /** False when the series has no detail record yet (its page would 404). */
   hasDetail: boolean;
   /** A few part numbers (SKU + model id) shown as chips on the series card. */
@@ -97,7 +98,7 @@ export async function summarise(product: Pick<ProductItem, "id">): Promise<Serie
     const partNo = (v: ProductVariant) =>
     v.specs["SKU"] ?? v.specs["Catalog No"] ?? v.specs["Product Code"] ?? v.specs["Part Number"] ?? v.specs["Model"] ?? v.id.toUpperCase();
   const sampleModels = variants.slice(0, 4).map((v) => ({ sku: partNo(v), id: v.specs["SKU"] ?? v.id }));
-  return { id: product.id, rows: rows.slice(0, 5), models: variants.length, maxPsi, minPrice: prices.length ? Math.min(...prices) : null, hasDetail: !!detail, sampleModels };
+  return { id: product.id, rows: rows.slice(0, 5), models: variants.length, maxPsi, minPrice: prices.length ? Math.min(...prices) : null, maxPrice: prices.length ? Math.max(...prices) : null, hasDetail: !!detail, sampleModels };
 }
 
 /** Summaries for every series in a category, fetched in parallel. A failed

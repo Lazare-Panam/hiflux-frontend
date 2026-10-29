@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Breadcrumbs, Typography } from "@mui/material";
+import { serializeJsonLd } from "@/app/seo/schema";
 
 const SITE = "https://www.hiflux.uk.com";
 
@@ -44,7 +45,7 @@ export default function PageBreadcrumbs({
   return (
     <>
       {schema && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
       )}
       <Breadcrumbs
         aria-label="Breadcrumb"

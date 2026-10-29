@@ -4,6 +4,8 @@ import { getCatalog, ProductType } from "@/api/useProductCatalog";
 import CatalogView from "./components/CatalogView";
 import ProductDetailContent from "../components/ProductDetailContent";
 import { getCategoryEditorial } from "../data/editorial";
+import JsonLd from "@/app/seo/JsonLd";
+import { SITE_URL, breadcrumbLd } from "@/app/seo/schema";
 
 // Cache the rendered page (ISR): built on the first visit, then served from
 // cache and regenerated in the background at most once an hour. Without this
@@ -66,37 +68,15 @@ export default async function ProductCatalogPage({ params }: Props) {
   const data = await getCatalog(id).catch(() => null);
   if (!data) notFound();
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://www.hiflux.uk.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Products",
-        item: "https://www.hiflux.uk.com/products",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: data.bannerTitle ?? id,
-        item: `https://www.hiflux.uk.com/products/${id}`,
-      },
-    ],
-  };
+  const breadcrumbSchema = breadcrumbLd([
+    { name: "Home", url: SITE_URL },
+    { name: "Products", url: `${SITE_URL}/products` },
+    { name: data.bannerTitle ?? id, url: `${SITE_URL}/products/${id}` },
+  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd data={breadcrumbSchema} />
       {data.type === ProductType.Grid ? (
         <ProductDetailContent id={id} />
       ) : (
