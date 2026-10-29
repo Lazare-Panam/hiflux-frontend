@@ -122,7 +122,7 @@ const FOOTER_COLUMNS = [
     links: [
       {
         label: "Pressure Gauge",
-        href: "/products/pressure-temp-flow/pressure-gauge",
+        href: "/series/pressure-gauge",
       },
       {
         label: "Thermocouple",

@@ -237,7 +237,7 @@ export const LEFT_NAV: NavItem[] = [
         ],
         // Same three tabs, in the same order, as hiflux.net > Pressure/Tempe/Flow.
         items: [
-          { label: "Pressure Gauge", href: "/products/pressure-temp-flow/pressure-gauge" },
+          { label: "Pressure Gauge", href: "/series/pressure-gauge" },
           { label: "Thermocouple", href: "/products/pressure-temp-flow/thermocouple" },
           { label: "Pump", href: "/products/pressure-temp-flow/pump" },
         ],

@@ -37,5 +37,5 @@ export const SERIES_BRIDGE: Record<string, SeriesBridge> = {
   "lok-valves": { name: "Lok Valves", catalog: "lok-fittings-valves" },
   "lok-tube": { name: "LOK Tube", catalog: "lok-fittings-valves" },
   "lok-tube-fittings": { name: "Lok Tube Fittings", catalog: "lok-fittings-valves" },
-  // "pressure-gauge": { name: "Pressure Gauge", catalog: "pressure-temp-flow" },
+  "pressure-gauge": { name: "Pressure Gauge", catalog: "pressure-temp-flow" },
 };
