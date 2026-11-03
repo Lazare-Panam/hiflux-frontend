@@ -2,8 +2,11 @@ import { BlogData } from "../components/BlogPost";
 import { post as coneThread } from "./posts/high-pressure-cone-and-thread-fittings-guide";
 import { post as regulators } from "./posts/high-pressure-regulators-gpr-hpr-bpr-selection-guide";
 import { post as highViscosityFiltration } from "./posts/industrial-filtration-high-viscosity-fluids";
+import { post as chemicalProcessFiltration } from "./posts/how-to-specify-chemical-process-filtration";
 
 export const blogs: BlogData[] = [
+  // November 2026 SEO content programme (targets from the Sept 2026 audit)
+  chemicalProcessFiltration,
   // October 2026 SEO content programme (targets from the Sept 2026 audit)
   highViscosityFiltration, coneThread, regulators,
   {
