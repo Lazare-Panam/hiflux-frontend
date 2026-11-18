@@ -78,7 +78,7 @@ function buildVariantSeo(
   const title = (
     (titleBase + " | Hiflux").length <= 60 ? `${titleBase} | Hiflux` : titleBase
   ).toUpperCase();
-
+//
   // Ball valves (ball-med-20k): trunnion type, orifice + finish-version copy.
   // Finish "180" confirmed as the 180°C high-temp (PEEK seat) version.
   if (productId === "ball-med-20k") {
