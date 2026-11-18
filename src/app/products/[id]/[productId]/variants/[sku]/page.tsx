@@ -75,8 +75,9 @@ function buildVariantSeo(
   const titleBase = [`${sku} ${productType}`, size, pressure]
     .filter(Boolean)
     .join(", ");
-  const title =
-    (titleBase + " | Hiflux").length <= 60 ? `${titleBase} | Hiflux` : titleBase;
+  const title = (
+    (titleBase + " | Hiflux").length <= 60 ? `${titleBase} | Hiflux` : titleBase
+  ).toUpperCase();
 
   // Ball valves (ball-med-20k): trunnion type, orifice + finish-version copy.
   // Finish "180" confirmed as the 180°C high-temp (PEEK seat) version.
@@ -259,7 +260,7 @@ export default async function VariantDetail({ params }: Props) {
 
             <Typography
               component="h1"
-              sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 800, lineHeight: 1.15 }}
+              sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 800, lineHeight: 1.15, textTransform: "uppercase !important" }}
             >
               {seo.h1}
             </Typography>
