@@ -50,7 +50,7 @@ const docLinkSx = {
 } as const;
 
 function magnitude(s: string): number {
-  const str = s.replace(/["”]/g, "").trim();
+  const str = s.replace(/["”,]/g, "").trim();
   const mixed = str.match(/^(\d+)\s+(\d+)\/(\d+)/);
   if (mixed) return +mixed[1] + +mixed[2] / +mixed[3];
   const frac = str.match(/^(\d+)\/(\d+)/);
